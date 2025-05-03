@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Empréstimo</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body class="theme-dark">
+  <div class="calculator-container">
+    <div class="calculator-header">
+      <h1>🏦 Calculadora de Empréstimo</h1>
+    </div>
+
+    <div class="calculator-steps">
+      <div class="progress-bar">
+        <!-- Step Icons -->
+        <div class="progress-step active" data-step="1">
+          <div class="step-icon">1</div>
+          <div class="step-label">Dados Pessoais</div>
+        </div>
+        <div class="progress-step" data-step="2">
+          <div class="step-icon">2</div>
+          <div class="step-label">Valor</div>
+        </div>
+        <div class="progress-step" data-step="3">
+          <div class="step-icon">3</div>
+          <div class="step-label">Parcelas</div>
+        </div>
+        <div class="progress-step" data-step="4">
+          <div class="step-icon">4</div>
+          <div class="step-label">Resumo</div>
+        </div>
+        <!-- Progress Lines -->
+        <div class="progress-line"></div> <!-- Linha cinza de fundo -->
+        <div class="progress-indicator"></div> <!-- Linha colorida que preenche -->
+      </div>
+    </div>
+
+    <div class="calculator-body">
+      <!-- Etapa 1: Dados Pessoais -->
+      <div id="etapa1" class="etapa ativa">
+        <h2>Etapa 1: Seus Dados</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome-completo">👤 Nome Completo:</label>
+            <input type="text" id="nome-completo" class="form-control" placeholder="Digite seu nome completo" required autocomplete="name" />
+            <div class="error-message" id="error-nome">Nome é obrigatório.</div> <!-- Mensagem de erro -->
+          </div>
+          <div class="form-group">
+            <label for="cpf">🧾 CPF:</label>
+            <input type="text" id="cpf" class="form-control" required placeholder="000.000.000-00" autocomplete="off" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite o CPF no formato 000.000.000-00"/>
+             <div class="error-message" id="error-cpf">CPF inválido ou obrigatório.</div> <!-- Mensagem de erro -->
+          </div>
+        </div>
+
+        <div class="form-row">
+           <div class="form-group">
+             <label for="data-atual">📅 Data Atual:</label>
+             <input type="text" id="data-atual" class="form-control" readonly />
+           </div>
+           <div class="form-group">
+              <label for="dia-pagamento">🗓️ Dia da 1ª Parcela:</label>
+              <select id="dia-pagamento" class="form-select" required>
+                  <option value="" disabled selected>Selecione o dia</option> <!-- Opção inicial -->
+                  <option value="5">Dia 05</option>
+                  <option value="10">Dia 10</option>
+                  <option value="15">Dia 15</option>
+                  <option value="20">Dia 20</option>
+                  <option value="25">Dia 25</option>
+                  <!-- Dia 30 removido para simplificar cálculo de datas entre meses -->
+              </select>
+               <div class="error-message" id="error-dia-pagamento">Selecione um dia.</div> <!-- Mensagem de erro -->
+           </div>
+        </div>
+
+        <div class="form-group">
+          <p id="lembrete-pagamento"></p> <!-- Lembrete da data -->
+        </div>
+
+        <div class="navigation-buttons">
+          <!-- Botão de Avançar da Etapa 1 -->
+          <button id="btn-ir-para-etapa2" class="btn btn-primary">Avançar para Valor</button>
+        </div>
+      </div>
+
+      <!-- Etapa 2: Valor -->
+      <div id="etapa2" class="etapa">
+        <h2>Etapa 2: Valor do Empréstimo</h2>
+        <div class="form-group">
+          <label for="faixa-valor">💰 Faixa de Valor (Informativo):</label>
+          <!-- Select da faixa de valor (informativo, não usado diretamente no cálculo principal) -->
+          <select id="faixa-valor" class="form-select">
+             <option value="500">💸 Até R$ 500,00</option>
+             <option value="1000">💵 R$ 500,01 - R$ 1.000,00</option>
+             <option value="2000">💳 R$ 1.000,01 - R$ 2.000,00</option>
+             <option value="3000">💼 R$ 2.000,01 - R$ 3.000,00</option>
+             <option value="4000">🏦 R$ 3.000,01 - R$ 4.000,00</option>
+             <option value="5000">🪙 R$ 4.000,01 - R$ 5.000,00</option>
+             <option value="10000">💎 Acima de R$ 5.000,01</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="valor-emprestimo">📥 Valor desejado (R$):</label>
+          <div class="valor-input-container"> <!-- Container para input de valor -->
+            <input type="text" id="valor-emprestimo" class="form-control" placeholder="R$ 1.500,00" inputmode="decimal" required />
+            <!-- <span id="valor-alinhado"></span> Removido, não era usado -->
+          </div>
+           <div class="error-message" id="error-valor-emprestimo">Valor inválido (mínimo R$ 100).</div> <!-- Mensagem de erro -->
+        </div>
+
+        <div class="navigation-buttons">
+          <button id="btn-voltar-para-etapa1" class="btn btn-secondary">Voltar</button>
+          <button id="btn-ir-para-etapa3" class="btn btn-primary">Avançar para Parcelas</button>
+        </div>
+      </div>
+
+      <!-- Etapa 3: Parcelas -->
+      <div id="etapa3" class="etapa">
+         <h2>Etapa 3: Escolha as Parcelas</h2>
+        <div class="form-group">
+          <label>🧮 Número de Parcelas:</label>
+           <p style="font-size: 0.9em; color: var(--text-light-secondary); margin-top: -10px; margin-bottom: 15px;">Escolha a melhor opção para você.</p>
+          <div class="parcelas-options" id="parcelas-options">
+            <!-- Opções de parcela serão inseridas aqui pelo JavaScript -->
+             <div class="error-message" id="error-parcelas">Selecione uma opção de parcelamento.</div> <!-- Mensagem de erro genérica para o grupo -->
+          </div>
+        </div>
+
+        <div class="navigation-buttons">
+          <button id="btn-voltar-para-etapa2" class="btn btn-secondary">Voltar</button>
+          <button id="btn-ir-para-etapa4" class="btn btn-primary">Avançar para Resumo</button>
+        </div>
+      </div>
+
+      <!-- Etapa 4: Resumo -->
+      <div id="etapa4" class="etapa">
+         <h2>Etapa 4: Resumo e Confirmação</h2>
+        <div class="resultado-parcelas"> <!-- Container do resumo -->
+          <h3>📋 Resumo do Empréstimo</h3>
+          <!-- Itens do resumo - Spans serão preenchidos pelo JavaScript -->
+          <div class="resultado-item"><span>👤 Nome:</span><span id="resumo-nome">-</span></div>
+          <div class="resultado-item"><span>🧾 CPF:</span><span id="resumo-cpf">-</span></div>
+          <!-- <div class="resultado-item"><span>💰 Faixa de valor (Ref):</span><span id="resumo-faixa">-</span></div> Linha da faixa comentada/removida -->
+          <div class="resultado-item"><span>📥 Valor Solicitado:</span><span id="resumo-valor">-</span></div>
+          <div class="resultado-item"><span>🧮 Parcelas:</span><span id="resumo-parcelas">-</span></div>
+          <div class="resultado-item"><span>💸 Valor da Parcela:</span><span id="resumo-valor-parcela">-</span></div>
+          <div class="resultado-item"><span>📅 Data da 1ª Parcela:</span><span id="resumo-data-primeira">-</span></div>
+          <div class="resultado-item"><span>📆 Data da Última Parcela:</span><span id="resumo-data-ultima">-</span></div>
+           <!-- Mensagem final de conferência -->
+           <div class="resultado-item" style="border: none; margin-top: 15px; font-style: italic; font-size: 0.9em;">
+             <span></span> <!-- Span vazio para alinhar -->
+             <span style="color: var(--text-light-secondary);">Confira os dados antes de enviar.</span>
+           </div>
+        </div>
+
+        <div class="navigation-buttons">
+          <button id="btn-voltar-para-etapa3" class="btn btn-secondary">Voltar</button>
+          <!-- Botão final que chama a função do WhatsApp -->
+          <button id="btn-finalizar" class="btn btn-success">✓ Confirmar e Enviar para WhatsApp</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script> <!-- Link para o JavaScript -->
+</body>
+</html>

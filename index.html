@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Empréstimo Rápido</title> <!-- Título Atualizado -->
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body class="theme-dark">
+  <div class="calculator-container">
+    <div class="calculator-header">
+      <h1>⚡ Calculadora de Empréstimo Rápido</h1> <!-- Título Atualizado -->
+    </div>
+
+    <div class="calculator-steps">
+      <div class="progress-bar">
+        <!-- Step Labels Atualizados -->
+        <div class="progress-step active" data-step="1">
+          <div class="step-icon">1</div>
+          <div class="step-label">Seus Dados</div>
+        </div>
+        <div class="progress-step" data-step="2">
+          <div class="step-icon">2</div>
+          <div class="step-label">Valor</div>
+        </div>
+        <div class="progress-step" data-step="3">
+          <div class="step-icon">3</div>
+          <div class="step-label">Prazo (Dias)</div> <!-- Label Atualizado -->
+        </div>
+        <div class="progress-step" data-step="4">
+          <div class="step-icon">4</div>
+          <div class="step-label">Resumo</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-indicator"></div>
+      </div>
+    </div>
+
+    <div class="calculator-body">
+      <!-- Etapa 1: Dados Pessoais (Dia Pagamento Removido) -->
+      <div id="etapa1" class="etapa ativa">
+        <h2>Etapa 1: Seus Dados</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome-completo">👤 Nome Completo:</label>
+            <input type="text" id="nome-completo" class="form-control" placeholder="Digite seu nome completo" required autocomplete="name" />
+            <div class="error-message" id="error-nome-completo">Nome é obrigatório.</div>
+          </div>
+          <div class="form-group">
+            <label for="cpf">🧾 CPF:</label>
+            <input type="text" id="cpf" class="form-control" required placeholder="000.000.000-00" autocomplete="off" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite o CPF no formato 000.000.000-00"/>
+             <div class="error-message" id="error-cpf">CPF inválido ou obrigatório.</div>
+          </div>
+        </div>
+        <div class="form-row">
+           <div class="form-group" style="flex-grow: 2;"> <!-- Ocupa mais espaço -->
+             <label for="data-atual">📅 Data da Solicitação:</label>
+             <input type="text" id="data-atual" class="form-control" readonly />
+           </div>
+           <!-- Campo Dia Pagamento Removido -->
+        </div>
+        <div class="navigation-buttons">
+          <!-- Botão ID Atualizado para clareza -->
+          <button id="btn-ir-para-valor" class="btn btn-primary">Avançar para Valor</button>
+        </div>
+      </div>
+
+      <!-- Etapa 2: Valor (Faixa Removida para simplificar) -->
+      <div id="etapa2" class="etapa">
+        <h2>Etapa 2: Valor do Empréstimo</h2>
+         <!-- Faixa de Valor Removida -->
+        <div class="form-group">
+          <label for="valor-emprestimo">📥 Valor desejado (R$):</label>
+          <div class="valor-input-container">
+            <input type="text" id="valor-emprestimo" class="form-control" placeholder="R$ 100,00" inputmode="decimal" required />
+          </div>
+           <div class="error-message" id="error-valor-emprestimo">Valor inválido (mínimo R$ 100).</div>
+        </div>
+        <div class="navigation-buttons">
+          <!-- Botões ID Atualizados -->
+          <button id="btn-voltar-para-dados" class="btn btn-secondary">Voltar</button>
+          <button id="btn-ir-para-prazo" class="btn btn-primary">Avançar para Prazo</button>
+        </div>
+      </div>
+
+      <!-- Etapa 3: Prazo em Dias (Substitui Parcelas) -->
+      <div id="etapa3" class="etapa">
+         <h2>Etapa 3: Prazo para Pagamento</h2> <!-- Título Atualizado -->
+        <div class="form-group">
+          <label>🗓️ Pagar em quantos dias?</label> <!-- Label Atualizado -->
+           <p style="font-size: 0.9em; color: var(--text-light-secondary); margin-top: -10px; margin-bottom: 15px;">Escolha o prazo para o pagamento único.</p>
+           <!-- Container ID Atualizado -->
+          <div class="prazo-options" id="prazo-options">
+            <!-- Opções de dias serão inseridas aqui pelo JavaScript -->
+             <!-- Error message ID Atualizado -->
+             <div class="error-message" id="error-prazo">Selecione um prazo.</div>
+          </div>
+        </div>
+        <div class="navigation-buttons">
+           <!-- Botões ID Atualizados -->
+          <button id="btn-voltar-para-valor" class="btn btn-secondary">Voltar</button>
+          <button id="btn-ir-para-resumo" class="btn btn-primary">Avançar para Resumo</button>
+        </div>
+      </div>
+
+      <!-- Etapa 4: Resumo (Campos Atualizados) -->
+      <div id="etapa4" class="etapa">
+         <h2>Etapa 4: Resumo e Confirmação</h2>
+        <div class="resultado-parcelas"> <!-- Classe mantida, mas conteúdo mudou -->
+          <h3>✅ Resumo do Empréstimo</h3>
+          <div class="resultado-item"><span>👤 Nome:</span><span id="resumo-nome">-</span></div>
+          <div class="resultado-item"><span>🧾 CPF:</span><span id="resumo-cpf">-</span></div>
+          <div class="resultado-item"><span>📅 Data da Solicitação:</span><span id="resumo-data-solicitacao">-</span></div>
+          <div class="resultado-item"><span>📥 Valor Solicitado:</span><span id="resumo-valor-solicitado">-</span></div>
+          <!-- Campos Removidos: Parcelas, Valor Parcela, Ultima Parcela -->
+          <!-- Campos Adicionados/Renomeados -->
+          <div class="resultado-item"><span>📆 Vencimento:</span><span id="resumo-data-vencimento">-</span></div>
+          <div class="resultado-item"><span>💰 Valor Total a Pagar:</span><span id="resumo-valor-total">-</span></div>
+          <!-- Mensagem Fixa Adicionada (similar ao exemplo) -->
+          <div class="resultado-item confirmation-message" style="font-style: italic;">
+            <span>📌 Observação:</span>
+            <span id="resumo-observacao"></span> <!-- Prazo será inserido aqui -->
+          </div>
+        </div>
+
+        <div class="navigation-buttons">
+           <!-- Botões ID Atualizados -->
+          <button id="btn-voltar-para-prazo" class="btn btn-secondary">Voltar</button>
+          <button id="btn-finalizar" class="btn btn-success">✓ Confirmar e Enviar para WhatsApp</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

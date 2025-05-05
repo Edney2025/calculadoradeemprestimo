@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function () {
      * @returns {number} The MONTHLY interest rate as a percentage (e.g., 15.5).
      */
     function calculateMonthlyRatePercent(numParcelas) {
-        const startRate = 20.0; // 17% a.m. (start)
-        const endRate = 9.0;    // 8% a.m. (end)
+        const startRate = 24.0; //18% a.m. (start)
+        const endRate = 9.0;    // 9% a.m. (end)
         const startInstallments = 3.0;
         const endInstallments = 48.0;
 

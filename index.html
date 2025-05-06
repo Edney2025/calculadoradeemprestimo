@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora de Empréstimo</title>
+  <title>Calculadora de Empréstimo Rápido</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body class="theme-dark">
   <div class="calculator-container">
     <div class="calculator-header">
-      <h1>🏦 Calculadora de Empréstimo</h1>
+      <h1>⚡ Calculadora de Empréstimo Rápido</h1>
     </div>
 
     <div class="calculator-steps">
@@ -18,7 +18,7 @@
         <!-- Step Icons -->
         <div class="progress-step active" data-step="1">
           <div class="step-icon">1</div>
-          <div class="step-label">Dados Pessoais</div>
+          <div class="step-label">Seus Dados</div>
         </div>
         <div class="progress-step" data-step="2">
           <div class="step-icon">2</div>
@@ -26,15 +26,14 @@
         </div>
         <div class="progress-step" data-step="3">
           <div class="step-icon">3</div>
-          <div class="step-label">Parcelas</div>
+          <div class="step-label">Prazo (Dias)</div>
         </div>
         <div class="progress-step" data-step="4">
           <div class="step-icon">4</div>
           <div class="step-label">Resumo</div>
         </div>
-        <!-- Progress Lines -->
-        <div class="progress-line"></div> <!-- Linha cinza de fundo -->
-        <div class="progress-indicator"></div> <!-- Linha colorida que preenche -->
+        <div class="progress-line"></div>
+        <div class="progress-indicator"></div>
       </div>
     </div>
 
@@ -46,7 +45,7 @@
           <div class="form-group">
             <label for="nome-completo">👤 Nome Completo:</label>
             <input type="text" id="nome-completo" class="form-control" placeholder="Digite seu nome completo" required autocomplete="name" />
-            <div class="error-message" id="error-nome-completo">Nome é obrigatório.</div> <!-- ID da mensagem de erro -->
+            <div class="error-message" id="error-nome-completo">Nome é obrigatório.</div>
           </div>
           <div class="form-group">
             <label for="cpf">🧾 CPF:</label>
@@ -54,33 +53,14 @@
              <div class="error-message" id="error-cpf">CPF inválido ou obrigatório.</div>
           </div>
         </div>
-
         <div class="form-row">
-           <div class="form-group">
-             <label for="data-atual">📅 Data Atual:</label>
+           <div class="form-group" style="flex-grow: 2;">
+             <label for="data-atual">📅 Data da Solicitação:</label>
              <input type="text" id="data-atual" class="form-control" readonly />
            </div>
-           <div class="form-group">
-              <label for="dia-pagamento">🗓️ Dia da 1ª Parcela:</label>
-              <select id="dia-pagamento" class="form-select" required>
-                  <option value="" disabled selected>Selecione o dia</option>
-                  <option value="5">Dia 05</option>
-                  <option value="10">Dia 10</option>
-                  <option value="15">Dia 15</option>
-                  <option value="20">Dia 20</option>
-                  <option value="25">Dia 25</option>
-                  <option value="30">Dia 30</option> <!-- Opção 30 está aqui -->
-              </select>
-               <div class="error-message" id="error-dia-pagamento">Selecione um dia.</div>
-           </div>
         </div>
-
-        <div class="form-group">
-          <p id="lembrete-pagamento"></p> <!-- Lembrete da data -->
-        </div>
-
         <div class="navigation-buttons">
-          <button id="btn-ir-para-etapa2" class="btn btn-primary">Avançar para Valor</button>
+          <button id="btn-ir-para-valor" class="btn btn-primary">Avançar para Valor</button>
         </div>
       </div>
 
@@ -88,48 +68,31 @@
       <div id="etapa2" class="etapa">
         <h2>Etapa 2: Valor do Empréstimo</h2>
         <div class="form-group">
-          <label for="faixa-valor">💰 Faixa de Valor (Informativo):</label>
-          <select name="faixa-preco" id="faixa-valor" class="form-select"> <!-- ID 'faixa-valor' confirmado -->
-            <option value="500">💸 Até R$ 500,00 — prazo: 10 a 20 dias</option>
-            <option value="1000">💵 R$ 500,01 - R$ 1.000,00 — prazo: 15 a 30 dias</option>
-            <option value="2000">💳 R$ 1.000,01 - R$ 2.000,00 — prazo: 25 a 40 dias</option>
-            <option value="3000">💼 R$ 2.000,01 - R$ 3.000,00 — prazo: 30 a 50 dias</option>
-            <option value="4000">🏦 R$ 3.000,01 - R$ 4.000,00 — prazo: 35 a 60 dias</option>
-            <option value="5000">🪙 R$ 4.000,01 - R$ 5.000,00 — prazo: 40 a 70 dias</option>
-            <option value="10000">💎 Acima de R$ 5.000,01 — prazo: 45 a 80 dias</option>
-          </select>
-        </div>
-
-        <div class="form-group">
           <label for="valor-emprestimo">📥 Valor desejado (R$):</label>
           <div class="valor-input-container">
-             <!-- GARANTIR que type="text" e inputmode="decimal" -->
             <input type="text" id="valor-emprestimo" class="form-control" placeholder="R$ 100,00" inputmode="decimal" required />
           </div>
            <div class="error-message" id="error-valor-emprestimo">Valor inválido (mínimo R$ 100).</div>
         </div>
-
         <div class="navigation-buttons">
-          <button id="btn-voltar-para-etapa1" class="btn btn-secondary">Voltar</button>
-          <button id="btn-ir-para-etapa3" class="btn btn-primary">Avançar para Parcelas</button>
+          <button id="btn-voltar-para-dados" class="btn btn-secondary">Voltar</button>
+          <button id="btn-ir-para-prazo" class="btn btn-primary">Avançar para Prazo</button>
         </div>
       </div>
 
-      <!-- Etapa 3: Parcelas -->
+      <!-- Etapa 3: Prazo em Dias -->
       <div id="etapa3" class="etapa">
-         <h2>Etapa 3: Escolha as Parcelas</h2>
+         <h2>Etapa 3: Prazo para Pagamento</h2>
         <div class="form-group">
-          <label>🧮 Número de Parcelas:</label>
-           <p style="font-size: 0.9em; color: var(--text-light-secondary); margin-top: -10px; margin-bottom: 15px;">Escolha a melhor opção para você.</p>
-          <div class="parcelas-options" id="parcelas-options">
-            <!-- Opções de parcela serão inseridas aqui pelo JavaScript -->
-             <div class="error-message" id="error-parcelas">Selecione uma opção de parcelamento.</div>
+          <label>🗓️ Pagar em quantos dias?</label>
+           <p style="font-size: 0.9em; color: var(--text-light-secondary); margin-top: -10px; margin-bottom: 15px;">Escolha o prazo para o pagamento único.</p>
+          <div class="prazo-options" id="prazo-options">
+             <div class="error-message" id="error-prazo">Selecione um prazo.</div>
           </div>
         </div>
-
         <div class="navigation-buttons">
-          <button id="btn-voltar-para-etapa2" class="btn btn-secondary">Voltar</button>
-          <button id="btn-ir-para-etapa4" class="btn btn-primary">Avançar para Resumo</button>
+          <button id="btn-voltar-para-valor" class="btn btn-secondary">Voltar</button>
+          <button id="btn-ir-para-resumo" class="btn btn-primary">Avançar para Resumo</button>
         </div>
       </div>
 
@@ -137,22 +100,21 @@
       <div id="etapa4" class="etapa">
          <h2>Etapa 4: Resumo e Confirmação</h2>
         <div class="resultado-parcelas">
-          <h3>📋 Resumo do Empréstimo</h3>
+          <h3>✅ Resumo do Empréstimo</h3>
           <div class="resultado-item"><span>👤 Nome:</span><span id="resumo-nome">-</span></div>
           <div class="resultado-item"><span>🧾 CPF:</span><span id="resumo-cpf">-</span></div>
-          <div class="resultado-item"><span>📥 Valor Solicitado:</span><span id="resumo-valor">-</span></div>
-          <div class="resultado-item"><span>🧮 Parcelas:</span><span id="resumo-parcelas">-</span></div>
-          <div class="resultado-item"><span>💸 Valor da Parcela:</span><span id="resumo-valor-parcela">-</span></div>
-          <div class="resultado-item"><span>📅 Data da 1ª Parcela:</span><span id="resumo-data-primeira">-</span></div>
-          <div class="resultado-item"><span>📆 Data da Última Parcela:</span><span id="resumo-data-ultima">-</span></div>
-           <div class="resultado-item confirmation-message"> <!-- Classe confirmada -->
-             <span></span>
-             <span>Confira os dados antes de enviar.</span>
-           </div>
+          <div class="resultado-item"><span>📅 Data da Solicitação:</span><span id="resumo-data-solicitacao">-</span></div>
+          <div class="resultado-item"><span>📥 Valor Solicitado:</span><span id="resumo-valor-solicitado">-</span></div>
+          <div class="resultado-item"><span>📆 Vencimento:</span><span id="resumo-data-vencimento">-</span></div>
+          <div class="resultado-item"><span>💰 Valor Total a Pagar:</span><span id="resumo-valor-total">-</span></div>
+          <div class="resultado-item confirmation-message">
+            <span>📌 Observação:</span>
+            <span id="resumo-observacao"></span>
+          </div>
         </div>
 
         <div class="navigation-buttons">
-          <button id="btn-voltar-para-etapa3" class="btn btn-secondary">Voltar</button>
+          <button id="btn-voltar-para-prazo" class="btn btn-secondary">Voltar</button>
           <button id="btn-finalizar" class="btn btn-success">✓ Confirmar e Enviar para WhatsApp</button>
         </div>
       </div>

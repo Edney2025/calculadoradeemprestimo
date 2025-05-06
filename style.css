@@ -91,12 +91,13 @@ body {
     min-width: 200px; /* Prevent excessive shrinking */
 }
 
-#lembrete-pagamento {
+#lembrete-pagamento { /* Might be removed or repurposed if not needed */
     color: var(--text-light-secondary);
     font-size: 0.9em;
     margin-top: 15px;
     text-align: center;
     font-style: italic;
+    display: none; /* Hide by default as day selection is gone */
 }
 
 /* ==== Progress Bar Styles ==== */
@@ -224,8 +225,7 @@ body {
 /* Style invalid fields */
 .form-control:invalid,
 .form-select:invalid {
-    /* Default browser invalid styles might be sufficient, or customize */
-     border-color: #e74c3c; /* Example invalid border color */
+     border-color: #e74c3c !important; /* Example invalid border color */
 }
 .form-control.is-invalid, /* Class added by JS */
 .form-select.is-invalid { /* Class added by JS */
@@ -233,12 +233,12 @@ body {
 }
 
 .form-select {
-    appearance: none; /* Standard property first */
-    -webkit-appearance: none; /* Vendor prefix */
-    -moz-appearance: none; /* Vendor prefix */
+    appearance: none; /* CORRIGIDO: Standard property first */
+    -webkit-appearance: none;
+    -moz-appearance: none; /* Linter warning fix: Standard property is present */
     background-image: url("data:image/svg+xml;utf8,<svg fill='%23e0e0e0' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
-    background-position-x: calc(100% - 10px); /* Adjust arrow position */
+    background-position-x: calc(100% - 10px);
     background-position-y: 50%;
     padding-right: 40px; /* Make space for arrow */
 }
@@ -249,25 +249,21 @@ body {
 }
 
 .valor-input-container {
-    position: relative; /* Needed for currency symbol positioning */
+    position: relative;
     display: flex;
     align-items: center;
 }
 
-/* Remove default spinner buttons */
-/* Chrome, Safari, Edge, Opera */
 .valor-input-container input::-webkit-outer-spin-button,
 .valor-input-container input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-/* Firefox */
-.valor-input-container input[type=number] { /* Specificity for Firefox fix */
+.valor-input-container input[type=number] {
   -moz-appearance: textfield;
 }
 
-
-.valor-input-container::before { /* Add 'R$' symbol */
+.valor-input-container::before {
     content: 'R$';
     position: absolute;
     left: 12px;
@@ -275,20 +271,20 @@ body {
     transform: translateY(-50%);
     color: var(--text-light-secondary);
     font-size: 16px;
-    pointer-events: none; /* Allow clicking through the symbol */
+    pointer-events: none;
 }
 
-.valor-input-container input { /* Applies to the input */
+.valor-input-container input { /* Applies to input type=text */
     flex-grow: 1;
     padding-left: 45px; /* Make space for 'R$' */
-    text-align: left; /* Align text to the left */
+    text-align: left;
 }
 
 .error-message {
-    color: #e74c3c; /* Red for errors */
+    color: #e74c3c;
     font-size: 0.85em;
     margin-top: 5px;
-    display: none; /* Hidden by default, shown by JS */
+    display: none; /* Hidden by default */
 }
 
 /* ==== Button Styles ==== */
@@ -296,20 +292,20 @@ body {
     display: flex;
     justify-content: space-between;
     margin-top: 30px;
-    flex-wrap: wrap; /* Allow buttons to wrap */
-    gap: 10px; /* Add gap between buttons when wrapped */
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .btn {
-    padding: 12px 25px; /* Slightly larger buttons */
+    padding: 12px 25px;
     border-radius: 5px;
     border: none;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-size: 15px; /* Slightly larger font */
-    flex-grow: 1; /* Allow buttons to grow */
-    min-width: 150px; /* Minimum width for buttons */
+    font-size: 15px;
+    flex-grow: 1;
+    min-width: 150px;
     text-align: center;
 }
 
@@ -328,7 +324,7 @@ body {
 .btn-secondary {
     background-color: #444;
     color: var(--text-light-primary);
-    flex-grow: 0.5; /* Make back button potentially smaller */
+    flex-grow: 0.5;
 }
 
 .btn-success {
@@ -338,30 +334,28 @@ body {
 
 .btn:not(:disabled):hover {
     opacity: 0.85;
-    transform: translateY(-2px); /* More noticeable hover effect */
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25); /* Enhanced shadow */
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
 
-/* ==== Installments Styles ==== */
-.parcelas-options {
+/* ==== Prazo Options Styles (reusing parcela styles) ==== */
+.prazo-options {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Slightly more gap */
+    gap: 12px;
     margin-top: 15px;
 }
 
-/* Add border for invalid state (visual feedback for validation) */
-.parcelas-options.is-invalid {
+.prazo-options.is-invalid {
     border: 1px solid #e74c3c;
     border-radius: 5px;
-    padding: 5px; /* Add padding so border isn't tight */
-    margin-bottom: -5px; /* Adjust spacing if padding is added */
+    padding: 5px;
 }
 
-.parcela-option {
+.parcela-option { /* Reusing class for day options styling */
     display: flex;
     align-items: center;
-    padding: 14px 18px; /* More padding */
+    padding: 14px 18px;
     background-color: var(--bg-dark-secondary);
     border-radius: 5px;
     transition: all 0.2s ease;
@@ -376,11 +370,11 @@ body {
 
 .parcela-option input[type="radio"] {
     margin-right: 15px;
-    accent-color: var(--accent-primary); /* Style the radio button check color */
+    accent-color: var(--accent-primary);
     width: 18px;
     height: 18px;
     cursor: pointer;
-    flex-shrink: 0; /* Prevent radio from shrinking */
+    flex-shrink: 0;
 }
 
 .parcela-option label {
@@ -391,161 +385,113 @@ body {
     cursor: pointer;
     color: var(--text-light-primary);
     font-size: 15px;
-    gap: 10px; /* Add gap between text and value */
+    gap: 10px;
 }
-
-.parcela-option label span { /* Style the calculated R$ value part */
+/* Styles for the value (R$ Total) part */
+.parcela-option label span {
     color: var(--accent-primary);
     font-weight: bold;
-    white-space: nowrap; /* Prevent value from wrapping */
+    white-space: nowrap;
+}
+/* Style for the date text added in label */
+.parcela-option .data-vencimento {
+    font-size: 0.9em;
+    color: var(--text-light-secondary);
+    margin-left: 5px; /* Add some space */
+    white-space: nowrap;
 }
 
-/* Style when checked */
-.parcela-option input[type="radio"]:checked + label {
-    /* font-weight: bold; */ /* Optional: keep default weight */
-}
 
 .parcela-option input[type="radio"]:checked + label span {
-    color: var(--accent-success); /* Change value color when checked */
+    color: var(--accent-success);
 }
 
-/* Highlight the whole option container when checked */
 .parcela-option:has(input[type="radio"]:checked) {
      border-color: var(--accent-primary);
-     background-color: #383838; /* Slightly different background when checked */
+     background-color: #383838;
 }
 
 /* ==== Summary Styles ==== */
-.resultado-parcelas {
+.resultado-parcelas { /* Container class name kept */
     margin-top: 20px;
     background-color: var(--bg-dark-secondary);
     padding: 25px;
     border-radius: 5px;
-    border-left: 5px solid var(--accent-primary); /* Thicker accent border */
+    border-left: 5px solid var(--accent-primary);
 }
 
 .resultado-parcelas h3 {
     color: var(--accent-primary);
-    margin-top: 0; /* Remove default margin */
+    margin-top: 0;
     margin-bottom: 20px;
-    font-size: 1.3em; /* Larger heading */
-    border-bottom: 1px solid #444; /* Separator line */
+    font-size: 1.3em;
+    border-bottom: 1px solid #444;
     padding-bottom: 10px;
 }
 
 .resultado-item {
     display: flex;
     justify-content: space-between;
-    align-items: center; /* Vertically align items */
+    align-items: center;
     margin-bottom: 12px;
     padding-bottom: 12px;
     border-bottom: 1px dashed #555;
-    font-size: 1em; /* Consistent font size */
-    gap: 15px; /* Add gap between label and value */
+    font-size: 1em;
+    gap: 15px;
 }
 
-.resultado-item:last-of-type { /* Remove border from last item with confirmation message */
+.resultado-item:last-of-type,
+.resultado-item.confirmation-message { /* Apply to both */
     border-bottom: none;
     margin-bottom: 0;
     padding-bottom: 0;
 }
 
-.resultado-item span:first-child { /* Style the label part (e.g., "Nome:") */
+.resultado-item span:first-child {
     color: var(--text-light-secondary);
-    margin-right: auto; /* Push value to the right */
-    white-space: nowrap; /* Prevent label wrap */
+    margin-right: auto;
+    white-space: nowrap;
 }
 
-.resultado-item span:last-child { /* Style the value part (e.g., the actual name) */
+.resultado-item span:last-child {
     color: var(--text-light-primary);
     font-weight: bold;
     text-align: right;
 }
 
-/* Special style for the final confirmation message text */
-.resultado-item.confirmation-message span:last-child { /* Styles the second span inside the div with class */
+.resultado-item.confirmation-message span:last-child {
     color: var(--text-light-secondary);
     font-style: italic;
     font-weight: normal;
     font-size: 0.9em;
-    text-align: right; /* Ensure it stays aligned right if needed */
+    text-align: right;
 }
-
 
 /* ==== Responsive Styles ==== */
 @media (max-width: 600px) {
-    body {
-        padding: 10px; /* Less padding on small screens */
-        align-items: flex-start; /* Align container to top */
-    }
-
-    .calculator-container {
-        margin: 10px 0; /* Allow container to touch edges */
-        padding: 20px;
-        max-width: 100%;
-    }
-
-    .calculator-header h1 {
-        font-size: 1.3em;
-    }
-
-    .form-row {
-       flex-direction: column; /* Stack inputs vertically */
-       gap: 0; /* Remove gap when stacked */
-    }
-
-     .form-row .form-group {
-        min-width: 100%; /* Full width on small screens */
-    }
-
-    .navigation-buttons {
-        flex-direction: column-reverse; /* Stack buttons, primary on bottom */
-        gap: 10px;
-    }
-
-    .navigation-buttons .btn {
-        width: 100%; /* Make buttons full width */
-        margin: 5px 0; /* Reset flexbox margin */
-        min-width: auto; /* Remove min-width */
-        flex-grow: 0; /* Disable flex grow */
-    }
-
-    .progress-bar {
-        padding: 0 5px; /* Adjust padding */
-    }
-
-     .progress-line, .progress-indicator {
-        left: 5px;
-        right: 5px;
-     }
-
-    .progress-step .step-label {
-        display: none; /* Hide labels on small screens to save space */
-    }
-
+    body { padding: 10px; align-items: flex-start; }
+    .calculator-container { margin: 10px 0; padding: 20px; max-width: 100%; }
+    .calculator-header h1 { font-size: 1.3em; }
+    .form-row { flex-direction: column; gap: 0; }
+    .form-row .form-group { min-width: 100%; }
+    .navigation-buttons { flex-direction: column-reverse; gap: 10px; }
+    .navigation-buttons .btn { width: 100%; margin: 5px 0; min-width: auto; flex-grow: 0; }
+    .progress-bar { padding: 0 5px; }
+    .progress-line, .progress-indicator { left: 5px; right: 5px; }
+    .progress-step .step-label { display: none; }
+    /* Adjust day option label stacking */
     .parcela-option label {
-        flex-direction: column; /* Stack text and value on small screens */
-        align-items: flex-start; /* Align left */
-        gap: 4px;
-    }
-
-    .resultado-item {
-        flex-direction: column; /* Stack label and value */
+        flex-wrap: wrap; /* Allow wrapping */
         align-items: flex-start;
-        gap: 5px;
     }
-     .resultado-item span:first-child {
-        margin-right: 0; /* Remove margin */
-        font-size: 0.9em; /* Smaller label */
+     .parcela-option .data-vencimento {
+         margin-left: 0; /* Remove left margin */
+         width: 100%; /* Take full width below */
+         text-align: left;
+         margin-top: 3px;
      }
-     .resultado-item span:last-child {
-        text-align: left; /* Align value left */
-        font-size: 1em;
-     }
-
-    /* Adjust confirmation message alignment */
-     .resultado-item.confirmation-message span:last-child {
-        text-align: left; /* Keep alignment left on small screens */
-     }
-
+    .resultado-item { flex-direction: column; align-items: flex-start; gap: 5px; }
+    .resultado-item span:first-child { margin-right: 0; font-size: 0.9em; }
+    .resultado-item span:last-child { text-align: left; font-size: 1em; }
+    .resultado-item.confirmation-message span:last-child { text-align: left; }
 }

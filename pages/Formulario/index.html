@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Encomenda Palotina - Cadastro Empréstimo Veículo</title>
+    <link rel="stylesheet" href="../../assets/css/style-home.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<aside class="sidebar">
+ <div class="logo">🐸 Encomenda Palotina</div>
+
+    <nav>
+
+      <a href="../calculadoras/em-breve.html">⚙️ Configurações</a> 
+      <a href="../calculadoras/em-breve.html">👤 Minha Conta</a>  
+      <a href="../suporte/index.html">🛠️ Suporte</a>  
+      <a href="../../index.html">🚪 Sair</a>  
+
+    </nav>
+
+  </aside>
+    <main class="content">
+       <header class="header">
+            <h1>📝 Cadastro de Empréstimo de Veículo</h1>
+           <div class="header-actions">
+               <a href="../../index.html" class="btn btn-secondary"> « Voltar</a>
+           </div>
+        </header>
+
+      <div id="progress-bar">
+          <div id="progress-bar-fill"></div>
+      </div>
+     <form id="loan-form" class="card" enctype="multipart/form-data">
+        <div class="form-step active" data-step="1">
+          <h2>Etapa 1/6: Dados Pessoais</h2>
+           <label for="nome" class="required">Nome Completo</label><input type="text" id="nome" name="nome" required >
+           <label for="cpf" class="required">CPF</label> <input type="text" id="cpf" name="cpf" required maxlength="14">
+           <button type="button" class="btn" onclick="nextStep()">Próximo</button>
+      </div>
+        <div class="form-step" data-step="2">
+          <h2>Etapa 2/6: Endereço</h2>
+            <label for="cep">CEP</label><input type="text" id="cep" name="cep"  required maxlength="9"> 
+            <label for="cidade">Cidade</label> <input type="text" id="cidade" name="cidade"  required>
+            <label for="estado">Estado</label> <input type="text" id="estado" name="estado"  required> 
+            <label for="bairro">Bairro</label><input type="text" id="bairro" name="bairro"  required> 
+            <label for="rua">Rua</label> <input type="text" id="rua" name="rua" required> 
+            <label for="numero" >Número</label><input type="text" id="numero" name="numero"  required>
+             <label for="complemento">Complemento</label> <input type="text" id="complemento" name="complemento">
+
+           <button type="button" class="btn" onclick="prevStep()">Anterior</button>
+            <button type="button" class="btn" onclick="nextStep()">Próximo</button>
+        </div>
+       <div class="form-step" data-step="3">
+          <h2>Etapa 3/6: Informações Financeiras</h2>
+          <label for="tempo_moradia" >Tempo de Moradia</label>
+          <select id="tempo_moradia" name="tempo_moradia" required>
+                <option value="" selected disabled>Selecione...</option>
+                <option value="Menos de 1 ano">Menos de 1 ano</option>
+                <!-- Adicione outras opções aqui -->
+            </select>
+            <label for="salario">Faixa Salarial</label> <select id="salario" name="salario" required>
+                <option value="" selected disabled>Selecione...</option>
+                <option value="Até R$1.500">Até R$1.500</option>
+               
+                <!-- Adicione outras opções aqui -->
+            </select>
+          <button type="button" class="btn" onclick="prevStep()">Anterior</button>
+            <button type="button" class="btn" onclick="nextStep()">Próximo</button>
+
+      </div>
+       <div class="form-step" data-step="4">
+         <h2>Etapa 4/6: Indicação (Opcional)</h2>
+
+            <label for="foi-indicado">Foi indicado?</label>
+           <select id="foi-indicado" name="foi_indicado" onchange="mostrarCampoIndicado(this.value)">
+              <option value="nao">Não</option> <option value="sim">Sim</option>
+          </select>
+
+          <div id="campo-indicador" style="display: none;"> <label for="nome-indicador">Quem indicou?</label> <input type="text" id="nome-indicador" name="nome_indicador" > </div>
+
+          <button type="button" class="btn" onclick="prevStep()">Anterior</button> <button type="button" class="btn" onclick="nextStep()">Próximo</button>
+       </div>
+
+      <div class="form-step" data-step="5">
+           <h2>Etapa 5/6: Documentos</h2>
+            <p>Envie foto da CNH (que já contém RG e CPF) OU envie fotos separadas do RG (frente e verso) e CPF.</p>
+             <label for="cnh">CNH (Substitui RG+CPF) </label> <input type="file" id="cnh" name="cnh[]" accept="image/*,.pdf" onchange="handleCNHUpload(this)"> <img id="cnh-preview" class="image-preview" src="#" alt="Preview CNH"> <span id="cnh-error" class="error-text"></span>
+
+
+              <div id="rg-cpf-fields" style="display:none;">
+                <label for="rg_frente">RG (Frente)</label> <input type="file" id="rg_frente" name="rg_frente[]" accept="image/*,.pdf" onchange="previewImage('rg_frente', 'rg-frente-preview')"> <img id="rg-frente-preview" class="image-preview" src="#" alt="Preview RG Frente"> <span id="rg_frente-error" class="error-text"></span>
+
+                 <label for="rg_verso">RG (Verso)</label><input type="file" id="rg_verso" name="rg_verso[]" accept="image/*,.pdf" onchange="previewImage('rg_verso', 'rg-verso-preview')"> <img id="rg-verso-preview" class="image-preview" src="#" alt="Preview RG Verso"> <span id="rg_verso-error" class="error-text"></span>
+
+
+                   <label for="cpf_doc">CPF (Documento) </label> <input type="file" id="cpf_doc" name="cpf_doc[]" accept="image/*,.pdf" onchange="previewImage('cpf_doc', 'cpf-doc-preview')"> <img id="cpf-doc-preview" class="image-preview" src="#" alt="Preview CPF">  <span id="cpf_doc-error" class="error-text"></span>
+             </div>
+              <label for="selfie" class="required">Selfie com Documento </label> <input type="file" id="selfie" name="selfie[]" accept="image/*" required onchange="previewImage('selfie', 'selfie-preview')"> <img id="selfie-preview" class="image-preview" src="#" alt="Preview Selfie"> <span id="selfie-error" class="error-text"></span>
+               <label for="residencia" class="required">Comprovante de Residência </label><input type="file" id="residencia" name="residencia[]" accept="image/*,.pdf" required onchange="previewImage('residencia', 'residencia-preview')">  <img id="residencia-preview" class="image-preview" src="#" alt="Preview Comprovante Residência"> <span id="residencia-error" class="error-text"></span>
+             <button type="button" class="btn" onclick="prevStep()">Anterior</button> <button type="button" class="btn" onclick="nextStep()">Próximo</button>
+
+        </div>
+
+     <div class="form-step" data-step="6">
+           <h2>Etapa 6/6: Redes Sociais</h2>
+            <p>Informe pelo menos uma rede social. O WhatsApp é obrigatório.</p>
+
+           <input type="checkbox" id="whatsapp-check" name="social[]" value="Whatsapp" checked disabled> <label for="whatsapp-check">Whatsapp</label>
+           <div id="whatsapp-input" class="social-input" style="display: block;"><input type="tel" id="whatsapp" name="whatsapp" placeholder="Seu número com DDD (Ex: 44999998888)" required> <span id="whatsapp-error" class="error-text"></span> </div>
+
+
+                <input type="checkbox" id="instagram-check" name="social[]" value="Instagram" onchange="toggleSocialInput('instagram')"> <label for="instagram-check">Instagram</label>
+            <div id="instagram-input" class="social-input"> <input type="text" id="instagram" name="instagram" placeholder="@SeuUsuario ou link do perfil"> </div>
+
+           <input type="checkbox" id="facebook-check" name="social[]" value="Facebook" onchange="toggleSocialInput('facebook')">  <label for="facebook-check">Facebook</label>
+             <div id="facebook-input" class="social-input"> <input type="text" id="facebook" name="facebook" placeholder="Link do seu perfil do Facebook"></div>
+
+             <input type="checkbox" id="tiktok-check" name="social[]" value="TikTok" onchange="toggleSocialInput('tiktok')"> <label for="tiktok-check">TikTok </label> <div id="tiktok-input" class="social-input">  <input type="text" id="tiktok" name="tiktok" placeholder="@SeuUsuario ou link do perfil"></div>
+              <input type="checkbox" id="linkedin-check" name="social[]" value="LinkedIn" onchange="toggleSocialInput('linkedin')"><label for="linkedin-check">LinkedIn</label>
+              <div id="linkedin-input" class="social-input"> <input type="text" id="linkedin" name="linkedin" placeholder="Link do seu perfil do LinkedIn"></div>
+
+              <div id="social-error" style="display: none;">Por favor, informe ou marque pelo menos uma rede social além do WhatsApp. </div>
+
+           <button type="button" class="btn" onclick="prevStep()">Anterior</button> <button type="submit" class="btn">Enviar Cadastro</button>
+      </div>
+
+  </form>
+
+
+
+        <script src="script.js"></script> </main>
+
+</body>
+
+</html>

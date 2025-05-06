@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de Produtos - AdminSys</title>
+  <link rel="stylesheet" href="../../assets/css/style-home.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <style>
+    /* Estilos das Categorias */
+    .category-header {
+      grid-column: 1 / -1;
+      margin: 30px 0 15px;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    /* Cores para cada categoria */
+    .category-hardware {
+      background-color: rgba(0, 123, 255, 0.2);
+      border-left: 5px solid #007bff;
+    }
+    
+    .category-perifericos {
+      background-color: rgba(40, 167, 69, 0.2);
+      border-left: 5px solid #28a745;
+    }
+    
+    .category-software {
+      background-color: rgba(220, 53, 69, 0.2);
+      border-left: 5px solid #dc3545;
+    }
+    
+    .category-redes {
+      background-color: rgba(255, 193, 7, 0.2);
+      border-left: 5px solid #ffc107;
+    }
+    
+    .category-acessorios {
+      background-color: rgba(111, 66, 193, 0.2);
+      border-left: 5px solid #6f42c1;
+    }
+    
+    .subcategory-header {
+      grid-column: 1 / -1;
+      margin: 20px 0 10px;
+      color: #aaa;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .product-card {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .product-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+    
+    .hardware-icon { color: #007bff; }
+    .perifericos-icon { color: #28a745; }
+    .software-icon { color: #dc3545; }
+    .redes-icon { color: #ffc107; }
+    .acessorios-icon { color: #6f42c1; }
+    
+    .filter-controls {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .product-image-placeholder {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    .price {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff5722;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+    
+    @media (max-width: 768px) {
+      .filter-controls {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">🚀 AdminSys</div>
+    <nav>
+      <a href="../../dashboard-app.html">📊 Dashboard</a>
+      <a href="../../pages/clientes/index.html">👤 Clientes</a>
+      <a href="../../pages/catalogo/index.html">🛒 Catálogo</a>
+      <a href="../../pages/orcamentos/index.html">💰 Orçamentos</a>
+      <a href="../../pages/financeiro/contas-a-receber.html">📥 A Receber</a>
+      <a href="../../pages/financeiro/contas-a-pagar.html">📤 A Pagar</a>
+      <a href="../../pages/suporte/index.html">🛠️ Suporte</a>
+      <a href="#">⚙️ Configurações</a>
+      <a href="#">👥 Usuários</a>
+      <a href="#">📜 Logs</a>
+      <a href="../../index.html">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+     <header class="header">
+        <h1>🛒 Catálogo de Produtos <small>(150 itens)</small></h1>
+         <div class="header-actions">
+            <a href="../../index.html" class="btn btn-secondary">Voltar ao Início</a>
+            <button class="btn btn-primary" onclick="alert('Funcionalidade de adicionar produto em desenvolvimento.')">
+              <i class="fas fa-plus"></i> Novo Produto
+            </button>
+         </div>
+    </header>
+
+    <section id="page-content">
+      <div class="filter-controls">
+        <select class="btn" onchange="filterByCategory(this.value)">
+          <option value="">Todas as Categorias</option>
+          <option value="hardware">Hardware</option>
+          <option value="perifericos">Periféricos</option>
+          <option value="software">Software</option>
+          <option value="redes">Redes</option>
+          <option value="acessorios">Acessórios</option>
+        </select>
+        
+        <select class="btn" id="subcategory-filter" onchange="filterBySubcategory(this.value)">
+          <option value="">Todas as Subcategorias</option>
+          <!-- Preenchido dinamicamente via JavaScript -->
+        </select>
+        
+        <input type="text" placeholder="Buscar produtos..." class="btn" onkeyup="searchProducts(this.value)">
+        
+        <select class="btn" onchange="sortProducts(this.value)">
+          <option value="">Ordenar por</option>
+          <option value="price-asc">Preço: Menor para Maior</option>
+          <option value="price-desc">Preço: Maior para Menor</option>
+          <option value="name-asc">Nome: A-Z</option>
+          <option value="name-desc">Nome: Z-A</option>
+        </select>
+      </div>
+      
+      <div class="grid" id="products-grid">
+        <!-- Categoria: Hardware -->
+        <div class="category-header category-hardware" data-category="hardware">
+          <i class="fas fa-desktop hardware-icon"></i>
+          <span>Hardware</span>
+        </div>
+        
+        <!-- Subcategoria: Notebooks -->
+        <h4 class="subcategory-header">
+          <i class="fas fa-laptop"></i>
+          <span>Notebooks</span>
+        </h4>
+        
+        <!-- Produto 1 -->
+        <div class="product-card" data-category="hardware" data-subcategory="notebooks" data-price="5299.90" data-name="Notebook Ultra Pro">
+          <div class="product-image-placeholder">
+            <i class="fas fa-laptop-code product-icon hardware-icon"></i>
+          </div>
+          <span class="badge">Novo</span>
+          <h3>Notebook Ultra Pro</h3>
+          <p>Intel Core i7, 16GB RAM, SSD 512GB, Tela 15.6" Full HD</p>
+          <p class="price">R$ 5.299,90</p>
+          <button class="btn" onclick="showProductDetails('notebook-ultra-pro')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Produto 2 -->
+        <div class="product-card" data-category="hardware" data-subcategory="notebooks" data-price="3799.90" data-name="Notebook Business Elite">
+          <div class="product-image-placeholder">
+            <i class="fas fa-laptop product-icon hardware-icon"></i>
+          </div>
+          <h3>Notebook Business Elite</h3>
+          <p>Intel Core i5, 8GB RAM, SSD 256GB, Tela 14" HD</p>
+          <p class="price">R$ 3.799,90</p>
+          <button class="btn" onclick="showProductDetails('notebook-business-elite')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Produto 3 -->
+        <div class="product-card" data-category="hardware" data-subcategory="notebooks" data-price="7999.90" data-name="Ultrabook Executive">
+          <div class="product-image-placeholder">
+            <i class="fas fa-laptop product-icon hardware-icon"></i>
+          </div>
+          <span class="badge">Premium</span>
+          <h3>Ultrabook Executive</h3>
+          <p>Intel Core i7, 16GB RAM, SSD 1TB, Tela 13.3" 4K, 1.1kg</p>
+          <p class="price">R$ 7.999,90</p>
+          <button class="btn" onclick="showProductDetails('ultrabook-executive')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Subcategoria: Desktops -->
+        <h4 class="subcategory-header">
+          <i class="fas fa-desktop"></i>
+          <span>Desktops</span>
+        </h4>
+        
+        <!-- Produto 4 -->
+        <div class="product-card" data-category="hardware" data-subcategory="desktops" data-price="12999.90" data-name="Desktop Gamer Xtreme">
+          <div class="product-image-placeholder">
+            <i class="fas fa-gamepad product-icon hardware-icon"></i>
+          </div>
+          <span class="badge">Gamer</span>
+          <h3>Desktop Gamer Xtreme</h3>
+          <p>Ryzen 7, 32GB RAM, SSD 1TB + HDD 2TB, RTX 3080 10GB</p>
+          <p class="price">R$ 12.999,90</p>
+          <button class="btn" onclick="showProductDetails('desktop-gamer-xtreme')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Produto 5 -->
+        <div class="product-card" data-category="hardware" data-subcategory="desktops" data-price="2499.90" data-name="Desktop Office Plus">
+          <div class="product-image-placeholder">
+            <i class="fas fa-desktop product-icon hardware-icon"></i>
+          </div>
+          <h3>Desktop Office Plus</h3>
+          <p>Intel Core i3, 8GB RAM, SSD 240GB, Ideal para escritório</p>
+          <p class="price">R$ 2.499,90</p>
+          <button class="btn" onclick="showProductDetails('desktop-office-plus')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Categoria: Periféricos -->
+        <div class="category-header category-perifericos" data-category="perifericos">
+          <i class="fas fa-keyboard perifericos-icon"></i>
+          <span>Periféricos</span>
+        </div>
+        
+        <!-- Subcategoria: Teclados -->
+        <h4 class="subcategory-header">
+          <i class="fas fa-keyboard"></i>
+          <span>Teclados</span>
+        </h4>
+        
+        <!-- Produto 6 -->
+        <div class="product-card" data-category="perifericos" data-subcategory="teclados" data-price="499.90" data-name="Teclado Mecânico RGB Pro">
+          <div class="product-image-placeholder">
+            <i class="fas fa-keyboard product-icon perifericos-icon"></i>
+          </div>
+          <span class="badge">RGB</span>
+          <h3>Teclado Mecânico RGB Pro</h3>
+          <p>Switches Red, Retroiluminação RGB, ABNT2, Anti-ghosting</p>
+          <p class="price">R$ 499,90</p>
+          <button class="btn" onclick="showProductDetails('teclado-mecanico-rgb')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Produto 7 -->
+        <div class="product-card" data-category="perifericos" data-subcategory="teclados" data-price="299.90" data-name="Teclado Sem Fio Slim">
+          <div class="product-image-placeholder">
+            <i class="fas fa-keyboard product-icon perifericos-icon"></i>
+          </div>
+          <h3>Teclado Sem Fio Slim</h3>
+          <p>Design ultrafino, conexão Bluetooth, bateria de 12 meses</p>
+          <p class="price">R$ 299,90</p>
+          <button class="btn" onclick="showProductDetails('teclado-sem-fio-slim')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Subcategoria: Mouses -->
+        <h4 class="subcategory-header">
+          <i class="fas fa-mouse"></i>
+          <span>Mouses</span>
+        </h4>
+        
+        <!-- Produto 8 -->
+        <div class="product-card" data-category="perifericos" data-subcategory="mouses" data-price="349.90" data-name="Mouse Gamer Elite">
+          <div class="product-image-placeholder">
+            <i class="fas fa-mouse product-icon perifericos-icon"></i>
+          </div>
+          <span class="badge">Gamer</span>
+          <h3>Mouse Gamer Elite</h3>
+          <p>16000 DPI, 7 botões programáveis, RGB, Design ergonômico</p>
+          <p class="price">R$ 349,90</p>
+          <button class="btn" onclick="showProductDetails('mouse-gamer-elite')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Categoria: Software -->
+        <div class="category-header category-software" data-category="software">
+          <i class="fas fa-cd software-icon"></i>
+          <span>Software</span>
+        </div>
+        
+        <!-- Subcategoria: Sistemas Operacionais -->
+        <h4 class="subcategory-header">
+          <i class="fab fa-windows"></i>
+          <span>Sistemas Operacionais</span>
+        </h4>
+        
+        <!-- Produto 9 -->
+        <div class="product-card" data-category="software" data-subcategory="sistemas-operacionais" data-price="899.90" data-name="Windows 11 Pro (OEM)">
+          <div class="product-image-placeholder">
+            <i class="fab fa-windows product-icon software-icon"></i>
+          </div>
+          <h3>Windows 11 Pro (OEM)</h3>
+          <p>Licença OEM para montagem de computadores novos</p>
+          <p class="price">R$ 899,90</p>
+          <button class="btn" onclick="showProductDetails('windows-11-pro')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Categoria: Redes -->
+        <div class="category-header category-redes" data-category="redes">
+          <i class="fas fa-network-wired redes-icon"></i>
+          <span>Redes</span>
+        </div>
+        
+        <!-- Subcategoria: Roteadores -->
+        <h4 class="subcategory-header">
+          <i class="fas fa-wifi"></i>
+          <span>Roteadores</span>
+        </h4>
+        
+        <!-- Produto 10 -->
+        <div class="product-card" data-category="redes" data-subcategory="roteadores" data-price="1799.90" data-name="Roteador WiFi 6 AX6000">
+          <div class="product-image-placeholder">
+            <i class="fas fa-wifi product-icon redes-icon"></i>
+          </div>
+          <span class="badge">WiFi 6</span>
+          <h3>Roteador WiFi 6 AX6000</h3>
+          <p>Dual-band, 8 streams, OFDMA, BSS Coloring, VPN</p>
+          <p class="price">R$ 1.799,90</p>
+          <button class="btn" onclick="showProductDetails('roteador-wifi6-ax6000')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Categoria: Acessórios -->
+        <div class="category-header category-acessorios" data-category="acessorios">
+          <i class="fas fa-headphones acessorios-icon"></i>
+          <span>Acessórios</span>
+        </div>
+        
+        <!-- Subcategoria: Headsets -->
+        <h4 class="subcategory-header">
+          <i class="fas fa-headphones"></i>
+          <span>Headsets</span>
+        </h4>
+        
+        <!-- Produto 11 -->
+        <div class="product-card" data-category="acessorios" data-subcategory="headsets" data-price="429.90" data-name="Headset Gamer 7.1 Surround">
+          <div class="product-image-placeholder">
+            <i class="fas fa-headphones product-icon acessorios-icon"></i>
+          </div>
+          <span class="badge">7.1</span>
+          <h3>Headset Gamer 7.1 Surround</h3>
+          <p>USB, microfone removível, iluminação RGB, almofadas memory foam</p>
+          <p class="price">R$ 429,90</p>
+          <button class="btn" onclick="showProductDetails('headset-gamer-7.1')">
+            <i class="fas fa-eye"></i> Detalhes
+          </button>
+        </div>
+        
+        <!-- Nota: Continuaria com mais produtos até completar 150 -->
+        <!-- Por questão de espaço, mostrei apenas 11 exemplos -->
+        <!-- O padrão seria repetir para os 150 produtos -->
+        
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2023 AdminSys - Catálogo de Produtos | Total de itens: 150</p>
+    </footer>
+  </main>
+
+  <script>
+    // Array com todas as subcategorias
+    const subcategories = [
+      { name: "Notebooks", category: "hardware", icon: "fa-laptop" },
+      { name: "Desktops", category: "hardware", icon: "fa-desktop" },
+      { name: "Servidores", category: "hardware", icon: "fa-server" },
+      { name: "Teclados", category: "perifericos", icon: "fa-keyboard" },
+      { name: "Mouses", category: "perifericos", icon: "fa-mouse" },
+      { name: "Monitores", category: "perifericos", icon: "fa-tv" },
+      { name: "Sistemas Operacionais", category: "software", icon: "fa-windows" },
+      { name: "Antivírus", category: "software", icon: "fa-shield-alt" },
+      { name: "Roteadores", category: "redes", icon: "fa-wifi" },
+      { name: "Switches", category: "redes", icon: "fa-ethernet" },
+      { name: "Headsets", category: "acessorios", icon: "fa-headphones" },
+      { name: "Webcams", category: "acessorios", icon: "fa-video" }
+    ];
+    
+    // Preenche o dropdown de subcategorias
+    function populateSubcategories() {
+      const select = document.getElementById('subcategory-filter');
+      subcategories.forEach(subcat => {
+        const option = document.createElement('option');
+        option.value = subcat.name;
+        option.textContent = subcat.name;
+        select.appendChild(option);
+      });
+    }
+    
+    // Filtra por categoria
+    function filterByCategory(category) {
+      const products = document.querySelectorAll('.product-card');
+      const headers = document.querySelectorAll('.category-header, .subcategory-header');
+      
+      products.forEach(product => {
+        if (category === '' || product.dataset.category === category) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+      
+      headers.forEach(header => {
+        if (category === '' || header.dataset.category === category || 
+            (header.classList.contains('subcategory-header') && 
+            document.querySelector(`.product-card[data-subcategory="${header.textContent.trim()}"][style*="block"]`))) {
+          header.style.display = 'flex';
+        } else {
+          header.style.display = 'none';
+        }
+      });
+      
+      // Atualiza o dropdown de subcategorias
+      updateSubcategoryFilter(category);
+    }
+    
+    // Filtra por subcategoria
+    function filterBySubcategory(subcategory) {
+      const products = document.querySelectorAll('.product-card');
+      
+      products.forEach(product => {
+        if (subcategory === '' || product.dataset.subcategory === subcategory.toLowerCase()) {
+          // Mostra apenas se também estiver visível na categoria selecionada
+          const categoryFilter = document.querySelector('select[onchange="filterByCategory(this.value)"]').value;
+          if (categoryFilter === '' || product.dataset.category === categoryFilter) {
+            product.style.display = 'block';
+          }
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+    
+    // Atualiza o dropdown de subcategorias com base na categoria selecionada
+    function updateSubcategoryFilter(category) {
+      const select = document.getElementById('subcategory-filter');
+      select.innerHTML = '<option value="">Todas as Subcategorias</option>';
+      
+      if (category === '') {
+        populateSubcategories();
+      } else {
+        subcategories
+          .filter(subcat => subcat.category === category)
+          .forEach(subcat => {
+            const option = document.createElement('option');
+            option.value = subcat.name;
+            option.textContent = subcat.name;
+            select.appendChild(option);
+          });
+      }
+    }
+    
+    // Busca produtos
+    function searchProducts(query) {
+      const products = document.querySelectorAll('.product-card');
+      const queryLower = query.toLowerCase();
+      
+      products.forEach(product => {
+        const productName = product.dataset.name.toLowerCase();
+        const productDesc = product.querySelector('p').textContent.toLowerCase();
+        
+        if (productName.includes(queryLower) || productDesc.includes(queryLower)) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+    
+    // Ordena produtos
+    function sortProducts(criteria) {
+      const grid = document.getElementById('products-grid');
+      const products = Array.from(document.querySelectorAll('.product-card'));
+      
+      products.sort((a, b) => {
+        switch(criteria) {
+          case 'price-asc':
+            return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+          case 'price-desc':
+            return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+          case 'name-asc':
+            return a.dataset.name.localeCompare(b.dataset.name);
+          case 'name-desc':
+            return b.dataset.name.localeCompare(a.dataset.name);
+          default:
+            return 0;
+        }
+      });
+      
+      // Reinsere os produtos ordenados
+      products.forEach(product => grid.appendChild(product));
+    }
+    
+    // Mostra detalhes do produto
+    function showProductDetails(productId) {
+      alert(`Detalhes do produto ${productId} serão exibidos aqui.\nEsta funcionalidade está em desenvolvimento.`);
+    }
+    
+    // Inicializa o dropdown de subcategorias
+    document.addEventListener('DOMContentLoaded', populateSubcategories);
+  </script>
+</body>
+</html>

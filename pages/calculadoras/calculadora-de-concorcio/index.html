@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Consórcio</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
+      padding: 20px;
+    }
+    .calculator-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    .tab {
+      padding: 10px 15px;
+      cursor: pointer;
+      background-color: #eee;
+      margin-right: 5px;
+      border-radius: 5px 5px 0 0;
+    }
+    .tab.active {
+      background-color: #4CAF50;
+      color: white;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator-container">
+    <h1>🏢 Calculadora de Consórcio</h1>
+    
+    <div class="form-group">
+      <label for="consortium-value">Valor do Bem (R$):</label>
+      <input type="number" id="consortium-value" value="50000">
+    </div>
+    
+    <div class="form-group">
+      <label for="consortium-term">Prazo (meses):</label>
+      <select id="consortium-term">
+        <option value="24">24 meses</option>
+        <option value="36">36 meses</option>
+        <option value="48" selected>48 meses</option>
+        <option value="60">60 meses</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="administration-fee">Taxa de Administração (%):</label>
+      <input type="number" id="administration-fee" value="15" step="0.1">
+    </div>
+    
+    <div class="tabs">
+      <div class="tab active" data-tab="simulation">Simulação</div>
+      <div class="tab" data-tab="comparison">Comparação</div>
+    </div>
+    
+    <div class="tab-content active" id="simulation-tab">
+      <div class="form-group">
+        <label for="bid-percentage">Lance (% do valor do bem):</label>
+        <input type="number" id="bid-percentage" value="20" step="1">
+      </div>
+      
+      <button onclick="calculateConsortium()">Calcular Consórcio</button>
+      
+      <div class="result">
+        <h3>Resultado da Simulação</h3>
+        <p>Valor da Carta: <span id="letter-value">R$ 0,00</span></p>
+        <p>Valor do Lance: <span id="bid-value">R$ 0,00</span></p>
+        <p>Parcela Mensal: <span id="consortium-monthly">R$ 0,00</span></p>
+        <p>Total Pago: <span id="consortium-total">R$ 0,00</span></p>
+        <p>Custo Efetivo Total (CET): <span id="cet">0%</span></p>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="comparison-tab">
+      <div class="form-group">
+        <label for="financing-rate">Taxa de Financiamento (% ao ano):</label>
+        <input type="number" id="financing-rate" value="12" step="0.1">
+      </div>
+      
+      <button onclick="compareOptions()">Comparar</button>
+      
+      <div class="result">
+        <h3>Comparação Consórcio vs Financiamento</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Consórcio</th>
+              <th>Financiamento</th>
+            </tr>
+          </thead>
+          <tbody id="comparison-results">
+            <!-- Os resultados serão inseridos aqui -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Ativar tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        this.classList.add('active');
+        document.getElementById(this.dataset.tab + '-tab').classList.add('active');
+      });
+    });
+    
+    function calculateConsortium() {
+      const consortiumValue = parseFloat(document.getElementById('consortium-value').value);
+      const term = parseInt(document.getElementById('consortium-term').value);
+      const adminFee = parseFloat(document.getElementById('administration-fee').value) / 100;
+      const bidPercentage = parseFloat(document.getElementById('bid-percentage').value) / 100;
+      
+      // Cálculo do valor da carta (bem + taxa de administração)
+      const letterValue = consortiumValue * (1 + adminFee);
+      
+      // Cálculo do lance
+      const bidValue = consortiumValue * bidPercentage;
+      
+      // Cálculo das parcelas (valor restante dividido pelo prazo)
+      const remainingValue = letterValue - bidValue;
+      const monthlyPayment = remainingValue / term;
+      
+      // Cálculo do CET aproximado (simplificado)
+      const cet = calculateCET(letterValue, bidValue, monthlyPayment, term);
+      
+      // Atualizar resultados
+      document.getElementById('letter-value').textContent = formatCurrency(letterValue);
+      document.getElementById('bid-value').textContent = formatCurrency(bidValue);
+      document.getElementById('consortium-monthly').textContent = formatCurrency(monthlyPayment);
+      document.getElementById('consortium-total').textContent = formatCurrency(bidValue + (monthlyPayment * term));
+      document.getElementById('cet').textContent = (cet * 100).toFixed(2) + '% ao ano';
+    }
+    
+    function compareOptions() {
+      const consortiumValue = parseFloat(document.getElementById('consortium-value').value);
+      const term = parseInt(document.getElementById('consortium-term').value);
+      const adminFee = parseFloat(document.getElementById('administration-fee').value) / 100;
+      const financingRate = parseFloat(document.getElementById('financing-rate').value) / 100;
+      
+      // Cálculos para o consórcio (sem lance)
+      const letterValue = consortiumValue * (1 + adminFee);
+      const consortiumMonthly = letterValue / term;
+      const consortiumTotal = consortiumMonthly * term;
+      
+      // Cálculos para o financiamento
+      const monthlyRate = Math.pow(1 + financingRate, 1/12) - 1;
+      const financingMonthly = (consortiumValue * monthlyRate * Math.pow(1 + monthlyRate, term)) / 
+                             (Math.pow(1 + monthlyRate, term) - 1);
+      const financingTotal = financingMonthly * term;
+      const financingInterest = financingTotal - consortiumValue;
+      
+      // Atualizar tabela de comparação
+      const tableBody = document.getElementById('comparison-results');
+      tableBody.innerHTML = `
+        <tr>
+          <td>Parcela Mensal</td>
+          <td>${formatCurrency(consortiumMonthly)}</td>
+          <td>${formatCurrency(financingMonthly)}</td>
+        </tr>
+        <tr>
+          <td>Total Pago</td>
+          <td>${formatCurrency(consortiumTotal)}</td>
+          <td>${formatCurrency(financingTotal)}</td>
+        </tr>
+        <tr>
+          <td>Juros/Encargos</td>
+          <td>${formatCurrency(letterValue - consortiumValue)}</td>
+          <td>${formatCurrency(financingInterest)}</td>
+        </tr>
+        <tr>
+          <td>Custo Efetivo Total (CET)</td>
+          <td>${(calculateCET(letterValue, 0, consortiumMonthly, term) * 100).toFixed(2)}%</td>
+          <td>${(financingRate * 100).toFixed(2)}%</td>
+        </tr>
+      `;
+    }
+    
+    // Função simplificada para cálculo do CET (apenas para demonstração)
+    function calculateCET(totalValue, initialPayment, monthlyPayment, term) {
+      // Esta é uma aproximação simplificada - o cálculo real do CET é mais complexo
+      const totalPaid = initialPayment + (monthlyPayment * term);
+      return Math.pow(totalPaid / totalValue, 1 / (term / 12)) - 1;
+    }
+    
+    function formatCurrency(value) {
+      return 'R$ ' + value.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
+    }
+    
+    // Calcular ao carregar a página
+    window.onload = calculateConsortium;
+  </script>
+</body>
+</html>

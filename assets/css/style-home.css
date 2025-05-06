@@ -1,0 +1,849 @@
+﻿/* ==== VARIABLES ==== */
+:root {
+  --bg-dark-primary: #121212;
+  --bg-dark-secondary: #1e1e1e;
+  --bg-dark-tertiary: #242424; /* Slightly different tertiary for contrast */
+  --bg-hover-dark: #2a2a2a;
+  --bg-hover-nav: #333333; /* Darker nav hover */
+
+  --text-light-primary: #e0e0e0; /* Slightly softer white */
+  --text-light-secondary: #aaaaaa; /* Softer secondary text */
+  --text-dark: #ffffff; /* Text on colored buttons */
+
+  --accent-primary: #00bcd4; /* Material Cyan */
+  --accent-secondary: #4caf50; /* Material Green */
+  --accent-whatsapp: #25D366;
+  --accent-error: #f44336; /* Material Red */
+  --accent-warning: #ff9800; /* Material Orange */
+  --accent-info: #03a9f4; /* Material Light Blue */
+
+  --border-color: #3a3a3a; /* Slightly more visible border */
+  --border-color-focus: var(--accent-primary);
+  --input-bg: #282828;
+
+  --logo-color: var(--accent-primary);
+
+  --shadow-color-soft: rgba(0, 0, 0, 0.15);
+  --shadow-color-medium: rgba(0, 0, 0, 0.3);
+  --shadow-glow-accent: rgba(0, 188, 212, 0.2); /* Cyan glow */
+
+  --sidebar-width: 240px;
+  --header-height: 70px;
+
+  --border-radius-small: 4px;
+  --border-radius-medium: 6px;
+  --border-radius-large: 8px;
+  --border-radius-xl: 10px;
+
+  --transition-speed-fast: 0.2s;
+  --transition-speed-normal: 0.3s;
+  --transition-timing: ease;
+  --transition-timing-bounce: ease-in-out;
+
+  /* Icon recommendation: Use SVG icons or an icon font library (like Font Awesome, Material Icons)
+     instead of emojis for better control, consistency, and performance in production apps. */
+}
+
+/* ==== RESET ==== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ==== BASE STYLES ==== */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-dark-primary);
+  color: var(--text-light-primary);
+  line-height: 1.6;
+  display: flex; /* Enables flex layout for sidebar + content */
+}
+
+/* Prevent body scroll when mobile sidebar is open */
+body.sidebar-open {
+    overflow: hidden;
+}
+
+
+a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-speed-fast) var(--transition-timing);
+}
+
+a:hover {
+  /* text-decoration: underline; */ /* Optional: remove underline globally */
+  color: var(--text-light-primary);
+}
+
+/* ==== LAYOUT ==== */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--bg-dark-secondary);
+  color: var(--text-light-primary);
+  padding: 1.5rem 1rem; /* Adjusted padding */
+  overflow-y: auto;
+  box-shadow: 3px 0 12px var(--shadow-color-medium); /* Slightly stronger shadow */
+  z-index: 1000;
+  transition: transform var(--transition-speed-normal) var(--transition-timing-bounce);
+}
+
+.content {
+  flex-grow: 1;
+  margin-left: var(--sidebar-width);
+  padding: 2rem;
+  transition: margin-left var(--transition-speed-normal) var(--transition-timing-bounce);
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* ==== COMPONENTS ==== */
+
+/* ---- Sidebar ---- */
+.sidebar .logo {
+  font-size: 1.4rem; /* Adjusted logo size */
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: var(--logo-color);
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.sidebar nav a {
+  display: flex; /* Align icon and text */
+  align-items: center;
+  gap: 0.8rem; /* Space between icon and text */
+  padding: 0.8rem 1rem; /* Adjusted padding */
+  color: var(--text-light-secondary);
+  margin-bottom: 0.5rem;
+  border-radius: var(--border-radius-medium);
+  font-weight: 500; /* Slightly bolder nav links */
+  transition: background var(--transition-speed-normal) var(--transition-timing),
+              color var(--transition-speed-normal) var(--transition-timing);
+}
+
+.sidebar nav a:hover,
+.sidebar nav a:focus {
+  background-color: var(--bg-hover-nav);
+  color: var(--text-light-primary);
+  text-decoration: none;
+  outline: none;
+}
+.sidebar nav a.active {
+    background-color: var(--accent-primary);
+    color: var(--bg-dark-secondary); /* High contrast */
+    font-weight: 700; /* Bold active link */
+}
+
+/* ---- Header ---- */
+.header {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens if needed */
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem; /* Space between title and actions */
+  margin-bottom: 2.5rem; /* Increased space below header */
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  font-weight: 700; /* Bolder header */
+  color: var(--text-light-primary); /* Use primary text color */
+  margin: 0;
+}
+
+.header-actions {
+  display: flex;
+  flex-wrap: wrap; /* Allow buttons to wrap */
+  gap: 1rem;
+}
+
+/* ---- Welcome Banner ---- */
+.welcome-banner {
+  margin-bottom: 2.5rem; /* Consistent spacing */
+  padding: 1rem 1.5rem; /* Adjusted padding */
+  background-color: var(--bg-dark-secondary); /* Use secondary bg */
+  border-radius: var(--border-radius-large);
+  border-left: 5px solid var(--accent-primary); /* Thicker accent border */
+}
+.welcome-banner h2 {
+  margin: 0 0 0.25rem 0; /* Space below heading */
+  font-size: 1.3em;
+  font-weight: 500;
+  color: var(--text-light-primary);
+}
+.welcome-banner p {
+  margin: 0;
+  color: var(--text-light-secondary);
+  font-size: 0.9em;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex; /* Use flex for icon alignment */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Space between text and potential icon */
+  padding: 0.7rem 1.3rem; /* Slightly more padding */
+  border: none;
+  border-radius: var(--border-radius-medium); /* Consistent radius */
+  font-weight: 700; /* Bold buttons */
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color var(--transition-speed-normal) var(--transition-timing),
+              box-shadow var(--transition-speed-fast) var(--transition-timing),
+              transform var(--transition-speed-fast) var(--transition-timing);
+  outline: none;
+  font-size: 0.9rem; /* Base button font size */
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px var(--shadow-color-soft);
+}
+.btn:focus {
+    box-shadow: 0 0 0 2px var(--bg-dark-primary), 0 0 0 4px var(--accent-primary);
+}
+.btn:active {
+    transform: translateY(0);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); /* Inner shadow on click */
+}
+
+/* Specific Button Colors */
+.btn-success {
+  background-color: var(--accent-secondary);
+  color: var(--text-dark);
+}
+.btn-success:hover {
+  background-color: #388e3c; /* Darker green */
+}
+.btn-whatsapp {
+  background-color: var(--accent-whatsapp);
+  color: var(--text-dark);
+}
+.btn-whatsapp:hover {
+  background-color: #1ebe5d;
+}
+/* Add other button variants (.btn-primary, .btn-danger etc. if needed) */
+
+/* ---- Section Title ---- */
+.section-title {
+  font-size: 1.3rem; /* Adjusted size */
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--text-light-primary);
+  padding-bottom: 0.5rem; /* Space for border */
+  border-bottom: 1px solid var(--border-color); /* Underline effect */
+  /* Optional: Accent border on left */
+  /* border-left: 4px solid var(--accent-primary); */
+  /* padding-left: 0.8rem; */
+}
+
+/* ---- Grid Layout ---- */
+.grid {
+  display: grid;
+  gap: 1.2rem; /* Consistent gap */
+  margin-bottom: 2.5rem; /* Space below grids */
+}
+
+/* Default grid (can be overridden by layout controls) */
+.main-grid {
+   /* Default set by JS, but good to have a fallback */
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+/* Procure e MODIFIQUE estas regras no seu CSS */
+
+/* ---- General Card (Used for Quick Access, Finance etc.) ---- */
+.card {
+  background-color: var(--bg-dark-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  transition: transform var(--transition-speed-fast) var(--transition-timing),
+              box-shadow var(--transition-speed-fast) var(--transition-timing),
+              background-color var(--transition-speed-fast) var(--transition-timing),
+              border-color var(--transition-speed-fast) var(--transition-timing); /* Adicionado border-color */
+  overflow: hidden;
+  /* ☆☆☆ Aumentar altura para acomodar ícone maior ☆☆☆ */
+  min-height: 160px; /* Altura mínima maior */
+  display: flex; /* Adicionado para o link preencher */
+}
+
+/* Style the link inside the card */
+.card a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Centraliza verticalmente */
+  text-align: center;
+  padding: 1.2rem 0.5rem; /* Ajustar padding se necessário */
+  width: 100%; /* Faz o link preencher o card */
+  height: 100%;
+  text-decoration: none;
+  color: var(--text-light-secondary);
+  transition: color var(--transition-speed-fast) var(--transition-timing);
+}
+
+/* Ícone dentro do card */
+.card .card-icon {
+   /* ☆☆☆ ÍCONE SIGNIFICATIVAMENTE MAIOR ☆☆☆ */
+  font-size: 4rem; /* Ajuste este valor conforme desejado */
+  display: block;
+  line-height: 1.1; /* Ajustar se necessário */
+  margin-bottom: 1rem; /* Espaço maior abaixo do ícone */
+  color: var(--text-light-primary);
+  transition: transform 0.2s ease-out, color 0.2s ease-out; /* Adicionado color */
+}
+/* ☆☆☆ Recomendaçao PROFISSIONAL: Use SVGs ou Fontes de Ícones (Font Awesome, Material Icons)
+     em vez de emojis para melhor controle, escalabilidade e aparência consistente.
+     Exemplo com SVG (requer o SVG no HTML):
+     .card .card-icon svg { width: 60px; height: 60px; fill: var(--text-light-primary); margin-bottom: 1rem; }
+☆☆☆ */
+
+
+/* Título dentro do card */
+.card .card-title {
+  font-size: 0.9rem; /* Tamanho do título pode precisar de ajuste */
+  font-weight: 500;
+  display: block;
+  line-height: 1.3;
+  color: var(--text-light-secondary);
+  transition: color 0.2s ease-out; /* Adicionado transition */
+}
+
+/* Hover do card */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px var(--shadow-color-medium);
+  background-color: var(--bg-dark-tertiary);
+  border-color: var(--accent-primary);
+}
+.card:hover a {
+    color: var(--text-light-primary); /* Não é mais necessário no link, mas ok */
+}
+.card:hover .card-icon {
+    transform: scale(1.08); /* Efeito sutil de escala */
+    color: var(--accent-primary); /* Muda cor do ícone no hover */
+}
+.card:hover .card-title {
+    color: var(--text-light-primary); /* Muda cor do título no hover */
+}
+
+/* Garante que os estilos de Grid Gerais existam (já devem estar lá) */
+.grid {
+  display: grid;
+  gap: 1.5rem; /* Aumenta o gap um pouco para cards maiores */
+  margin-bottom: 2.5rem;
+}
+.main-grid {
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Base para auto-fill */
+}
+.main-grid.grid-3 { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); } /* Ajustar minmax para menos colunas */
+.main-grid.grid-4 { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); } /* Ajustar minmax */
+.main-grid.grid-5 { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } /* Ajustar minmax para mais colunas */
+/* Você pode adicionar .grid-6 se quiser */
+.main-grid.grid-6 { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+
+/* Ajustes responsivos para os cards maiores */
+@media (max-width: 992px) {
+    .card { min-height: 150px; }
+    .card .card-icon { font-size: 3.5rem; }
+    .card .card-title { font-size: 0.85rem; }
+    .main-grid.grid-5, .main-grid.grid-6 {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+     .main-grid.grid-4 {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+     .card { min-height: 140px; }
+     .card .card-icon { font-size: 3.2rem; margin-bottom: 0.8rem;}
+     .card .card-title { font-size: 0.8rem; }
+     /* Força menos colunas em mobile para cards maiores */
+     .main-grid,
+     .main-grid.grid-5,
+     .main-grid.grid-4,
+     .main-grid.grid-3,
+     .main-grid.grid-6 {
+         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Ex: base de 140px */
+     }
+}
+@media (max-width: 480px) {
+    .card { min-height: 130px; }
+    .card .card-icon { font-size: 3rem; }
+    .card .card-title { font-size: 0.75rem; }
+     .main-grid,
+     .main-grid.grid-5,
+     .main-grid.grid-4,
+     .main-grid.grid-3,
+      .main-grid.grid-6 {
+         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Ex: base de 120px */
+          gap: 1rem;
+     }
+}
+
+/* Alert Variants */
+.alert-danger { border-left-color: var(--accent-error); color: var(--text-light-primary); }
+.alert-danger a { color: var(--accent-error); }
+.alert-danger a:hover { color: #e53935; } /* Darker red hover */
+
+.alert-warning { border-left-color: var(--accent-warning); color: var(--text-light-primary); }
+.alert-warning a { color: var(--accent-warning); }
+.alert-warning a:hover { color: #fb8c00; } /* Darker orange hover */
+
+.alert-info { border-left-color: var(--accent-info); color: var(--text-light-primary); }
+.alert-info a { color: var(--accent-info); }
+.alert-info a:hover { color: #0288d1; } /* Darker blue hover */
+
+
+/* ---- Layout Controls ---- */
+.layout-controls {
+  text-align: right; /* Keep alignment intention */
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem; /* Added top margin */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem; /* Space between label and buttons, and between buttons */
+}
+.layout-controls span {
+  font-size: 0.9em;
+  color: var(--text-light-secondary);
+  margin-right: 0.5rem; /* Space after label */
+}
+.btn-icon {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-light-secondary);
+  padding: 0.4rem; /* Adjust padding */
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  transition: background-color var(--transition-speed-fast), color var(--transition-speed-fast), border-color var(--transition-speed-fast);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; /* Prevent extra space */
+}
+.btn-icon svg {
+  display: block; /* Remove extra space below SVG */
+  width: 20px; /* Explicit size */
+  height: 20px;
+  fill: currentColor; /* Make SVG use text color */
+}
+.btn-icon:hover {
+  background-color: var(--bg-hover-nav);
+  color: var(--text-light-primary);
+  border-color: var(--text-light-secondary);
+}
+.btn-icon.active {
+  background-color: var(--accent-primary);
+  color: var(--bg-dark-secondary); /* High contrast */
+  border-color: var(--accent-primary);
+}
+.btn-icon:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--bg-dark-primary), 0 0 0 4px var(--accent-primary);
+}
+
+/* Grid Column Overrides (Applied by JS) */
+.main-grid.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.main-grid.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.main-grid.grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+/* List View Layout (Applied by JS) */
+.main-grid.layout-list {
+  grid-template-columns: 1fr; /* Stack cards vertically */
+  gap: 0.8rem; /* Reduce gap for list */
+}
+.main-grid.layout-list .card {
+  height: auto; /* Allow height to adjust to content */
+  text-align: left;
+}
+.main-grid.layout-list .card a {
+  flex-direction: row; /* Icon left, text right */
+  justify-content: flex-start; /* Align items left */
+  align-items: center;
+  padding: 0.8rem 1.2rem; /* Adjust padding for list items */
+  gap: 1rem; /* Space between icon and title */
+}
+.main-grid.layout-list .card .card-icon {
+  font-size: 1.8rem; /* Slightly smaller icon for list view */
+  margin-bottom: 0; /* No margin needed below icon */
+  transform: scale(1); /* Reset hover scale */
+  color: var(--accent-primary); /* Keep icon color consistent */
+}
+.main-grid.layout-list .card:hover .card-icon {
+     transform: none; /* Disable icon scaling in list view hover */
+}
+.main-grid.layout-list .card .card-title {
+  font-size: 1rem; /* Slightly larger title for list view */
+  color: var(--text-light-primary); /* Make title more prominent */
+}
+.main-grid.layout-list .card:hover {
+    /* Keep subtle hover, maybe just background/border */
+    transform: none; /* Disable Y transform */
+    box-shadow: 0 2px 5px var(--shadow-color-soft);
+}
+
+/* ---- Chart Placeholder ---- */
+.chart-placeholder {
+  text-align: center;
+  background-color: var(--bg-dark-secondary);
+  padding: 1rem;
+  border-radius: var(--border-radius-large);
+  border: 1px solid var(--border-color);
+  margin-bottom: 2.5rem; /* Consistent spacing */
+}
+.chart-placeholder img {
+  max-width: 100%; /* Responsive image */
+  height: auto;
+  border-radius: var(--border-radius-medium);
+  opacity: 0.8; /* Slightly transparent */
+}
+
+
+/* ==== RESPONSIVE ==== */
+
+/* Medium screens (Tablets) */
+@media (max-width: 992px) {
+    .main-grid.grid-5, .main-grid.grid-4 {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust auto-fill base */
+    }
+     .main-grid.grid-3 {
+        grid-template-columns: repeat(3, 1fr); /* Keep 3 columns if specified */
+    }
+    .kpi-grid {
+         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    .card { height: 120px; } /* Slightly smaller cards */
+    .card .card-icon { font-size: 2.5rem; }
+    .card .card-title { font-size: 0.8rem; }
+}
+
+
+/* Small screens (Mobile) */
+@media (max-width: 768px) {
+  body {
+      flex-direction: column;
+  }
+
+  .sidebar {
+    transform: translateX(calc(-1 * var(--sidebar-width)));
+    position: fixed;
+    height: 100vh;
+    /* Add transition for smooth appearance */
+    transition: transform var(--transition-speed-normal) var(--transition-timing-bounce);
+  }
+
+  .sidebar.show-sidebar {
+    transform: translateX(0);
+  }
+
+  .content {
+    margin-left: 0;
+    padding: 1.5rem 1rem;
+    height: auto; /* Let content define height */
+     min-height: calc(100vh - var(--header-height)); /* Ensure content area fills viewport */
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem; /* Adjust spacing */
+  }
+  .header h1 { font-size: 1.6rem; }
+  .header-actions {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .grid { gap: 1rem; } /* Reduce grid gap */
+
+  /* Adjust main grid for mobile */
+  .main-grid,
+  .main-grid.grid-5,
+  .main-grid.grid-4,
+  .main-grid.grid-3 {
+      grid-template-columns: repeat(2, 1fr); /* Force 2 columns on mobile */
+  }
+   .main-grid.layout-list {
+      grid-template-columns: 1fr; /* List view remains 1 column */
+  }
+
+  .card { height: 110px; } /* Even smaller cards */
+  .card .card-icon { font-size: 2.2rem; }
+  .card .card-title { font-size: 0.75rem; }
+
+   .main-grid.layout-list .card a { padding: 0.6rem 1rem; }
+   .main-grid.layout-list .card .card-icon { font-size: 1.6rem; }
+   .main-grid.layout-list .card .card-title { font-size: 0.9rem; }
+
+
+  .kpi-grid {
+     grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+     gap: 0.8rem;
+  }
+  .kpi-value { font-size: 1.1em; }
+  .kpi-label { font-size: 0.75em; }
+
+  .layout-controls {
+      flex-wrap: wrap; /* Allow controls to wrap */
+      justify-content: flex-start; /* Align left */
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+    .main-grid,
+    .main-grid.grid-5,
+    .main-grid.grid-4,
+    .main-grid.grid-3 {
+        grid-template-columns: 1fr; /* Stack cards vertically */
+        gap: 0.8rem;
+    }
+    .card { height: 100px; }
+    .card .card-icon { font-size: 2rem; }
+    .card .card-title { font-size: 0.7rem; }
+
+    .kpi-grid {
+        grid-template-columns: 1fr; /* Stack KPIs */
+    }
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    .header h1 { font-size: 1.4rem; }
+    .section-title { font-size: 1.1rem; }
+    .welcome-banner h2 { font-size: 1.2em; }
+
+    .layout-controls { gap: 0.3rem; } /* Reduce gap further */
+    .btn-icon { padding: 0.3rem; }
+}
+
+/* ==== Mobile Sidebar Toggle Button ==== */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1100; /* Above sidebar */
+    background: var(--bg-dark-secondary);
+    color: var(--text-light-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-small);
+    padding: 0.5rem 0.8rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+.sidebar-toggle:hover {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .sidebar-toggle {
+        display: block;
+    }
+}/* ============================================= */
+/* === ESTILOS ADICIONAIS PARA PÁGINAS DE CATEGORIA === */
+/* ============================================= */
+
+/* Reutilização ou definição de título de seção (se não existir) */
+.content .section-title { /* Torna o seletor mais específico para o conteúdo */
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 3rem; /* Espaço acima da seção de exemplos/produtos */
+  margin-bottom: 1.5rem;
+  color: var(--text-light-primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Estilos para lista de subcategorias com links */
+.subcategory-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  column-count: 2; /* Tenta exibir em 2 colunas */
+  column-gap: 2rem;
+}
+
+.subcategory-list li {
+  margin-bottom: 0.5rem;
+  padding: 0;
+  border-bottom: none; /* Remove a borda da LI */
+  break-inside: avoid-column; /* Evita quebrar itens entre colunas */
+}
+
+.subcategory-list li a {
+  display: block; /* Link ocupa toda a largura */
+  padding: 0.6rem 0.2rem;
+  color: var(--text-light-secondary);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--border-color); /* Borda no link */
+  transition: color 0.2s ease, border-color 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.subcategory-list li:last-child a {
+   border-bottom: none; /* Remove borda do último link */
+}
+
+.subcategory-list li a:hover {
+  color: var(--accent-primary);
+  border-bottom-color: var(--accent-primary);
+}
+
+.drive-icon { /* Ícone da pasta */
+  font-size: 0.9em;
+  margin-left: 0.5rem;
+  opacity: 0.7;
+  display: inline-block;
+}
+
+.subcategory-list li a:hover .drive-icon {
+  opacity: 1;
+}
+
+/* Grid de Produtos de Exemplo */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Ajuste o tamanho mínimo do card */
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+/* Card de Produto Individual */
+.product-card {
+  background-color: var(--bg-dark-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px var(--shadow-color-medium);
+  border-color: var(--accent-primary);
+}
+
+.product-image {
+  max-width: 100%;
+  height: 120px; /* Altura fixa para a imagem */
+  object-fit: cover; /* Ajusta a imagem */
+  border-radius: var(--border-radius-small);
+  margin-bottom: 0.8rem;
+  background-color: var(--bg-dark-tertiary); /* Cor de fundo para placeholder */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.product-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light-primary);
+  margin-bottom: 0.4rem;
+  flex-grow: 1; /* Faz o nome ocupar espaço e empurrar preço/botão */
+  line-height: 1.3;
+}
+
+.product-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent-secondary); /* Preço em cor de sucesso */
+  margin-bottom: 0.8rem;
+}
+
+.product-card .btn {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.85rem;
+  width: 100%;
+  margin-top: auto; /* Empurra o botão para baixo */
+}
+
+/* Links de Navegação no Cabeçalho da Página de Categoria */
+.page-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  gap: 1rem;
+}
+.page-header h1 {
+  color: var(--text-light-primary);
+  font-size: 1.8rem;
+  margin: 0;
+}
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+.nav-links a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.nav-links a:hover {
+  text-decoration: underline;
+  color: var(--text-light-primary);
+}
+
+/* Link Final para o Drive */
+.drive-link-section {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+.drive-link-section p {
+  margin-bottom: 1rem;
+  color: var(--text-light-secondary);
+  font-size: 0.9em;
+}
+.drive-link-section a {
+  font-weight: 700;
+}
+
+/* Responsividade para Colunas e Cards */
+@media (max-width: 768px) {
+  .subcategory-list { column-count: 2; } /* Mantém 2 colunas se possível */
+}
+
+@media (max-width: 600px) {
+  .subcategory-list { column-count: 1; } /* 1 coluna em telas pequenas */
+  .page-header { flex-direction: column; align-items: flex-start; }
+   .product-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Cards menores */
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* Cards ainda menores */
+  }
+  .product-image { height: 100px; }
+  .product-name { font-size: 0.8rem; }
+  .product-price { font-size: 0.9rem; }
+}
+
+/* ============================================= */
+/* === FIM DOS ESTILOS ADICIONAIS ============= */
+/* ============================================= */

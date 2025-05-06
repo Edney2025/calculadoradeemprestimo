@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculadora de Renegociação</title> <!-- Título Atualizado -->
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body class="theme-dark">
+  <div class="calculator-container">
+    <div class="calculator-header">
+      <h1>🤝 Calculadora de Renegociação</h1> <!-- Título Atualizado -->
+    </div>
+
+    <!-- Steps Atualizados (3 Passos) -->
+    <div class="calculator-steps">
+      <div class="progress-bar">
+        <div class="progress-step active" data-step="1">
+          <div class="step-icon">1</div>
+          <div class="step-label">Dados Atuais</div> <!-- Label Atualizado -->
+        </div>
+        <div class="progress-step" data-step="2">
+          <div class="step-icon">2</div>
+          <div class="step-label">Parcelamento</div> <!-- Label Atualizado -->
+        </div>
+        <div class="progress-step" data-step="3">
+          <div class="step-icon">3</div>
+          <div class="step-label">Resumo</div> <!-- Label Atualizado -->
+        </div>
+         <!-- Remover/Ocultar o 4º Passo se não for usado -->
+        <div class="progress-line"></div>
+        <div class="progress-indicator"></div>
+      </div>
+    </div>
+
+    <div class="calculator-body">
+      <!-- Etapa 1: Dados Atuais (Nome, CPF, Saldo Devedor, Novo Dia Pagamento) -->
+      <div id="etapa1" class="etapa ativa">
+        <h2>Dados da Renegociação</h2>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nome-completo">👤 Nome Completo:</label>
+            <input type="text" id="nome-completo" class="form-control" placeholder="Nome do cliente" required autocomplete="name" />
+            <div class="error-message" id="error-nome-completo">Nome é obrigatório.</div>
+          </div>
+          <div class="form-group">
+            <label for="cpf">🧾 CPF:</label>
+            <input type="text" id="cpf" class="form-control" required placeholder="000.000.000-00" autocomplete="off" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="Digite o CPF no formato 000.000.000-00"/>
+             <div class="error-message" id="error-cpf">CPF inválido ou obrigatório.</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <!-- Input para Saldo Devedor Atual -->
+            <label for="saldo-devedor">💰 Saldo Devedor Atual (R$):</label>
+            <div class="valor-input-container">
+               <!-- Input como text para formatação -->
+               <input type="text" id="saldo-devedor" class="form-control" placeholder="R$ 500,00" inputmode="decimal" required />
+            </div>
+             <div class="error-message" id="error-saldo-devedor">Valor inválido.</div>
+           </div>
+           <div class="form-group">
+              <!-- Novo Dia de Pagamento para a renegociação -->
+              <label for="novo-dia-pagamento">🗓️ Dia da 1º Parcela:</label>
+              <select id="novo-dia-pagamento" class="form-select" required>
+                  <option value="" disabled selected>Selecione o dia</option>
+                  <option value="5">Dia 05</option>
+                  <option value="10">Dia 10</option>
+                  <option value="15">Dia 15</option>
+                  <option value="20">Dia 20</option>
+                  <option value="25">Dia 25</option>
+                  <option value="30">Dia 30</option>
+              </select>
+               <div class="error-message" id="error-novo-dia-pagamento">Selecione um dia.</div>
+           </div>
+        </div>
+
+        <div class="navigation-buttons">
+          <!-- Botão ID Atualizado -->
+          <button id="btn-ir-para-parcelas" class="btn btn-primary">Avançar para Parcelamento</button>
+        </div>
+      </div>
+
+      <!-- Etapa 2: Parcelamento da Renegociação -->
+      <div id="etapa2" class="etapa">
+         <h2>Parcelamento da Renegociação</h2>
+        <div class="form-group">
+          <label>🧮 Pagar saldo devedor em quantas vezes?</label>
+           
+          <!-- Container ID Atualizado -->
+          <div class="parcelas-options" id="parcelas-reneg-options">
+             <!-- Opções serão geradas aqui -->
+             <div class="error-message" id="error-parcelas-reneg">Selecione uma opção.</div> <!-- ID da Mensagem Atualizado -->
+          </div>
+        </div>
+        <div class="navigation-buttons">
+           <!-- Botões ID Atualizados -->
+          <button id="btn-voltar-para-dados" class="btn btn-secondary">Voltar</button>
+          <button id="btn-ir-para-resumo-reneg" class="btn btn-primary">Avançar para Resumo</button> <!-- ID Atualizado -->
+        </div>
+      </div>
+
+      <!-- Etapa 3: Resumo da Renegociação -->
+      <div id="etapa3" class="etapa">
+         <h2>Resumo da Renegociação</h2>
+        <div class="resultado-parcelas">
+          <h3>📝 Resumo da Proposta</h3> <!-- Título Atualizado -->
+          <!-- Campos do Resumo Atualizados -->
+          <div class="resultado-item"><span>👤 Nome:</span><span id="resumo-reneg-nome">-</span></div>
+          <div class="resultado-item"><span>🧾 CPF:</span><span id="resumo-reneg-cpf">-</span></div>
+          <div class="resultado-item"><span>💰 Saldo Renegociado:</span><span id="resumo-reneg-saldo">-</span></div>
+          <div class="resultado-item"><span>💳 Novas Parcelas:</span><span id="resumo-reneg-qtd-parcelas">-</span></div>
+          <div class="resultado-item"><span>💸 Valor da Nova Parcela:</span><span id="resumo-reneg-valor-parcela">-</span></div>
+          <div class="resultado-item"><span>📅 1ª Nova Parcela:</span><span id="resumo-reneg-data-primeira">-</span></div>
+          <div class="resultado-item"><span>📆 Última Nova Parcela:</span><span id="resumo-reneg-data-ultima">-</span></div>
+           <div class="resultado-item confirmation-message">
+             <span></span>
+             <span>Confirme os detalhes da renegociação.</span>
+           </div>
+        </div>
+        <div class="navigation-buttons">
+          <!-- Botões ID Atualizados -->
+          <button id="btn-voltar-para-parcelas" class="btn btn-secondary">Voltar</button>
+          <button id="btn-finalizar-reneg" class="btn btn-success">✓ Confirmar e Enviar para WhatsApp</button> <!-- ID Atualizado -->
+        </div>
+      </div>
+       <!-- Etapa 4 original removida/oculta -->
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- ☆☆☆ MUDE O TÍTULO DA CALCULADORA AQUI ☆☆☆ -->
+  <title>AdminSys - Calculadora [Nome da Calculadora]</title>
+
+  <!-- === CSS === -->
+  <!-- 1. CSS Principal do Admin (Subindo DOIS níveis para a raiz) -->
+  <link rel="stylesheet" href="../../assets/css/style-home.css">
+  <!-- 2. CSS COMPARTILHADO das Calculadoras (Subindo UM nível) -->
+  <link rel="stylesheet" href="../style.css"> <!-- Contém .calculator-container, .etapa, etc. -->
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sidebar (Caminhos corrigidos para subir DOIS níveis) -->
+  <aside class="sidebar">
+    <div class="logo">🚀 AdminSys</div>
+    <nav>
+      <a href="../../dashboard-app.html">📊 Dashboard</a>
+      <a href="../../pages/clientes/index.html">👤 Clientes</a>
+      <a href="../../pages/catalogo/index.html">🛒 Catálogo</a>
+      <a href="../../pages/orcamentos/index.html">💰 Orçamentos</a>
+      <a href="../../pages/financeiro/contas-a-receber.html">📥 A Receber</a>
+      <a href="../../pages/financeiro/contas-a-pagar.html">📤 A Pagar</a>
+      <!-- Link ATIVO para Calculadoras (aponta para o índice) -->
+      <a href="../index.html" class="active">🧮 Calculadoras</a> <!-- Subindo UM nível -->
+      <a href="../../pages/suporte/index.html">🛠️ Suporte</a>
+      <a href="#">⚙️ Configurações</a>
+      <a href="#">👥 Usuários</a>
+      <a href="#">📜 Logs</a>
+      <a href="../../index.html">🚪 Sair</a> <!-- Link para a raiz -->
+    </nav>
+  </aside>
+
+  <!-- Conteúdo Principal (Usando a classe da sua home: .content) -->
+  <main class="content">
+
+    <!-- Header Padrão com Título da Calculadora e Botão Voltar -->
+    <header class="header">
+       <!-- ☆☆☆ MUDE O H1 PARA O NOME DA CALCULADORA ☆☆☆ -->
+       <h1>Calculadora [Nome da Calculadora]</h1>
+       <div class="header-actions">
+           <!-- ☆ BOTÃO VOLTAR PARA O ÍNDICE DE CALCULADORAS ☆ -->
+           <a href="../index.html" class="btn btn-secondary">
+               « Voltar para Calculadoras
+           </a>
+       </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- ☆☆☆ COLE O CONTEÚDO HTML ORIGINAL DA SUA CALCULADORA AQUI ☆☆☆ -->
+    <!-- Substitua esta seção pelo HTML da sua calculadora específica -->
+    <!-- Exemplo: <div class="calculator-container"> ... </div> -->
+
+    <div class="calculator-container placeholder-content"> <!-- Exemplo de placeholder -->
+        <h2>Conteúdo da Calculadora Aqui</h2>
+        <p>Cole o HTML original da sua calculadora (o container principal, steps, etapas, formulários, etc.) neste local.</p>
+        <!-- Exemplo de como o HTML da sua calculadora deve começar:
+        <div class="calculator-container">
+            <div class="calculator-header"> ... </div>
+            <div class="calculator-steps"> ... </div>
+            <div class="calculator-body"> ... </div>
+        </div>
+        -->
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ☆☆☆ FIM DO CONTEÚDO HTML DA CALCULADORA ☆☆☆ -->
+    <!-- ============================================================ -->
+
+  </main> <!-- Fim de .content -->
+
+  <!-- === JS === -->
+  <!-- 1. JS Principal do Admin (Subindo DOIS níveis) -->
+  <script src="../../assets/js/navigation.js"></script>
+  <!-- 2. JS COMPARTILHADO das Calculadoras (Subindo UM nível) -->
+  <script src="../script.js"></script> <!-- Contém funções de validação, cálculo, etc. -->
+  <!-- 3. JS específico desta calculadora (SE HOUVER, mas tente colocar tudo no script.js compartilhado) -->
+  <!-- <script src="script-especifico.js"></script> -->
+
+</body>
+</html>

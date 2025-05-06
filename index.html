@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Encomenda Palotina - Painel</title>
+  <!-- ☆☆☆ TIP: Consider using an icon font (like Font Awesome) or SVG icons for better scalability and consistency ☆☆☆ -->
+  <link rel="stylesheet" href="assets/css/style-home.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ☆☆☆ Mobile Toggle Button (Add this inside body, before sidebar) ☆☆☆ -->
+  <button class="sidebar-toggle" aria-label="Abrir menu">☰</button>
+
+  <aside class="sidebar">
+    <div class="logo">🐸 Encomenda Palotina</div>
+    <nav>
+       <!-- Sidebar Simplificada -->
+      <a href="pages/calculadoras/em-breve.html">⚙️ Configurações</a>
+      <a href="pages/calculadoras/em-breve.html">👤 Minha Conta</a>
+      <a href="pages/suporte/index.html">🛠️ Suporte</a>
+      <a href="index.html">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="header">
+       <h1>Painel de Controle</h1>
+        <div class="header-actions">
+            <a href="pages/orcamentos/novo.html" class="btn btn-success">
+                ➕ Novo Orçamento
+            </a>
+            <a href="https://wa.me/5544998408460?text=Quero%20iniciar%20um%20atendimento" target="_blank" class="btn btn-whatsapp">
+                💬 Contato WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <!-- ☆☆☆ Saudação e Data ☆☆☆ -->
+    <div class="welcome-banner">
+        <h2>👋 Olá, Edy!</h2>
+        <p id="current-date">Carregando data...</p>
+    </div>
+
+    <!-- ☆☆☆ Seção KPIs ☆☆☆ -->
+    <section class="kpi-section">
+        <!-- KPI Title can be optional if context is clear -->
+        <!-- <h2 class="section-title">Indicadores Chave</h2> -->
+        <div class="grid kpi-grid">
+            <div class="kpi-card">
+                <span class="kpi-icon">💰</span>
+                <span class="kpi-value">3</span>
+                <span class="kpi-label">Orçamentos Pendentes</span>
+                <a href="pages/orcamentos/index.html" class="kpi-link">Ver</a>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">📤</span>
+                <span class="kpi-value">R$ 150,00</span>
+                <span class="kpi-label">A Pagar (Hoje)</span>
+                <a href="pages/financeiro/contas-a-pagar.html" class="kpi-link">Ver</a>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">📥</span>
+                <span class="kpi-value">R$ 500,00</span>
+                <span class="kpi-label">A Receber (7 dias)</span>
+                 <a href="pages/financeiro/contas-a-receber.html" class="kpi-link">Ver</a>
+            </div>
+             <div class="kpi-card">
+                <span class="kpi-icon">💬</span>
+                <span class="kpi-value">2</span>
+                <span class="kpi-label">Novas Mensagens</span>
+                 <a href="pages/calculadoras/em-breve.html" class="kpi-link">Ver</a>
+            </div>
+        </div>
+    </section>
+
+     <!-- ☆☆☆ Seção de Alertas ☆☆☆ -->
+     <section class="alerts-section">
+         <h2 class="section-title">⚠️ Atenção</h2>
+         <div class="alert-list">
+             <div class="alert alert-danger">
+                <span>🚨 1 Conta a Pagar vence HOJE!</span>
+                <a href="pages/financeiro/contas-a-pagar.html">Ver</a>
+             </div>
+             <div class="alert alert-warning">
+                <span>⚠️ Estoque baixo: Produto XYZ (2 un.)</span>
+                <a href="pages/calculadoras/em-breve.html">Ver</a>
+             </div>
+             <!-- Example Info Alert -->
+             <!--
+             <div class="alert alert-info">
+                 <span>💬 Novo chamado de suporte não lido!</span>
+                 <a href="pages/suporte/index.html">Ver</a>
+             </div>
+              -->
+         </div>
+     </section>
+
+    <!-- ☆☆☆ Controles de Layout ☆☆☆ -->
+    <div class="layout-controls">
+        <span>Visualizar como:</span>
+        <button id="grid-3-btn" class="btn-icon" title="Grade (3 Colunas)">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
+        </button>
+        <button id="grid-4-btn" class="btn-icon active" title="Grade (4 Colunas)">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 13h8v-8h-8z"/></svg>
+        </button>
+        <button id="grid-5-btn" class="btn-icon" title="Grade (5 Colunas)">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M2 2h4v4H2zm6 0h4v4H8zm6 0h4v4h-4zM2 8h4v4H2zm6 8h4v-4H8zm-6 0h4v-4H2zm12-6h4v-4h-4zm0 6h4v-4h-4zm-6-6h4v4H8z"/></svg>
+             </button>
+         <button id="list-view-btn" class="btn-icon" title="Lista">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+         </button>
+    </div>
+
+    <!-- ☆☆☆ Seções de Cards (main-grid) ☆☆☆ -->
+    <section>
+        <h2 class="section-title">Acesso Rápido</h2>
+         <div class="grid main-grid grid-4"> <!-- Initial grid class matches default active button -->
+            <div class="card"><a href="pages/clientes/index.html"><span class="card-icon" title="Ver ou Cadastrar Clientes">👤</span><span class="card-title">Clientes</span></a></div>
+            <div class="card"><a href="pages/catalogo/index.html"><span class="card-icon" title="Ver Produtos e Serviços">🛒</span><span class="card-title">Catálogo</span></a></div>
+            <div class="card"><a href="pages/orcamentos/index.html"><span class="card-icon" title="Criar ou Ver Orçamentos">💰</span><span class="card-title">Orçamentos</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Registrar ou Ver Pagamentos">💳</span><span class="card-title">Pagamentos</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Ver ou Criar Agendamentos">📅</span><span class="card-title">Agendamentos</span></a></div>
+            <div class="card"><a href="pages/suporte/index.html"><span class="card-icon" title="Abrir Chamado ou Ver FAQ">🛠️</span><span class="card-title">Suporte</span></a></div>
+            <!-- Add more cards as needed -->
+         </div>
+      </section>
+
+    <section>
+      <h2 class="section-title">Financeiro</h2>
+       <div class="grid main-grid grid-4">
+            <div class="card"><a href="pages/financeiro/contas-a-pagar.html"><span class="card-icon" title="Gerenciar Contas a Pagar">📤</span><span class="card-title">Contas a Pagar</span></a></div>
+            <div class="card"><a href="pages/financeiro/contas-a-receber.html"><span class="card-icon" title="Gerenciar Contas a Receber">📥</span><span class="card-title">Contas a Receber</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Boletos Disponíveis / Emitir Boleto ou QR">🧾</span><span class="card-title">Boletos & QR</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Enviar Comprovante / Avisar Pagamento">✅</span><span class="card-title">Comprovantes</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Link para Pagamento / Parcelamento Ativo">💳</span><span class="card-title">Links de Pagamento</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Últimos Pagamentos">💵</span><span class="card-title">Histórico Pagamentos</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Relatório Financeiro">📈</span><span class="card-title">Resumo Financeiro</span></a></div>
+             <div class="card"><a href="pages/calculadoras/index.html"><span class="card-icon" title="Simuladores Financeiros">🧮</span><span class="card-title">Calculadoras</span></a></div>
+      </div>
+    </section>
+
+    <section>
+        <h2 class="section-title">Produtos & Serviços</h2>
+         <div class="grid main-grid grid-4">
+            <div class="card"><a href="pages/catalogo/index.html"><span class="card-icon" title="Meus Produtos, Serviços Disponíveis">🛒</span><span class="card-title">Catálogo</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Adicionar, Atualizar Preço, Ativar/Desativar">➕</span><span class="card-title">Gerenciar Itens</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Controle de Estoque, Reposição">📦</span><span class="card-title">Estoque</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Histórico de Vendas, Itens Mais Vendidos">📊</span><span class="card-title">Relatório Vendas</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Avaliações de Clientes">⭐</span><span class="card-title">Avaliações</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Ver Produto no Portal">🌐</span><span class="card-title">Ver no Portal</span></a></div>
+        </div>
+      </section>
+
+    <section>
+        <h2 class="section-title">Clientes & Fornecedores</h2>
+         <div class="grid main-grid grid-4">
+            <div class="card"><a href="pages/clientes/index.html"><span class="card-icon" title="Cadastro, Lista, Histórico">👤</span><span class="card-title">Clientes</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Clientes Ativos/Inativos, Em Dívida">🚦</span><span class="card-title">Status Clientes</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Notas, Fidelidade, Enviar Promoção">📝</span><span class="card-title">Ações Cliente</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Lista, Adicionar, Contatos">🚚</span><span class="card-title">Fornecedores</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Histórico Compras, Avaliação, Cotações">📋</span><span class="card-title">Compras Fornec.</span></a></div>
+            <div class="card"><a href="pages/calculadoras/em-breve.html"><span class="card-icon" title="Agendar Compra, Negociação">🤝</span><span class="card-title">Negociar Compra</span></a></div>
+        </div>
+      </section>
+
+     <!-- ☆☆☆ Seção Gráfico (Opcional - Imagem Placeholder) ☆☆☆ -->
+     <section>
+        <h2 class="section-title">Desempenho Visual (Exemplo)</h2>
+        <div class="chart-placeholder">
+            <img src="assets/images/grafico_exemplo.png" alt="Gráfico de Exemplo">
+             <!-- Lembre-se de criar a pasta 'assets/images' e colocar um gráfico de exemplo lá -->
+        </div>
+    </section>
+
+   </main>
+
+   <!-- ☆☆☆ SCRIPTS ☆☆☆ -->
+   <!-- Make sure navigation.js handles the sidebar toggle -->
+   <script src="assets/js/navigation.js"></script>
+   <script>
+    // Script para Data Dinâmica
+    try {
+        const dateElement = document.getElementById('current-date');
+        if(dateElement) {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            // Capitalize first letter of weekday and month
+            let dateString = today.toLocaleDateString('pt-BR', options);
+            dateString = dateString.charAt(0).toUpperCase() + dateString.slice(1).replace(/ de (\w)/, (match, p1) => ` de ${p1.toUpperCase()}`);
+            dateElement.textContent = dateString;
+        }
+      } catch (e) { console.error("Erro ao definir data:", e); }
+
+    // Script para Controles de Layout
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnGrid3 = document.getElementById('grid-3-btn');
+      const btnGrid4 = document.getElementById('grid-4-btn');
+      const btnGrid5 = document.getElementById('grid-5-btn');
+      const btnListView = document.getElementById('list-view-btn');
+      const allButtons = [btnGrid3, btnGrid4, btnGrid5, btnListView].filter(btn => btn); // Filter out nulls if any button doesn't exist
+      const targetGrids = document.querySelectorAll('.main-grid'); // Target only main content grids
+
+      function applyLayoutClass(layout) {
+        if (!targetGrids.length || !allButtons.length) {
+            console.warn("Layout controls or target grids not found.");
+            return;
+        }
+
+        // Remove existing layout classes from grids
+        targetGrids.forEach(grid => {
+          grid.classList.remove('grid-3', 'grid-4', 'grid-5', 'layout-list');
+        });
+
+        // Remove active class from all buttons
+        allButtons.forEach(btn => btn.classList.remove('active'));
+
+        // Determine class to add and which button is active
+        let classToAdd = 'grid-4'; // Default
+        let activeButton = btnGrid4;
+
+        if (layout === 'list' && btnListView) {
+             classToAdd = 'layout-list';
+             activeButton = btnListView;
+        } else if (layout === 'grid5' && btnGrid5) {
+             classToAdd = 'grid-5';
+             activeButton = btnGrid5;
+        } else if (layout === 'grid3' && btnGrid3) {
+             classToAdd = 'grid-3';
+             activeButton = btnGrid3;
+        } else if (btnGrid4) { // Fallback to grid-4 if specified layout button doesn't exist
+             classToAdd = 'grid-4';
+             activeButton = btnGrid4;
+        }
+
+        // Add the new class to grids
+        targetGrids.forEach(grid => { grid.classList.add(classToAdd); });
+
+        // Add active class to the correct button
+        if (activeButton) {
+            activeButton.classList.add('active');
+        }
+      }
+
+      // Add event listeners
+      if (btnGrid3) btnGrid3.addEventListener('click', () => applyLayoutClass('grid3'));
+      if (btnGrid4) btnGrid4.addEventListener('click', () => applyLayoutClass('grid4'));
+      if (btnGrid5) btnGrid5.addEventListener('click', () => applyLayoutClass('grid5'));
+      if (btnListView) btnListView.addEventListener('click', () => applyLayoutClass('list'));
+
+      // Apply initial layout (default is grid-4, matching the initially active button)
+       applyLayoutClass('grid4');
+
+       // --- Sidebar Toggle Logic ---
+       const sidebar = document.querySelector('.sidebar');
+       const toggleButton = document.querySelector('.sidebar-toggle');
+
+       if (sidebar && toggleButton) {
+           toggleButton.addEventListener('click', () => {
+               sidebar.classList.toggle('show-sidebar');
+               // Optional: Add class to body to prevent scrolling when sidebar is open
+               document.body.classList.toggle('sidebar-open');
+           });
+
+           // Optional: Close sidebar if clicking outside of it on mobile
+           document.addEventListener('click', (event) => {
+               if (window.innerWidth <= 768 && sidebar.classList.contains('show-sidebar')) {
+                   const isClickInsideSidebar = sidebar.contains(event.target);
+                   const isClickOnToggleButton = toggleButton.contains(event.target);
+                   if (!isClickInsideSidebar && !isClickOnToggleButton) {
+                       sidebar.classList.remove('show-sidebar');
+                       document.body.classList.remove('sidebar-open');
+                   }
+               }
+           });
+       } else {
+           console.warn("Sidebar or Toggle Button not found for mobile interaction.");
+       }
+
+    });
+  </script>
+ </body>
+ </html>

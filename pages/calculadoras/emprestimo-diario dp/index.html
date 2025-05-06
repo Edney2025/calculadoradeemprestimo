@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empréstimo Diário - Calculadora</title>
+  <style>
+    :root {
+      --primary-color: #4a6bff;
+      --secondary-color: #f8f9fa;
+      --text-color: #333;
+      --border-color: #ddd;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+      --danger-color: #dc3545;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #f5f7fa;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .nav-container {
+      background: #2c3e50;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .nav-button {
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    
+    .nav-button.back {
+      background: #3498db;
+    }
+    
+    .nav-button.home {
+      background: #2ecc71;
+    }
+    
+    .nav-button:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    .calculator-container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    
+    .calculator-header {
+      background: var(--primary-color);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .calculator-body {
+      padding: 20px;
+    }
+    
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -10px;
+    }
+    
+    .form-group {
+      flex: 1;
+      min-width: 200px;
+      padding: 0 10px;
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    
+    button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s;
+    }
+    
+    button:hover {
+      background: #3a5bff;
+    }
+    
+    .result-container {
+      margin-top: 30px;
+      padding: 20px;
+      background: var(--secondary-color);
+      border-radius: 5px;
+    }
+    
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--border-color);
+    }
+    
+    .result-item:last-child {
+      border-bottom: none;
+    }
+    
+    .result-label {
+      font-weight: bold;
+    }
+    
+    .result-value {
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+    
+    @media (max-width: 600px) {
+      .form-row {
+        flex-direction: column;
+      }
+      
+      .form-group {
+        min-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra de navegação -->
+  <div class="nav-container">
+    <h1 style="color: white; margin: 0;">Sistema Financeiro</h1>
+    <div class="nav-buttons">
+      <a href="javascript:history.back()" class="nav-button back">Voltar</a>
+      <a href="/" class="nav-button home">Home</a>
+    </div>
+  </div>
+
+  <!-- Calculadora -->
+  <div class="calculator-container">
+    <div class="calculator-header">
+      <h2>Empréstimo Diário</h2>
+      <p>Calcule o valor do empréstimo com juros diários</p>
+    </div>
+    
+    <div class="calculator-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="valor">Valor do Empréstimo (R$):</label>
+          <input type="number" id="valor" placeholder="1000.00" step="0.01">
+        </div>
+        
+        <div class="form-group">
+          <label for="dias">Número de Dias:</label>
+          <input type="number" id="dias" placeholder="30">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="taxa-diaria">Taxa de Juros Diária (%):</label>
+          <input type="number" id="taxa-diaria" placeholder="0.5" step="0.01">
+        </div>
+        
+        <div class="form-group">
+          <label for="taxa-administrativa">Taxa Administrativa (%):</label>
+          <input type="number" id="taxa-administrativa" placeholder="2" step="0.01">
+        </div>
+      </div>
+      
+      <button onclick="calcularEmprestimo()">Calcular</button>
+      
+      <div class="result-container" id="resultado" style="display: none;">
+        <h3>Resultado do Cálculo</h3>
+        
+        <div class="result-item">
+          <span class="result-label">Valor do Empréstimo:</span>
+          <span class="result-value" id="result-valor">R$ 0,00</span>
+        </div>
+        
+        <div class="result-item">
+          <span class="result-label">Juros Diários:</span>
+          <span class="result-value" id="result-juros">R$ 0,00</span>
+        </div>
+        
+        <div class="result-item">
+          <span class="result-label">Taxa Administrativa:</span>
+          <span class="result-value" id="result-taxa">R$ 0,00</span>
+        </div>
+        
+        <div class="result-item">
+          <span class="result-label">Total a Pagar:</span>
+          <span class="result-value" id="result-total">R$ 0,00</span>
+        </div>
+        
+        <div class="result-item">
+          <span class="result-label">Valor por Dia:</span>
+          <span class="result-value" id="result-diario">R$ 0,00</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calcularEmprestimo() {
+      // Obter valores dos inputs
+      const valor = parseFloat(document.getElementById('valor').value);
+      const dias = parseInt(document.getElementById('dias').value);
+      const taxaDiaria = parseFloat(document.getElementById('taxa-diaria').value) / 100;
+      const taxaAdm = parseFloat(document.getElementById('taxa-administrativa').value) / 100;
+      
+      // Validar entradas
+      if (isNaN(valor) || isNaN(dias) || isNaN(taxaDiaria) || isNaN(taxaAdm)) {
+        alert('Por favor, preencha todos os campos corretamente!');
+        return;
+      }
+      
+      // Calcular juros compostos diários
+      const juros = valor * Math.pow(1 + taxaDiaria, dias) - valor;
+      const taxaAdministrativa = valor * taxaAdm;
+      const total = valor + juros + taxaAdministrativa;
+      const valorDiario = total / dias;
+      
+      // Formatar valores para exibição
+      const formatarMoeda = (valor) => {
+        return 'R$ ' + valor.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, '$1.');
+      };
+      
+      // Exibir resultados
+      document.getElementById('result-valor').textContent = formatarMoeda(valor);
+      document.getElementById('result-juros').textContent = formatarMoeda(juros);
+      document.getElementById('result-taxa').textContent = formatarMoeda(taxaAdministrativa);
+      document.getElementById('result-total').textContent = formatarMoeda(total);
+      document.getElementById('result-diario').textContent = formatarMoeda(valorDiario);
+      
+      // Mostrar container de resultados
+      document.getElementById('resultado').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

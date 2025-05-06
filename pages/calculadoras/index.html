@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AdminSys - Calculadoras</title>
+
+  <!-- === CSS === -->
+  <link rel="stylesheet" href="../../assets/css/style-home.css">
+  <link rel="stylesheet" href="style.css"> <!-- CSS Comum das Calculadoras -->
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+  <!-- Sidebar (Mesma de antes) -->
+  <aside class="sidebar">
+    <div class="logo">🚀 AdminSys</div>
+    <nav>
+      <a href="../../dashboard-app.html">📊 Dashboard</a>
+      <a href="../../pages/clientes/index.html">👤 Clientes</a>
+      <a href="../../pages/catalogo/index.html">🛒 Catálogo</a>
+      <a href="../../pages/orcamentos/index.html">💰 Orçamentos</a>
+      <a href="../../pages/financeiro/contas-a-receber.html">📥 A Receber</a>
+      <a href="../../pages/financeiro/contas-a-pagar.html">📤 A Pagar</a>
+      <a href="index.html" class="active">🧮 Calculadoras</a>
+      <a href="../../pages/suporte/index.html">🛠️ Suporte</a>
+      <a href="#">⚙️ Configurações</a>
+      <a href="#">👥 Usuários</a>
+      <a href="#">📜 Logs</a>
+      <a href="../../index.html">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <!-- Conteúdo Principal -->
+  <main class="content">
+
+    <!-- Header Padrão -->
+    <header class="header">
+       <h1>Nossas Calculadoras</h1>
+       <div class="header-actions"></div>
+    </header>
+
+    <section>
+                <!-- Controles de Layout com ÍCONES -->
+                <div class="layout-controls icon-controls" style="text-align: center; margin-bottom: 30px;">
+                    <!-- Usando SVGs simples como exemplo. Você pode usar FontAwesome ou imagens -->
+                   <button id="grid-4-btn" class="btn-icon active" title="Visualização em Grade (4 Colunas)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm10 13h8v-8h-8z"/></svg>
+                   </button>
+                   <button id="grid-5-btn" class="btn-icon" title="Visualização em Grade (5 Colunas)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M2 2h4v4H2zm6 0h4v4H8zm6 0h4v4h-4zM2 8h4v4H2zm6 8h4v-4H8zm-6 0h4v-4H2zm12-6h4v-4h-4zm0 6h4v-4h-4zm-6-6h4v4H8z"/></svg>
+                        </button>
+                    <button id="list-view-btn" class="btn-icon" title="Visualização em Lista">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                    </button>
+               </div>
+
+        <!-- Grid das Calculadoras (ID mantido, classes serão trocadas pelo JS) -->
+        <div id="calculator-grid" class="grid grid-4"> <!-- Inicia com grid-4 -->
+
+            <!-- ================================================== -->
+            <!-- Sessão: Empréstimos e Renegociações (Principais)  -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">🏦 Empréstimos e Renegociações</h2>
+             <!-- === TODAS EM MANUTENÇÃO === -->
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⚡</span> <span class="title">Empréstimo Rápido (Diário)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🏦</span> <span class="title">Empréstimo Parcelado</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">💔</span> <span class="title">Renegociação (Vencidas)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⏳</span> <span class="title">Renegociação (A Vencer)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🔄</span> <span class="title">Renegociação Total</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">📉</span> <span class="title">Pagamento Antecipado</span> </a> </div>
+
+
+            <!-- ================================================== -->
+            <!-- Sessão: Produtos e Vendas                         -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">🛍️ Produtos e Vendas</h2>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">✨</span> <span class="title">Produto Novo (Com Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⭐</span> <span class="title">Produto Novo (Sem Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">📦</span> <span class="title">Produto Usado (Com Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🧸</span> <span class="title">Produto Usado (Sem Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">➕</span> <span class="title">Vários Produtos (Com Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🛒</span> <span class="title">Vários Produtos (Sem Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">💰</span> <span class="title">Cashback</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🎁</span> <span class="title">Venda Casada (Combo)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🏆</span> <span class="title">Venda com Bônus/Brinde</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🎯</span> <span class="title">Meta de Faturamento</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">📈</span> <span class="title">Aumento de Preço (%)</span> </a> </div>
+
+
+            <!-- ================================================== -->
+            <!-- Sessão: Gestão de Produtos (Loja/Estoque)         -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">📦 Gestão de Produtos</h2>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🔄</span> <span class="title">Reposição de Estoque</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">📊</span> <span class="title">Lucro por Lote</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🧩</span> <span class="title">Venda Unidade ou Kit</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">📏</span> <span class="title">Conversor Medidas (Produtos)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🤝</span> <span class="title">Produto com Permuta</span> </a> </div>
+
+
+            <!-- ================================================== -->
+            <!-- Sessão: Transportes                               -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">🚗 Transportes</h2>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🚙</span> <span class="title">Automóveis</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🚲</span> <span class="title">Bicicleta Elétrica (Com Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⚡🚲</span> <span class="title">Bicicleta Elétrica (Sem Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🛴</span> <span class="title">Patinete Elétrico (Com Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⚡🛴</span> <span class="title">Patinete Elétrico (Sem Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🛵</span> <span class="title">Scooter Elétrica (Com Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⚡🛵</span> <span class="title">Scooter Elétrica (Sem Entrada)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🛡️</span> <span class="title">Garantia Veículos Elétricos</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🚚</span> <span class="title">Taxa de Entrega / Frete</span> </a> </div>
+
+
+             <!-- ================================================== -->
+            <!-- Sessão: Tecnologia, Aluguel e TV Box              -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">📱 Tecnologia e Serviços Digitais</h2>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⏳</span> <span class="title">Custo x Uso (Dispositivo/Aluguel)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🔓</span> <span class="title">Desbloqueio + Serviço Extra</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🔼</span> <span class="title">Upgrade de Plano</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🔁</span> <span class="title">Renovação Automática</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🆚</span> <span class="title">Comparador de Planos</span> </a> </div>
+
+
+            <!-- ================================================== -->
+            <!-- Sessão: Orçamentos e Serviços Técnicos            -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">🛠️ Orçamentos e Serviços Técnicos</h2>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⏱️</span> <span class="title">Diária Técnica (Hora/Dia)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">⛽</span> <span class="title">Custo de Deslocamento</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">👷</span> <span class="title">Mão de Obra + Material</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">💳</span> <span class="title">Parcelamento de Serviço</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">📅</span> <span class="title">Atraso Pagamento (Reajuste Mensal)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🛋️</span> <span class="title">Montagem de Móveis</span> </a> </div>
+
+
+            <!-- ================================================== -->
+            <!-- Sessão: Garantia Estendida (Produtos Gerais)      -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">🛡️ Garantia Estendida (Produtos)</h2>
+             <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🇧🇷</span> <span class="title">Garantia (Nacionais)</span> </a> </div>
+             <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🌍</span> <span class="title">Garantia (Importados)</span> </a> </div>
+
+
+             <!-- ================================================== -->
+            <!-- Sessão: Calculadoras Administrativas/Trabalhistas -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">🧾 Calculadoras Administrativas</h2>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🔚</span> <span class="title">Simulador de Rescisão</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">📉</span> <span class="title">INSS e IRRF (Descontos)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">👴</span> <span class="title">Simulador Aposentadoria</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🚌</span> <span class="title">Vale Transporte e Alimentação</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">💵</span> <span class="title">Salário Líquido</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🏦</span> <span class="title">FGTS Acumulado</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">❗</span> <span class="title">Parcelas Atrasadas (Juros Gerais)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🧾</span> <span class="title">Boleto em Atraso (Juros/Multa)</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🚫</span> <span class="title">Desconto por Faltas</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🌙</span> <span class="title">Adicional Noturno / Periculosidade</span> </a> </div>
+
+
+            <!-- ================================================== -->
+            <!-- Sessão: Utilitários Gerais                        -->
+            <!-- ================================================== -->
+            <h2 class="section-title" style="grid-column: 1 / -1;">⚙️ Utilitários Gerais</h2>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">🪙</span> <span class="title">Contador de Dinheiro</span> </a> </div>
+            <div class="card calculator-item maintenance"> <a href="em-breve.html"> <span class="icon">💱</span> <span class="title">Conversor de Moedas</span> </a> </div>
+
+        </div> <!-- Fim de #calculator-grid -->
+    </section>
+
+  </main> <!-- Fim de .content -->
+
+  <!-- === JS === -->
+  <script src="../../assets/js/navigation.js"></script>
+  <!-- Script atualizado para controle Grid 4 / Grid 5 / Lista -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const gridContainer = document.getElementById('calculator-grid');
+      if (gridContainer) {
+        const btnGrid4 = document.getElementById('grid-4-btn');
+        const btnGrid5 = document.getElementById('grid-5-btn');
+        const btnListView = document.getElementById('list-view-btn'); // ☆ Seleciona o novo botão
+        const allButtons = [btnGrid4, btnGrid5, btnListView]; // ☆ Array com todos os botões
+
+        function applyLayoutClass(layout) {
+          if (!gridContainer || !allButtons.every(btn => btn)) return; // Verifica se todos existem
+
+          // Remove todas as classes de layout primeiro
+          gridContainer.classList.remove('grid-4', 'grid-5', 'layout-list');
+          // Remove a classe 'active' de todos os botões
+          allButtons.forEach(btn => btn.classList.remove('active'));
+
+          // Adiciona a classe de layout correta e ativa o botão correto
+          if (layout === 'list') {
+            gridContainer.classList.add('layout-list');
+            btnListView.classList.add('active');
+          } else if (layout === 'grid5') {
+            gridContainer.classList.add('grid-5');
+            btnGrid5.classList.add('active');
+          } else { // Default é grid4
+            gridContainer.classList.add('grid-4');
+            btnGrid4.classList.add('active');
+          }
+        }
+
+        // Adiciona os event listeners
+        if (btnGrid4) btnGrid4.addEventListener('click', () => applyLayoutClass('grid4'));
+        if (btnGrid5) btnGrid5.addEventListener('click', () => applyLayoutClass('grid5'));
+        if (btnListView) btnListView.addEventListener('click', () => applyLayoutClass('list')); // ☆ Listener para o botão Lista
+
+        applyLayoutClass('grid4'); // Aplica layout inicial
+      }
+    });
+  </script>
+
+</body>
+</html>

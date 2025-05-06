@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renegociação</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .btn {
+      padding: 8px 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <button class="btn" onclick="history.back()">Voltar</button>
+    <button class="btn" onclick="location.href='index.html'">Home</button>
+  </div>
+
+  <h2>Renegociação de Dívidas</h2>
+  
+  <div class="form-group">
+    <label>Valor devido (R$):</label>
+    <input type="number" id="valor" min="100" step="0.01">
+  </div>
+  
+  <div class="form-group">
+    <label>Dias em atraso:</label>
+    <input type="number" id="dias" min="1">
+  </div>
+  
+  <div class="form-group">
+    <label>Taxa diária (%):</label>
+    <input type="number" id="taxa" min="0.1" step="0.01" value="0.5">
+  </div>
+  
+  <div class="form-group">
+    <label>Novas parcelas:</label>
+    <select id="parcelas">
+      <option value="1">À vista</option>
+      <option value="3">3x</option>
+      <option value="6">6x</option>
+      <option value="12">12x</option>
+    </select>
+  </div>
+  
+  <button class="btn" onclick="calcular()">Calcular</button>
+  
+  <div class="result" id="resultado">
+    <h3>Resultado</h3>
+    <p>Valor atualizado: <span id="atualizado">R$ 0,00</span></p>
+    <p>Valor da parcela: <span id="parcela">R$ 0,00</span></p>
+  </div>
+
+  <script>
+    function calcular() {
+      const valor = parseFloat(document.getElementById('valor').value);
+      const dias = parseInt(document.getElementById('dias').value);
+      const taxa = parseFloat(document.getElementById('taxa').value) / 100;
+      const parcelas = parseInt(document.getElementById('parcelas').value);
+      
+      const atualizado = valor * Math.pow(1 + taxa, dias);
+      const parcela = atualizado / parcelas;
+      
+      document.getElementById('atualizado').textContent = 'R$ ' + atualizado.toFixed(2).replace('.', ',');
+      document.getElementById('parcela').textContent = 'R$ ' + parcela.toFixed(2).replace('.', ',');
+    }
+  </script>
+</body>
+</html>

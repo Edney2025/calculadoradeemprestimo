@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Em Construção</title>
+    <!-- Link to the main stylesheet for basic styling and variables -->
+    <link rel="stylesheet" href="../../assets/css/style-home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Specific styles for this page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background-color: var(--bg-dark-primary);
+            color: var(--text-light-primary);
+            font-family: 'Inter', sans-serif;
+            flex-direction: column; /* Stack elements vertically */
+            padding: 2rem;
+        }
+        .container {
+            background-color: var(--bg-dark-secondary);
+            padding: 3rem 2.5rem;
+            border-radius: var(--border-radius-large);
+            box-shadow: 0 5px 15px var(--shadow-color-medium);
+            max-width: 500px;
+            width: 100%;
+        }
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-warning); /* Use warning color */
+        }
+        h1 {
+            color: var(--text-light-primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        p {
+            color: var(--text-light-secondary);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        /* Use the existing .btn class and override color/border if needed */
+        .btn-back {
+            background-color: var(--accent-primary);
+            color: var(--bg-dark-primary);
+            border: none;
+            padding: 0.8rem 1.8rem; /* Larger button */
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none; /* Ensure link looks like a button */
+            display: inline-block; /* Needed for padding/margin */
+            border-radius: var(--border-radius-medium);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn-back:hover {
+            background-color: #0097a7; /* Darker cyan */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow-color-soft);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚧</div>
+        <h1>Página em Construção</h1>
+        <p>
+            Estamos trabalhando nesta funcionalidade e ela estará disponível em breve.
+            Agradecemos a sua paciência!
+        </p>
+        <!-- ☆☆☆ IMPORTANT: Link goes back to the main index.html ☆☆☆ -->
+        <a href="../../index.html" class="btn btn-back">
+            Voltar para a Página Inicial
+        </a>
+    </div>
+</body>
+</html>

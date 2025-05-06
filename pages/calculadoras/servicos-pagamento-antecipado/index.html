@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagamento Antecipado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .btn {
+      padding: 8px 16px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <button class="btn" onclick="history.back()">Voltar</button>
+    <button class="btn" onclick="location.href='index.html'">Home</button>
+  </div>
+
+  <h2>Pagamento Antecipado</h2>
+  
+  <div class="form-group">
+    <label>Valor original (R$):</label>
+    <input type="number" id="valor" min="100" step="0.01">
+  </div>
+  
+  <div class="form-group">
+    <label>Parcelas restantes:</label>
+    <input type="number" id="restantes" min="1">
+  </div>
+  
+  <div class="form-group">
+    <label>Desconto (%):</label>
+    <input type="number" id="desconto" min="0" max="100" step="0.1" value="5">
+  </div>
+  
+  <button class="btn" onclick="calcular()">Calcular</button>
+  
+  <div class="result" id="resultado">
+    <h3>Resultado</h3>
+    <p>Valor com desconto: <span id="descontado">R$ 0,00</span></p>
+    <p>Economia: <span id="economia">R$ 0,00</span></p>
+  </div>
+
+  <script>
+    function calcular() {
+      const valor = parseFloat(document.getElementById('valor').value);
+      const restantes = parseInt(document.getElementById('restantes').value);
+      const desconto = parseFloat(document.getElementById('desconto').value) / 100;
+      
+      const descontado = valor * (1 - desconto);
+      const economia = valor - descontado;
+      
+      document.getElementById('descontado').textContent = 'R$ ' + descontado.toFixed(2).replace('.', ',');
+      document.getElementById('economia').textContent = 'R$ ' + economia.toFixed(2).replace('.', ',');
+    }
+  </script>
+</body>
+</html>

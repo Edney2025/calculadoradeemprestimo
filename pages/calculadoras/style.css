@@ -1,0 +1,544 @@
+/* ================================================== */
+/* CSS Compartilhado para TODAS as Calculadoras       */
+/* (pages/calculadoras/style.css)                     */
+/* ================================================== */
+
+/* Este CSS complementa o ../../assets/css/style-home.css */
+/* NÃO REPITA estilos gerais de layout (body, sidebar, header, .content, .btn) aqui. */
+
+
+/* --- Estilos para o ÍNDICE de Calculadoras --- */
+
+/* Ajustes nos cards do índice, se necessário, além da classe .card */
+/* A classe .calculator-item é adicionada aos .card no índice */
+.calculator-item {
+    /* Herda estilos do .card */
+    /* Adiciona estilos específicos para os cards *do índice* */
+    min-height: 160px; /* Altura mínima para alinhar */
+}
+
+.calculator-item a { /* O link dentro do card */
+    /* Herda estilos do .card a */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    text-decoration: none; /* Garante que não haja sublinhado */
+    color: inherit; /* Usa a cor definida em .card a */
+}
+
+.calculator-item .icon {
+    font-size: 2.5em; /* Tamanho do ícone no índice */
+    margin-bottom: 12px;
+    line-height: 1;
+    display: block;
+}
+
+.calculator-item .title {
+    font-weight: bold;
+    font-size: 1em; /* Tamanho do título no índice */
+    line-height: 1.3;
+    text-align: center;
+}
+
+.calculator-item.maintenance {
+     opacity: 0.65; /* Itens não prontos ficam mais apagados */
+     transition: opacity 0.2s ease;
+}
+.calculator-item.maintenance:hover {
+    opacity: 1;
+}
+
+/* Layout do Grid no Índice (Classes .grid-4 e .grid-5) */
+/* Elas são adicionadas/removidas via JS no #calculator-grid */
+#calculator-grid.grid-4 {
+    /* O style-home.css já define .grid. Se precisar sobrescrever: */
+    /* grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); */
+}
+@media (min-width: 1100px) { #calculator-grid.grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+#calculator-grid.grid-5 {
+     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+@media (min-width: 1250px) { #calculator-grid.grid-5 { grid-template-columns: repeat(5, 1fr); } }
+
+/* Títulos das seções no índice (Herda .section-title) */
+#calculator-grid > h2.section-title {
+    /* O style="grid-column: 1 / -1;" no HTML já faz ocupar a linha toda */
+    /* Pode adicionar mais margem se quiser */
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+#calculator-grid > h2.section-title:first-of-type {
+    margin-top: 0; /* Remove margem extra do primeiro título */
+}
+
+
+/* --- Estilos para as PÁGINAS INDIVIDUAIS das Calculadoras --- */
+
+.calculator-container {
+  /* Container principal DENTRO da página da calculadora */
+  background-color: var(--bg-dark-tertiary);
+  padding: 25px 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin-top: 20px; /* Espaço abaixo do header da página */
+  margin-bottom: 30px;
+  /* max-width: 850px; /* Limita a largura se necessário */
+  /* margin-left: auto; */
+  /* margin-right: auto; */
+}
+
+/* Cabeçalho INTERNO da calculadora (opcional, se houver) */
+.calculator-header h1 {
+    font-size: 1.6em;
+    color: var(--accent-primary);
+    text-align: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+/* Barra de Progresso (Steps) */
+.calculator-steps {
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+}
+.progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    max-width: 700px; /* Ajuste a largura máxima da barra */
+    margin: 0 auto;
+}
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    width: 90px; /* Largura para cada passo */
+    cursor: default; /* Não clicável por padrão */
+}
+.step-icon {
+    width: 40px; /* Ícone um pouco maior */
+    height: 40px;
+    border-radius: 50%;
+    background-color: #4a4a4a; /* Cinza um pouco mais claro */
+    color: var(--text-light-secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    border: 3px solid #4a4a4a;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.step-label {
+    font-size: 0.9em;
+    color: var(--text-light-secondary);
+    max-width: 80px;
+    line-height: 1.3;
+     transition: color 0.3s ease, font-weight 0.3s ease;
+}
+.progress-step.active .step-icon {
+    background-color: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+    color: white;
+}
+.progress-step.active .step-label {
+    color: var(--text-light-primary);
+    font-weight: bold;
+}
+/* Linhas da barra de progresso */
+.progress-line, .progress-indicator {
+    position: absolute;
+    top: 20px; /* Metade da altura do ícone (40px / 2) */
+    /* Ajuste left/right baseado na % da largura dos steps */
+    left: calc(90px / 2); /* Metade da largura de um step */
+    right: calc(90px / 2);
+    height: 5px; /* Linha mais grossa */
+    z-index: 1;
+    border-radius: 3px;
+}
+.progress-line { background-color: #4a4a4a; }
+.progress-indicator { background-color: var(--accent-secondary); width: 0%; transition: width 0.4s ease-out; }
+
+/* Corpo e Etapas da Calculadora */
+.calculator-body {
+    /* padding-top: 20px; */
+}
+.etapa { display: none; animation: fadeIn 0.4s ease-in-out; }
+.etapa.ativa { display: block; }
+.etapa h2 { /* Título de cada etapa */
+    font-size: 1.3em;
+    color: var(--text-light-primary);
+    font-weight: 700;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Estilos para Formulários DENTRO das calculadoras */
+/* (Complementam os estilos de form do style-home.css) */
+.form-row {
+    display: flex;
+    flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+    gap: 25px; /* Espaçamento entre grupos */
+    margin-bottom: 20px;
+}
+.form-row .form-group {
+    flex: 1 1 250px; /* Flex-grow, flex-shrink, flex-basis (mínimo 250px) */
+    margin-bottom: 0; /* Remove margem duplicada */
+    min-width: 200px; /* Garante largura mínima */
+}
+/* Sobrescrever label se necessário */
+.calculator-container .form-group label {
+    font-size: 0.9em; /* Labels um pouco menores */
+    margin-bottom: 6px;
+    /* display: flex; */
+    /* align-items: center; */ /* Para alinhar com ícones se usar */
+}
+/* Inputs e Selects já estilizados pelo style-home.css */
+/* Adicionar estilos específicos se necessário */
+.calculator-container input[type="text"],
+.calculator-container input[type="number"],
+.calculator-container select {
+     /* padding: 10px 12px; /* Ajuste padding se necessário */
+}
+/* Input de Valor com R$ */
+.valor-input-container { position: relative; }
+.valor-input-container::before {
+    content: 'R$';
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light-secondary);
+    pointer-events: none;
+    font-size: 1em;
+}
+.valor-input-container input { /* Aplica a todos inputs dentro */
+    padding-left: 55px !important; /* Espaço para o R$ (importante para sobrescrever) */
+    text-align: right;
+}
+
+/* Mensagens de Erro */
+.error-message {
+    color: var(--accent-danger);
+    font-size: 0.8em; /* Pequena */
+    padding-top: 4px;
+    display: none; /* Oculto por padrão */
+    /* position: absolute; */ /* Removido para fluxo normal */
+    /* bottom: -18px; */
+    /* left: 0; */
+    width: 100%;
+}
+/* Inputs inválidos (style-home pode ter isso, mas garantimos aqui) */
+.calculator-container input.invalid,
+.calculator-container select.invalid,
+.parcelas-options.invalid, /* Para grupo de radios */
+.prazo-options.invalid {
+    border-color: var(--accent-danger) !important; /* Garante a borda vermelha */
+    /* box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.2); */ /* Sombra opcional */
+}
+/* Mostra a mensagem quando o campo adjacente OU o container tem .invalid */
+input.invalid ~ .error-message,
+select.invalid ~ .error-message,
+.parcelas-options.invalid .error-message, /* Mostra erro DENTRO do container */
+.prazo-options.invalid .error-message {
+    display: block;
+}
+
+/* Opções de Parcelas/Prazo (Radio Buttons Estilizados) */
+.parcelas-options, .prazo-options {
+    display: grid;
+    /* Cria colunas automáticas com largura mínima/máxima */
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 5px;
+    position: relative; /* Para a mensagem de erro interna */
+}
+.parcelas-options .error-message, /* Posiciona msg de erro */
+.prazo-options .error-message {
+    grid-column: 1 / -1; /* Ocupa toda a largura */
+    text-align: center;
+    margin-top: 5px;
+    position: static; /* Volta ao fluxo normal */
+}
+
+.parcelas-options label, .prazo-options label {
+    /* Estilo do botão não selecionado */
+    display: block;
+    background-color: #383838; /* Fundo do botão radio */
+    border: 2px solid #555;
+    padding: 12px 8px; /* Mais padding vertical */
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    text-align: center;
+    font-weight: 400; /* Normal */
+    color: var(--text-light-secondary);
+    font-size: 0.95em;
+    line-height: 1.3;
+}
+.parcelas-options input[type="radio"], .prazo-options input[type="radio"] {
+    display: none; /* Esconde o input original */
+}
+/* Estilo QUANDO SELECIONADO */
+.parcelas-options input[type="radio"]:checked + label,
+.prazo-options input[type="radio"]:checked + label {
+    background-color: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+    color: white;
+    font-weight: bold;
+    /* box-shadow: 0 0 6px rgba(0, 123, 255, 0.4); */
+}
+/* Hover (não selecionado) */
+.parcelas-options input[type="radio"]:not(:checked) + label:hover,
+.prazo-options input[type="radio"]:not(:checked) + label:hover {
+    background-color: #4f4f4f;
+    border-color: #777;
+    color: var(--text-light-primary);
+}
+
+
+/* Resumo da Simulação/Renegociação */
+.resultado-parcelas {
+    background-color: rgba(0, 0, 0, 0.2); /* Fundo mais sutil */
+    padding: 20px 25px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    margin-top: 20px;
+    border-left: 4px solid var(--accent-primary); /* Borda esquerda destacada */
+}
+.resultado-parcelas h3 {
+    color: var(--accent-primary);
+    margin: 0 0 20px 0; /* Margem apenas abaixo */
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.2em;
+    font-weight: 700;
+}
+.resultado-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinha itens verticalmente */
+    padding: 8px 0; /* Menos padding */
+    border-bottom: 1px dotted #444; /* Linha pontilhada mais sutil */
+    font-size: 0.95em;
+    flex-wrap: wrap; /* Permite quebrar em telas pequenas */
+    gap: 5px;
+}
+.resultado-item:last-child {
+    border-bottom: none;
+}
+.resultado-item span:first-child { /* Label (Nome:, CPF:, etc.) */
+    color: var(--text-light-secondary);
+    margin-right: 10px;
+    flex-shrink: 0; /* Não deixa o label encolher */
+}
+.resultado-item span:last-child { /* Valor */
+    font-weight: bold;
+    color: var(--text-light-primary);
+    text-align: right;
+    word-break: break-word; /* Quebra palavras longas se necessário */
+}
+/* Mensagem especial no resumo */
+.resultado-item.confirmation-message {
+    background-color: rgba(255, 204, 0, 0.1); /* Fundo amarelado sutil */
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 4px;
+    border: none;
+    border-left: 4px solid var(--accent-warning);
+}
+.resultado-item.confirmation-message span:first-child { color: var(--accent-warning); font-weight: bold; }
+.resultado-item.confirmation-message span:last-child { font-weight: normal; font-style: italic; font-size: 0.9em; text-align: left; }
+
+
+/* Botões de Navegação (Dentro da Calculadora) */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border-color);
+    gap: 15px;
+}
+/* Estiliza os botões usando as classes .btn do style-home.css */
+.navigation-buttons button {
+    /* Herda .btn */
+    min-width: 130px;
+    padding: 10px 20px; /* Ajuste padding se necessário */
+}
+/* Botão Voltar (geralmente secundário) */
+.navigation-buttons .btn-secondary {
+    /* Já estilizado pelo style-home.css */
+}
+/* Botão Avançar (geralmente primário) */
+.navigation-buttons .btn-primary {
+     background-color: var(--accent-secondary); /* Azul primário */
+     color: white;
+}
+.navigation-buttons .btn-primary:hover {
+    background-color: #0056b3; /* Azul mais escuro */
+}
+/* Botão Finalizar (geralmente sucesso) */
+.navigation-buttons .btn-success {
+    /* Já estilizado pelo style-home.css */
+    background-color: var(--accent-success);
+}
+.navigation-buttons .btn-success:hover {
+    background-color: #218838;
+}
+
+/* Para esconder botões (via JS) */
+.navigation-buttons button.hidden {
+    display: none;
+}
+
+
+/* Animação de Fade-in para Etapas */
+@keyframes fadeIn {
+  from { opacity: 0; /* transform: translateY(5px); */ }
+  to { opacity: 1; /* transform: translateY(0); */ }
+}
+
+/* Responsividade específica para calculadoras */
+@media (max-width: 768px) {
+    .calculator-container { padding: 15px; }
+    .form-row { gap: 0; } /* Remove gap para empilhar melhor */
+    .form-row .form-group { flex-basis: 100%; margin-bottom: 15px; } /* Ocupa linha toda */
+    .parcelas-options, .prazo-options { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; }
+    .navigation-buttons { flex-direction: column-reverse; align-items: stretch; }
+    .navigation-buttons button { width: 100%; margin-bottom: 10px; }
+    .navigation-buttons button:last-child { margin-bottom: 0; }
+    .resultado-item { font-size: 0.9em;}
+    .progress-bar { max-width: 95%; } /* Barra ocupa mais espaço */
+    .progress-step { width: 60px; } /* Steps menores */
+    .step-icon { width: 30px; height: 30px; font-size: 1em; border-width: 2px;}
+    .step-label { font-size: 0.8em; max-width: 55px; }
+    .progress-line, .progress-indicator { top: 15px; left: 30px; right: 30px; height: 4px; }
+}
+@media (max-width: 480px) {
+    .parcelas-options, .prazo-options { grid-template-columns: repeat(2, 1fr); } /* Força 2 colunas */
+}
+
+
+/* === ☆☆☆ ESTILOS PARA BOTÕES DE ÍCONE DE LAYOUT (Adicionar/Verificar) ☆☆☆ === */
+.icon-controls {
+    /* O estilo inline no HTML já centraliza, mas pode adicionar mais aqui se precisar */
+}
+
+.icon-controls button.btn-icon {
+    background-color: transparent; /* Sem fundo */
+    border: 1px solid var(--border-color); /* Borda sutil */
+    color: var(--text-light-secondary); /* Cor do ícone */
+    padding: 8px; /* Padding interno */
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 4px; /* Espaçamento entre botões */
+    line-height: 0; /* Para alinhar melhor o SVG */
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    vertical-align: middle; /* Alinha com o texto "Layout:" se houver */
+}
+
+.icon-controls button.btn-icon:hover {
+    background-color: var(--bg-dark-tertiary); /* Fundo no hover */
+    color: var(--text-light-primary);
+    border-color: #666;
+}
+
+.icon-controls button.btn-icon.active {
+    background-color: var(--accent-secondary); /* Cor de destaque quando ativo */
+    color: white;
+    border-color: var(--accent-secondary);
+}
+
+.icon-controls button.btn-icon svg {
+    vertical-align: middle; /* Alinha SVG verticalmente */
+    width: 20px; /* Garante tamanho consistente */
+    height: 20px;
+}
+
+/* --- Estilos para Visualização em Lista (Adicionar/Verificar) --- */
+
+/* Quando o container #calculator-grid tiver a classe .layout-list */
+#calculator-grid.layout-list {
+    display: flex; /* Muda de grid para flexbox */
+    flex-direction: column; /* Itens empilhados verticalmente */
+    gap: 0; /* Remover gap do grid, usar borda */
+}
+
+/* Ajusta os títulos das seções na visualização em lista */
+#calculator-grid.layout-list > h2.section-title {
+    grid-column: auto; /* Remove o span de grid */
+    margin-top: 25px;
+    margin-bottom: 10px;
+    border-bottom-width: 1px; /* Linha mais fina talvez */
+}
+#calculator-grid.layout-list > h2.section-title:first-of-type {
+     margin-top: 5px; /* Menos espaço no topo da lista */
+}
+
+
+/* Ajusta a aparência dos itens (.card) quando em modo lista */
+#calculator-grid.layout-list .card.calculator-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    min-height: auto;
+    padding: 15px 15px; /* Padding da lista */
+    box-shadow: none;
+    border-radius: 0;
+    border: none; /* Remove borda geral do card */
+    border-bottom: 1px solid var(--border-color); /* Adiciona linha separadora */
+    background-color: transparent; /* Fundo transparente no modo lista */
+    transition: background-color 0.2s ease;
+}
+
+#calculator-grid.layout-list .card.calculator-item:hover {
+    background-color: rgba(255, 255, 255, 0.04); /* Leve destaque no hover */
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* Ajusta o link dentro do card no modo lista */
+#calculator-grid.layout-list .card.calculator-item a {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0;
+    width: 100%;
+    /* Remove estilo hover específico do card a se houver */
+    background-color: transparent !important;
+}
+
+/* Ajusta o ícone no modo lista */
+#calculator-grid.layout-list .calculator-item .icon {
+    font-size: 1.6em; /* Ícone menor na lista */
+    margin-bottom: 0;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+/* Ajusta o título no modo lista */
+#calculator-grid.layout-list .calculator-item .title {
+    font-size: 1em;
+    line-height: 1.4;
+    font-weight: 400; /* Mais leve */
+    text-align: left;
+}
+#calculator-grid.layout-list .calculator-item .title br {
+    display: none; /* Esconde as quebras de linha */
+}

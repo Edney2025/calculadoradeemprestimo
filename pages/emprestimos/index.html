@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulador de Empréstimo - AdminSys</title>
+  <link rel="stylesheet" href="../../assets/css/style-home.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon"> <!-- Opcional: Adicionar favicon -->
+  <style>
+    /* Estilos específicos da página podem ir aqui, se necessário */
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">🚀 AdminSys</div>
+    <nav>
+      <!-- Links da Navegação -->
+      <a href="../../dashboard-app.html">📊 Dashboard</a>
+      <a href="../../pages/clientes/index.html">👤 Clientes</a>
+      <a href="../../pages/catalogo/index.html">🛒 Catálogo</a>
+      <a href="../../pages/orcamentos/index.html">💰 Orçamentos</a>
+      <a href="../../pages/financeiro/contas-a-receber.html">📥 A Receber</a>
+      <a href="../../pages/financeiro/contas-a-pagar.html">📤 A Pagar</a>
+      <a href="../../pages/suporte/index.html">🛠️ Suporte</a>
+      <!-- Links com # ainda não implementados -->
+      <a href="#">⚙️ Configurações</a>
+      <a href="#">👥 Usuários</a>
+      <a href="#">📜 Logs</a>
+      <a href="../../index.html">🚪 Sair</a> <!-- Pode ser a home ou página de login -->
+    </nav>
+  </aside>
+
+  <main class="content">
+     <header class="header">
+        <h1>🏦 Empréstimos e Simulações</h1>
+         <div class="header-actions">
+            <a href="../../index.html" class="btn btn-secondary">Voltar ao Início</a>
+            <!-- Adicionar botões de ação específicos da página aqui -->
+         </div>
+    </header>
+
+    <section id="page-content">
+      <div class="calculator-box">
+    <h2 style="text-align: center; color: var(--accent-primary); margin-bottom: 25px;">Simulador de Empréstimo Pessoal</h2>
+    <div class="form-group">
+        <label for="valor">Quanto você precisa (R$)?</label>
+        <input type="number" id="valor" placeholder="Ex: 5000" min="1">
+    </div>
+    <div class="form-group">
+        <label for="taxa">Taxa de Juros Mensal Estimada (%):</label>
+        <input type="number" id="taxa" step="0.01" placeholder="Ex: 3.5" min="0">
+    </div>
+    <div class="form-group">
+        <label for="prazo">Em quantos meses pretende pagar?</label>
+        <input type="number" id="prazo" placeholder="Ex: 12" min="1">
+    </div>
+    <button class="btn form-button" onclick="calcularEmprestimo()">Simular Parcelas</button>
+
+    <div id="resultado">
+        <p>Preencha os valores acima para ver uma simulação.</p>
+    </div>
+</div>
+    </section>
+
+    <footer>
+        <!-- Pode adicionar um footer aqui se desejar -->
+    </footer>
+  </main>
+
+  <!-- Scripts Essenciais -->
+  <script src="../../assets/js/navigation.js"></script>
+  <script>
+    function calcularEmprestimo() {
+      const valorInput = document.getElementById('valor');
+      const taxaInput = document.getElementById('taxa');
+      const prazoInput = document.getElementById('prazo');
+      const resultadoDiv = document.getElementById('resultado');
+
+      valorInput.style.borderColor = '#555';
+      taxaInput.style.borderColor = '#555';
+      prazoInput.style.borderColor = '#555';
+      resultadoDiv.innerHTML = ''; // Limpa resultados
+
+      const valor = parseFloat(valorInput.value);
+      const taxa = parseFloat(taxaInput.value) / 100;
+      const prazo = parseInt(prazoInput.value);
+
+      let hasError = false;
+      if (isNaN(valor) || valor <= 0) { resultadoDiv.innerHTML += '<p style="color: var(--accent-warning);">Valor inválido.</p>'; valorInput.style.borderColor = 'var(--accent-warning)'; hasError = true; }
+      if (isNaN(taxa) || taxa < 0) { resultadoDiv.innerHTML += '<p style="color: var(--accent-warning);">Taxa inválida.</p>'; taxaInput.style.borderColor = 'var(--accent-warning)'; hasError = true; }
+      if (isNaN(prazo) || prazo <= 0) { resultadoDiv.innerHTML += '<p style="color: var(--accent-warning);">Prazo inválido.</p>'; prazoInput.style.borderColor = 'var(--accent-warning)'; hasError = true; }
+      if (hasError) { resultadoDiv.insertAdjacentHTML('afterbegin', '<p style="color: var(--accent-warning); font-weight: bold;">Corrija os campos marcados.</p>'); return; }
+
+      let parcela;
+      if (taxa > 0) { parcela = valor * (taxa * Math.pow(1 + taxa, prazo)) / (Math.pow(1 + taxa, prazo) - 1); }
+      else { parcela = valor / prazo; }
+      const totalPago = parcela * prazo;
+      const totalJuros = totalPago - valor;
+
+      if (isNaN(parcela) || !isFinite(parcela)) {
+         resultadoDiv.innerHTML = '<p style="color: var(--accent-danger);">Erro no cálculo. Verifique os valores.</p>';
+      } else {
+          // ★★★ CORREÇÃO APLICADA AQUI ★★★ -> Escapado os '
+</body>
+</html> para PowerShell ($)
+          resultadoDiv.innerHTML = \
+            <p>Valor da Parcela Estimada: <strong style='font-size: 1.2em;'>R$ \${parcela.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}\</strong></p>
+            <hr style='border-color: var(--border-color); margin: 15px 0;'>
+            <p>Total Estimado Pago: <strong>R$ \${totalPago.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}\</strong></p>
+            <p>Total Estimado de Juros: <strong>R$ \${totalJuros.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}\</strong></p>
+            <small>(Cálculo via Tabela Price. Simulação. Sujeito a análise de crédito e confirmação das condições.)</small>
+          \;
+      }
+    }
+  </script>
+</body>
+</html>

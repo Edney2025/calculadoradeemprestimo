@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Painel Encomenda Palotina</title>
+  <!-- ☆☆☆ Correct relative path to CSS ☆☆☆ -->
+  <link rel="stylesheet" href="../../assets/css/style-home.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Add specific admin styles if needed later -->
+  <!-- <link rel="stylesheet" href="admin-styles.css"> -->
+
+  <!-- Security Note: This is a basic static page.
+       Real-world admin dashboards require server-side authentication
+       and authorization to prevent unauthorized access.
+       Do not rely on URL obscurity for security. -->
+</head>
+<body>
+
+  <!-- ☆☆☆ Mobile Toggle Button ☆☆☆ -->
+  <button class="sidebar-toggle" aria-label="Abrir menu">☰</button>
+
+  <aside class="sidebar">
+    <!-- ☆☆☆ Logo - Link back to main site? Or stay in admin? ☆☆☆ -->
+    <div class="logo"><a href="../../index.html" title="Voltar ao site principal">🐸 Encomenda Palotina</a> <span style="font-size: 0.7em; color: var(--accent-warning); display: block; margin-top: -5px;">ADMIN</span></div>
+    <nav>
+       <!-- ☆☆☆ Admin Sidebar Links ☆☆☆ -->
+       <a href="index.html" class="active">📊 Painel Admin</a> <!-- Active link -->
+       <a href="../calculadoras/em-breve.html">👥 Gerenciar Usuários</a>
+       <a href="../calculadoras/em-breve.html">📦 Gerenciar Produtos</a>
+       <a href="../calculadoras/em-breve.html">📈 Relatórios Avançados</a>
+       <a href="../calculadoras/em-breve.html">⚙️ Configurações Gerais</a>
+       <a href="../../index.html">🚪 Voltar ao Site</a> <!-- Link back to main site -->
+       <!-- Add logout link if applicable later -->
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="header">
+       <!-- ☆☆☆ Admin Header ☆☆☆ -->
+       <h1>Painel de Controle <span style="font-size: 0.8em; color: var(--text-light-secondary);">(Admin)</span></h1>
+        <div class="header-actions">
+            <!-- Add Admin specific actions here if needed -->
+             <a href="../calculadoras/em-breve.html" class="btn btn-primary">
+                ⚡ Ação Rápida Admin
+            </a>
+        </div>
+    </header>
+
+    <!-- ☆☆☆ Saudação e Data ☆☆☆ -->
+    <div class="welcome-banner">
+        <!-- Greeting can be dynamic later -->
+        <h2>👋 Olá, Edy! <span style="font-size:0.8em; color:var(--text-light-secondary)">(Admin)</span></h2>
+        <p id="current-date">Carregando data...</p>
+    </div>
+
+    <!-- ☆☆☆ Seção KPIs ☆☆☆ -->
+    <section class="kpi-section">
+        <!-- Optional Title for KPIs -->
+        <!-- <h2 class="section-title">Visão Geral</h2> -->
+        <div class="grid kpi-grid">
+            <!-- Data you provided -->
+            <div class="kpi-card">
+                <span class="kpi-icon">💰</span>
+                <span class="kpi-value">3</span>
+                <span class="kpi-label">Orçamentos Pendentes</span>
+                <!-- Link to admin view of budgets -->
+                <a href="../calculadoras/em-breve.html" class="kpi-link">Ver</a>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">📤</span>
+                <span class="kpi-value">R$ 150,00</span>
+                <span class="kpi-label">A Pagar (Hoje)</span>
+                 <!-- Link to admin view of payables -->
+                <a href="../calculadoras/em-breve.html" class="kpi-link">Ver</a>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-icon">📥</span>
+                <span class="kpi-value">R$ 500,00</span>
+                <span class="kpi-label">A Receber (7 dias)</span>
+                 <!-- Link to admin view of receivables -->
+                 <a href="../calculadoras/em-breve.html" class="kpi-link">Ver</a>
+            </div>
+             <div class="kpi-card">
+                <span class="kpi-icon">💬</span>
+                <span class="kpi-value">2</span>
+                <span class="kpi-label">Novas Mensagens</span>
+                 <!-- Link to admin message center -->
+                 <a href="../calculadoras/em-breve.html" class="kpi-link">Ver</a>
+            </div>
+             <!-- Add more admin-specific KPIs if needed -->
+             <div class="kpi-card">
+                <span class="kpi-icon">👥</span>
+                <span class="kpi-value">152</span>
+                <span class="kpi-label">Usuários Registrados</span>
+                 <a href="../calculadoras/em-breve.html" class="kpi-link">Gerenciar</a>
+            </div>
+        </div>
+    </section>
+
+     <!-- ☆☆☆ Seção de Alertas ☆☆☆ -->
+     <section class="alerts-section">
+         <h2 class="section-title">⚠️ Atenção (Admin)</h2>
+         <div class="alert-list">
+              <!-- Data you provided -->
+             <div class="alert alert-danger">
+                <span>🚨 1 Conta a Pagar vence HOJE!</span>
+                <!-- Link to admin view -->
+                <a href="../calculadoras/em-breve.html">Ver</a>
+             </div>
+             <div class="alert alert-warning">
+                <span>⚠️ Estoque baixo: Produto XYZ (2 un.)</span>
+                <!-- Link to admin inventory management -->
+                <a href="../calculadoras/em-breve.html">Ver</a>
+             </div>
+             <!-- Add more admin-specific alerts -->
+              <div class="alert alert-info">
+                <span>🛡️ Nova tentativa de login suspeita.</span>
+                <a href="../calculadoras/em-breve.html">Ver Logs</a>
+             </div>
+         </div>
+     </section>
+
+     <!-- Add other admin-specific sections here -->
+     <section>
+        <h2 class="section-title">Ações Administrativas</h2>
+        <div class="grid main-grid grid-4"> <!-- Use main-grid for consistency -->
+             <div class="card"><a href="../calculadoras/em-breve.html"><span class="card-icon">➕</span><span class="card-title">Novo Usuário</span></a></div>
+             <div class="card"><a href="../calculadoras/em-breve.html"><span class="card-icon">📝</span><span class="card-title">Publicar Aviso</span></a></div>
+             <div class="card"><a href="../calculadoras/em-breve.html"><span class="card-icon">💾</span><span class="card-title">Backup Sistema</span></a></div>
+             <div class="card"><a href="../calculadoras/em-breve.html"><span class="card-icon">🧹</span><span class="card-title">Limpar Cache</span></a></div>
+         </div>
+     </section>
+
+
+   </main>
+
+   <!-- ☆☆☆ Correct relative path to JS ☆☆☆ -->
+   <script src="../../assets/js/navigation.js"></script>
+   <script>
+    // Script para Data Dinâmica (Same as index.html)
+    try {
+        const dateElement = document.getElementById('current-date');
+        if(dateElement) {
+            const today = new Date();
+            // Use MMMM for full month name, adjust options as needed
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            let dateString = today.toLocaleDateString('pt-BR', options);
+            dateString = dateString.charAt(0).toUpperCase() + dateString.slice(1).replace(/ de (\w)/, (match, p1) => ` de ${p1.toUpperCase()}`);
+            dateElement.textContent = dateString;
+        }
+      } catch (e) { console.error("Erro ao definir data:", e); }
+
+    // Sidebar Toggle Logic (Same as index.html)
+    document.addEventListener('DOMContentLoaded', () => {
+        const sidebar = document.querySelector('.sidebar');
+        const toggleButton = document.querySelector('.sidebar-toggle');
+
+        if (sidebar && toggleButton) {
+            toggleButton.addEventListener('click', () => {
+                sidebar.classList.toggle('show-sidebar');
+                document.body.classList.toggle('sidebar-open');
+            });
+
+            document.addEventListener('click', (event) => {
+                if (window.innerWidth <= 768 && sidebar.classList.contains('show-sidebar')) {
+                    const isClickInsideSidebar = sidebar.contains(event.target);
+                    const isClickOnToggleButton = toggleButton.contains(event.target);
+                    if (!isClickInsideSidebar && !isClickOnToggleButton) {
+                        sidebar.classList.remove('show-sidebar');
+                        document.body.classList.remove('sidebar-open');
+                    }
+                }
+            });
+        } else {
+           console.warn("Sidebar or Toggle Button not found for mobile interaction.");
+        }
+       // No layout controls needed here unless you want them specifically for admin
+    });
+   </script>
+ </body>
+ </html>

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catálogo de Produtos - AdminSys</title>
+  <link rel="stylesheet" href="../../assets/css/style-home.css"> <!-- Seu CSS global -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
+  <style>
+    /* Estilos das Categorias */
+    .category-header {
+      grid-column: 1 / -1;
+      margin: 30px 0 15px;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      /* Estilo base, cores específicas virão de classes .category-slug */
+      background-color: rgba(100, 100, 100, 0.1);
+      border-left: 5px solid #666;
+    }
+
+    /* Cores para cada categoria (Adicione todas as suas 23+ categorias aqui) */
+    /* .category-hardware, .category-perifericos, etc. não são mais categorias principais, mas sim parte de .category-informatica */
+    .category-informatica { background-color: rgba(0, 123, 255, 0.2); border-left: 5px solid #007bff; }
+    .category-automotivo { background-color: rgba(255, 152, 0, 0.2); border-left: 5px solid #ff9800; }
+    .category-bebes-e-criancas { background-color: rgba(233, 30, 99, 0.2); border-left: 5px solid #e91e63; }
+    .category-beleza-e-perfumaria { background-color: rgba(156, 39, 176, 0.2); border-left: 5px solid #9c27b0; }
+    .category-brinquedos { background-color: rgba(76, 175, 80, 0.2); border-left: 5px solid #4CAF50; }
+    .category-cama-mesa-e-banho { background-color: rgba(3, 169, 244, 0.2); border-left: 5px solid #03A9F4; }
+    .category-casa-e-construcao { background-color: rgba(121, 85, 72, 0.2); border-left: 5px solid #795548; }
+    .category-eletrodomesticos { background-color: rgba(96, 125, 139, 0.2); border-left: 5px solid #607D8B; }
+    .category-eletroportateis { background-color: rgba(0, 150, 136, 0.2); border-left: 5px solid #009688; }
+    .category-esporte-e-lazer { background-color: rgba(255, 87, 34, 0.2); border-left: 5px solid #FF5722; }
+    .category-games { background-color: rgba(103, 58, 183, 0.2); border-left: 5px solid #673AB7; }
+    .category-industrial-e-comercial { background-color: rgba(63, 81, 181, 0.2); border-left: 5px solid #3F51B5; }
+    .category-instrumentos-musicais { background-color: rgba(255, 235, 59, 0.2); border-left: 5px solid #FFEB3B; color: #333; /* Para melhor contraste com amarelo */}
+    .category-mercado { background-color: rgba(139, 195, 74, 0.2); border-left: 5px solid #8BC34A; }
+    .category-moveis-e-decoracao { background-color: rgba(205, 220, 57, 0.2); border-left: 5px solid #CDDC39; color: #333; }
+    .category-moda-e-acessorios { background-color: rgba(244, 67, 54, 0.2); border-left: 5px solid #F44336; }
+    .category-pets { background-color: rgba(121, 85, 72, 0.2); border-left: 5px solid #795548; } /* Reutilizando cor, pode ser única */
+    .category-papelaria { background-color: rgba(33, 150, 243, 0.2); border-left: 5px solid #2196F3; }
+    .category-saude-e-cuidados-pessoais { background-color: rgba(0, 188, 212, 0.2); border-left: 5px solid #00BCD4; }
+    .category-smartphone-e-celular { background-color: rgba(255, 193, 7, 0.2); border-left: 5px solid #FFC107; } /* Reutilizando cor */
+    .category-telefonia-fixa-empresarial { background-color: rgba(158, 158, 158, 0.2); border-left: 5px solid #9E9E9E; } /* Slug ajustado */
+    .category-tv-audio-e-video { background-color: rgba(63, 81, 181, 0.2); border-left: 5px solid #3f51b5; } /* Reutilizando cor */
+    .category-utilidades-domesticas { background-color: rgba(111, 66, 193, 0.2); border-left: 5px solid #6f42c1; } /* Reutilizando cor */
+
+    /* Ícones para cada categoria (cor deve combinar com border-left) */
+    /* .hardware-icon, etc. não são mais ícones de categoria principal, mas sim para produtos ou subcategorias */
+    .informatica-icon { color: #007bff; }
+    .automotivo-icon { color: #ff9800; }
+    .bebes-e-criancas-icon { color: #e91e63; }
+    .beleza-e-perfumaria-icon { color: #9c27b0; }
+    .brinquedos-icon { color: #4CAF50; }
+    .cama-mesa-e-banho-icon { color: #03A9F4; }
+    .casa-e-construcao-icon { color: #795548; }
+    .eletrodomesticos-icon { color: #607D8B; }
+    .eletroportateis-icon { color: #009688; }
+    .esporte-e-lazer-icon { color: #FF5722; }
+    .games-icon { color: #673AB7; }
+    .industrial-e-comercial-icon { color: #3F51B5; }
+    .instrumentos-musicais-icon { color: #c7b000; } 
+    .mercado-icon { color: #8BC34A; }
+    .moveis-e-decoracao-icon { color: #a9b800; } 
+    .moda-e-acessorios-icon { color: #F44336; }
+    .pets-icon { color: #795548; }
+    .papelaria-icon { color: #2196F3; }
+    .saude-e-cuidados-pessoais-icon { color: #00BCD4; }
+    .smartphone-e-celular-icon { color: #ffc107; }
+    .telefonia-fixa-empresarial-icon { color: #9E9E9E; } /* Slug ajustado */
+    .tv-audio-e-video-icon { color: #3f51b5; }
+    .utilidades-domesticas-icon { color: #6f42c1; }
+
+    .subcategory-header {
+      grid-column: 1 / -1;
+      margin: 20px 0 10px;
+      color: #aaa;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .product-card {
+      border: 1px solid #444;
+      background-color: #2a2a2a;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    
+    .product-icon { 
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #ddd; 
+    }
+        
+    .filter-controls {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .product-image-placeholder {
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 15px;
+      background-color: #333;
+      border-radius: 4px;
+    }
+    
+    .price {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ff5722;
+      color: white;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+    
+    #no-results-message {
+        grid-column: 1 / -1;
+        text-align: center;
+        font-size: 1.2rem;
+        color: #aaa;
+        padding: 30px;
+        display: none; 
+    }
+
+    @media (max-width: 768px) {
+      .filter-controls {
+        flex-direction: column;
+      }
+      .grid {
+        grid-template-columns: 1fr; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="logo">🚀 AdminSys</div>
+    <nav>
+      <a href="../../dashboard-app.html">📊 Dashboard</a>
+      <a href="../../pages/clientes/index.html">👤 Clientes</a>
+      <a href="../../pages/catalogo/index.html" class="active">🛒 Catálogo</a>
+      <a href="../../pages/orcamentos/index.html">💰 Orçamentos</a>
+      <a href="../../pages/financeiro/contas-a-receber.html">📥 A Receber</a>
+      <a href="../../pages/financeiro/contas-a-pagar.html">📤 A Pagar</a>
+      <a href="../../pages/suporte/index.html">🛠️ Suporte</a>
+      <a href="#">⚙️ Configurações</a>
+      <a href="#">👥 Usuários</a>
+      <a href="#">📜 Logs</a>
+      <a href="../../index.html">🚪 Sair</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+     <header class="header">
+        <h1>🛒 Catálogo de Produtos <small id="product-count-header">(0 itens)</small></h1>
+         <div class="header-actions">
+            <a href="../../index.html" class="btn btn-secondary">Voltar ao Início</a>
+            <button class="btn btn-primary" onclick="openAddProductModal()">
+              <i class="fas fa-plus"></i> Novo Produto
+            </button>
+         </div>
+    </header>
+
+    <section id="page-content">
+      <div class="filter-controls">
+        <select class="btn" id="category-filter" title="Filtrar por Categoria">
+          <option value="">Todas as Categorias</option>
+        </select>
+        
+        <select class="btn" id="subcategory-filter" title="Filtrar por Subcategoria">
+          <option value="">Todas as Subcategorias</option>
+        </select>
+        
+        <input type="text" id="search-input" placeholder="Buscar produtos..." class="btn" title="Buscar por nome ou descrição">
+        
+        <select class="btn" id="sort-filter" title="Ordenar produtos">
+          <option value="">Ordenar por</option>
+          <option value="price-asc">Preço: Menor para Maior</option>
+          <option value="price-desc">Preço: Maior para Menor</option>
+          <option value="name-asc">Nome: A-Z</option>
+          <option value="name-desc">Nome: Z-A</option>
+          <option value="relevance">Relevância</option>
+        </select>
+      </div>
+      
+      <div class="grid" id="products-grid">
+      </div>
+      <div id="no-results-message">
+        <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 10px;"></i>
+        <p>Nenhum produto encontrado com os filtros aplicados.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2023 AdminSys - Catálogo de Produtos | Total de itens: <span id="total-items-footer">0</span></p>
+    </footer>
+  </main>
+
+  <script>
+    // --- ESTRUTURA DE DADOS DAS CATEGORIAS E SUBCATEGORIAS ---
+    // ESTA É A ÚNICA DEFINIÇÃO DE catalogStructure
+    const catalogStructure = [
+      { 
+        name: "Informática", 
+        slug: "informatica", 
+        icon: "fas fa-laptop",
+        subcategories: [
+          { name: "Processadores (CPU)", slug: "processadores-cpu", icon: "fas fa-microchip" },
+          { name: "Placas-mãe", slug: "placas-mae", icon: "fas fa-digital-tachograph" },
+          { name: "Memórias RAM", slug: "memorias-ram", icon: "fas fa-memory" },
+          { name: "Placas de Vídeo (GPU)", slug: "placas-de-video-gpu", icon: "fas fa-tv" },
+          { name: "SSDs (Armazenamento Flash)", slug: "ssds", icon: "fas fa-hdd" },
+          { name: "HDs (Discos Rígidos)", slug: "hds", icon: "fas fa-hdd" },
+          { name: "Fontes de Alimentação (PSU)", slug: "fontes-psu", icon: "fas fa-plug" },
+          { name: "Gabinetes e Cases", slug: "gabinetes-cases", icon: "fas fa-cube" },
+          { name: "Coolers e Refrigeração", slug: "coolers-refrigeracao", icon: "fas fa-fan" },
+          { name: "Notebooks e Ultrabooks", slug: "notebooks-ultrabooks", icon: "fas fa-laptop" },
+          { name: "Desktops e All-in-One", slug: "desktops-all-in-one", icon: "fas fa-desktop" },
+          { name: "Servidores", slug: "servidores", icon: "fas fa-server" },
+          { name: "Teclados", slug: "teclados", icon: "fas fa-keyboard" },
+          { name: "Mouses", slug: "mouses", icon: "fas fa-mouse" },
+          { name: "Monitores", slug: "monitores", icon: "fas fa-desktop" },
+          { name: "Impressoras e Multifuncionais", slug: "impressoras-multifuncionais", icon: "fas fa-print" },
+          { name: "Webcams e Câmeras", slug: "webcams-cameras", icon: "fas fa-video" },
+          { name: "Headsets e Fones de Ouvido", slug: "headsets-fones", icon: "fas fa-headphones" },
+          { name: "Microfones", slug: "microfones", icon: "fas fa-microphone" },
+          { name: "Sistemas Operacionais", slug: "sistemas-operacionais", icon: "fab fa-windows" },
+          { name: "Softwares de Produtividade (Office)", slug: "softwares-produtividade", icon: "fas fa-file-word" },
+          { name: "Antivírus e Segurança Digital", slug: "antivirus-seguranca", icon: "fas fa-shield-alt" },
+          { name: "Roteadores e Modems", slug: "roteadores-modems", icon: "fas fa-wifi" },
+          { name: "Switches e Hubs de Rede", slug: "switches-hubs-rede", icon: "fas fa-ethernet" },
+          { name: "Pen Drives e Armazenamento Externo", slug: "pen-drives-externo", icon: "fas fa-usb" }
+        ]
+      },
+      { 
+        name: "Automotivo", 
+        slug: "automotivo", 
+        icon: "fas fa-car", 
+        subcategories: [
+          { name: "Pneus e Rodas", slug: "pneus-rodas", icon: "fas fa-dot-circle" },
+          { name: "Som e Multimídia Automotiva", slug: "som-multimidia-auto", icon: "fas fa-volume-up" },
+          { name: "Peças de Motor", slug: "pecas-motor-auto", icon: "fas fa-cogs" },
+          { name: "Acessórios Internos (Tapetes, Capas)", slug: "acessorios-internos-auto", icon: "fas fa-car-side" },
+          { name: "Óleos e Lubrificantes", slug: "oleos-lubrificantes-auto", icon: "fas fa-oil-can" },
+          { name: "Baterias Automotivas", slug: "baterias-auto", icon: "fas fa-car-battery" },
+          { name: "Ferramentas para Carros", slug: "ferramentas-auto", icon: "fas fa-tools" },
+          { name: "Produtos de Limpeza Automotiva", slug: "limpeza-auto", icon: "fas fa-soap" },
+          { name: "Alarmes e Segurança Veicular", slug: "alarmes-seguranca-auto", icon: "fas fa-shield-alt" },
+          { name: "Faróis e Iluminação", slug: "farois-iluminacao-auto", icon: "far fa-lightbulb" },
+          { name: "GPS e Navegadores", slug: "gps-navegadores-auto", icon: "fas fa-map-marked-alt" },
+          { name: "Acessórios Externos (Racks, Engates)", slug: "acessorios-externos-auto", icon: "fas fa-truck-pickup" },
+          { name: "Peças de Suspensão e Direção", slug: "suspensao-direcao-auto", icon: "fas fa-bullseye" },
+          { name: "Peças de Freio", slug: "freios-auto", icon: "fas fa-compact-disc" },
+          { name: "Filtros Automotivos (Ar, Óleo, Comb.)", slug: "filtros-auto", icon: "fas fa-filter" },
+          { name: "Equipamentos para Oficina", slug: "equipamentos-oficina-auto", icon: "fas fa-wrench" },
+          { name: "Motos: Peças e Acessórios", slug: "motos-pecas-acessorios", icon: "fas fa-motorcycle" },
+          { name: "Pneus para Motos", slug: "pneus-motos", icon: "fas fa-motorcycle" },
+          { name: "Capacetes", slug: "capacetes", icon: "fas fa-hard-hat" },
+          { name: "Vestuário para Motociclistas", slug: "vestuario-motociclistas", icon: "fas fa-user-ninja" },
+          { name: "Adesivos e Personalização", slug: "adesivos-personalizacao-auto", icon: "fas fa-palette" },
+          { name: "Manutenção Preventiva Kits", slug: "manutencao-preventiva-kits-auto", icon: "fas fa-medkit" },
+          { name: "Produtos para Performance", slug: "performance-auto", icon: "fas fa-tachometer-alt" },
+          { name: "Câmeras Veiculares (Dashcams)", slug: "dashcams", icon: "fas fa-video" },
+          { name: "Carregadores Veiculares", slug: "carregadores-veiculares", icon: "fas fa-bolt" }
+        ]
+      },
+      { 
+        name: "Bebês e Crianças", 
+        slug: "bebes-e-criancas", 
+        icon: "fas fa-baby-carriage", 
+        subcategories: [
+          { name: "Carrinhos e Bebê Conforto", slug: "carrinhos-bebe-conforto", icon: "fas fa-baby-carriage" },
+          { name: "Fraldas Descartáveis e de Pano", slug: "fraldas-bebe", icon: "fas fa-toilet-paper" },
+          { name: "Higiene do Bebê (Lenços, Pomadas)", slug: "higiene-bebe", icon: "fas fa-pump-soap" },
+          { name: "Alimentação (Mamadeiras, Pratos)", slug: "alimentacao-infantil", icon: "fas fa-utensils" },
+          { name: "Móveis para Quarto do Bebê", slug: "moveis-quarto-bebe", icon: "fas fa-bed" },
+          { name: "Brinquedos para Bebês (0-2 anos)", slug: "brinquedos-bebes-0-2", icon: "fas fa-shapes" },
+          { name: "Roupas para Bebês", slug: "roupas-bebes", icon: "fas fa-baby" },
+          { name: "Roupas Infantis (2+ anos)", slug: "roupas-infantis-2mais", icon: "fas fa-child" },
+          { name: "Segurança (Grades, Protetores)", slug: "seguranca-casa-bebe", icon: "fas fa-lock" },
+          { name: "Cadeirinhas para Automóvel", slug: "cadeirinhas-auto-bebe", icon: "fas fa-car-alt" },
+          { name: "Material Escolar Infantil", slug: "material-escolar-infantil", icon: "fas fa-pencil-ruler" },
+          { name: "Livros Infantis", slug: "livros-infantis", icon: "fas fa-book-open" },
+          { name: "Calçados Infantis", slug: "calcados-infantis", icon: "fas fa-shoe-prints" },
+          { name: "Berços e Cercados", slug: "bercos-cercados", icon: "fas fa-bars" },
+          { name: "Andadores e Primeiros Passos", slug: "andadores-primeiros-passos", icon: "fas fa-walking" },
+          { name: "Banheiras e Suportes", slug: "banheiras-suportes-bebe", icon: "fas fa-bath" },
+          { name: "Chupetas e Mordedores", slug: "chupetas-mordedores", icon: "fas fa-ring" },
+          { name: "Decoração Quarto Infantil", slug: "decoracao-quarto-infantil", icon: "fas fa-paint-roller" },
+          { name: "Bolsas Maternidade e Trocadores", slug: "bolsas-maternidade-trocadores", icon: "fas fa-briefcase" },
+          { name: "Termômetros e Saúde do Bebê", slug: "termometros-saude-bebe", icon: "fas fa-thermometer" },
+          { name: "Babás Eletrônicas", slug: "babas-eletronicas", icon: "fas fa-assistive-listening-systems" },
+          { name: "Cangurus e Slings", slug: "cangurus-slings", icon: "fas fa-user-friends" },
+          { name: "Tapetes de Atividades", slug: "tapetes-atividades-bebe", icon: "fas fa-puzzle-piece" },
+          { name: "Fantasias Infantis", slug: "fantasias-infantis", icon: "fas fa-mask" },
+          { name: "Presentes para Chá de Bebê", slug: "presentes-cha-de-bebe", icon: "fas fa-gift" }
+        ]
+      },
+      { 
+        name: "Beleza e Perfumaria", 
+        slug: "beleza-e-perfumaria", 
+        icon: "fas fa-paint-brush", 
+        subcategories: [
+          { name: "Perfumes Femininos", slug: "perfumes-femininos", icon: "fas fa-spray-can" },
+          { name: "Perfumes Masculinos", slug: "perfumes-masculinos", icon: "fas fa-spray-can" },
+          { name: "Maquiagem para Rosto (Base, Pó)", slug: "maquiagem-rosto", icon: "fas fa-magic" },
+          { name: "Maquiagem para Olhos (Sombra, Rímel)", slug: "maquiagem-olhos", icon: "fas fa-eye" },
+          { name: "Maquiagem para Lábios (Batom, Gloss)", slug: "maquiagem-labios", icon: "fas fa-tint" },
+          { name: "Shampoos e Condicionadores", slug: "shampoos-condicionadores", icon: "fas fa-bottle-water" },
+          { name: "Tratamentos Capilares", slug: "tratamentos-capilares", icon: "fas fa-cut" },
+          { name: "Dermocosméticos Faciais", slug: "dermocosmeticos-faciais", icon: "fas fa-notes-medical" },
+          { name: "Cuidados com a Pele Corporal", slug: "cuidados-pele-corporal", icon: "fas fa-spa" },
+          { name: "Protetores Solares", slug: "protetores-solares", icon: "fas fa-sun" },
+          { name: "Higiene Íntima", slug: "higiene-intima", icon: "fas fa-hands-wash" },
+          { name: "Sabonetes (Líquidos e Barra)", slug: "sabonetes", icon: "fas fa-soap" },
+          { name: "Desodorantes", slug: "desodorantes", icon: "fas fa-wind" },
+          { name: "Kits de Presente Beleza", slug: "kits-presente-beleza", icon: "fas fa-gift" },
+          { name: "Esmaltes e Cuidados com Unhas", slug: "esmaltes-unhas", icon: "fas fa-hand-sparkles" },
+          { name: "Produtos para Barbearia", slug: "produtos-barbearia", icon: "fas fa-user-tie" },
+          { name: "Acessórios de Beleza (Pincéis, Esponjas)", slug: "acessorios-beleza", icon: "fas fa-brush" },
+          { name: "Modeladores e Secadores de Cabelo", slug: "modeladores-secadores-cabelo", icon: "fas fa-wind" },
+          { name: "Depilatórios", slug: "depilatorios", icon: "fas fa-feather-alt" },
+          { name: "Fragrâncias para Ambiente", slug: "fragrancias-ambiente", icon: "fas fa-home" },
+          { name: "Óleos Essenciais e Aromaterapia", slug: "oleos-essenciais-aromaterapia", icon: "fas fa-leaf" },
+          { name: "Produtos Veganos de Beleza", slug: "produtos-veganos-beleza", icon: "fas fa-seedling" },
+          { name: "Produtos Orgânicos de Beleza", slug: "produtos-organicos-beleza", icon: "fas fa-recycle" },
+          { name: "Maquiagem Artística", slug: "maquiagem-artistica", icon: "fas fa-theater-masks" },
+          { name: "Extensões de Cílios e Sobrancelhas", slug: "extensoes-cilios-sobrancelhas", icon: "fas fa-eye" }
+        ]
+      },
+      { 
+        name: "Brinquedos", 
+        slug: "brinquedos", 
+        icon: "fas fa-puzzle-piece", 
+        subcategories: [
+          { name: "Bonecas e Bonecos de Ação", slug: "bonecas-bonecos-acao", icon: "fas fa-user-astronaut" },
+          { name: "Jogos de Tabuleiro e Cartas", slug: "jogos-tabuleiro-cartas", icon: "fas fa-dice-d20" },
+          { name: "Blocos de Montar e Construção", slug: "blocos-montar-construcao", icon: "fas fa-cubes" },
+          { name: "Carrinhos, Pistas e Veículos de Brinquedo", slug: "carrinhos-veiculos-brinq", icon: "fas fa-car-crash" },
+          { name: "Pelúcias e Bichos de Pano", slug: "pelucias-bichos-pano", icon: "fas fa-teddy-bear" },
+          { name: "Brinquedos Educativos e Científicos", slug: "brinquedos-educativos-cientificos", icon: "fas fa-brain" },
+          { name: "Instrumentos Musicais Infantis", slug: "instrumentos-musicais-infantis", icon: "fas fa-drum" },
+          { name: "Fantasias e Acessórios Infantis", slug: "fantasias-acessorios-infantis", icon: "fas fa-mask" },
+          { name: "Playgrounds, Escorregadores e Balanços", slug: "playgrounds-externos", icon: "fas fa-fort-awesome" },
+          { name: "Lançadores de Dardos e Água", slug: "lancadores-dardos-agua", icon: "fas fa-bullseye" },
+          { name: "Quebra-Cabeças (Puzzles)", slug: "quebra-cabecas-puzzles", icon: "fas fa-puzzle-piece" },
+          { name: "Brinquedos de Faz de Conta (Cozinhas, Ferramentas)", slug: "brinquedos-faz-de-conta", icon: "fas fa-store" },
+          { name: "Massinhas de Modelar e Argila", slug: "massinhas-modelar-argila", icon: "fas fa-hand-paper" },
+          { name: "Bicicletas, Triciclos e Patinetes Infantis", slug: "bicicletas-triciclos-patinetes-inf", icon: "fas fa-bicycle" },
+          { name: "Drones e Veículos de Controle Remoto", slug: "drones-controle-remoto", icon: "fas fa-helicopter" },
+          { name: "Kits de Arte e Pintura Infantil", slug: "kits-arte-pintura-infantil", icon: "fas fa-paint-brush" },
+          { name: "Brinquedos de Praia e Piscina", slug: "brinquedos-praia-piscina", icon: "fas fa-umbrella-beach" },
+          { name: "Brinquedos Pedagógicos", slug: "brinquedos-pedagogicos", icon: "fas fa-graduation-cap" },
+          { name: "Miniaturas Colecionáveis", slug: "miniaturas-colecionaveis", icon: "fas fa-users" },
+          { name: "Brinquedos de Banho", slug: "brinquedos-de-banho", icon: "fas fa-bath" },
+          { name: "Pipas e Cata-Ventos", slug: "pipas-cataventos", icon: "fas fa-wind" },
+          { name: "Brinquedos de Madeira", slug: "brinquedos-de-madeira", icon: "fas fa-tree" },
+          { name: "Robôs de Brinquedo", slug: "robos-de-brinquedo", icon: "fas fa-robot" },
+          { name: "Jogos Eletrônicos Portáteis (não consoles)", slug: "jogos-eletronicos-portateis-brinq", icon: "fas fa-gamepad" },
+          { name: "Slimes e Gelecas", slug: "slimes-gelecas", icon: "fas fa-hand-sparkles" }
+        ]
+      },
+      { 
+        name: "Cama, Mesa e Banho", 
+        slug: "cama-mesa-e-banho", 
+        icon: "fas fa-bed", 
+        subcategories: [ 
+            { name: "Jogos de Cama (Lençol, Fronha)", slug: "jogos-cama", icon: "fas fa-bed" },
+            { name: "Toalhas de Banho e Rosto", slug: "toalhas-banho-rosto", icon: "fas fa-bath" },
+            { name: "Toalhas de Mesa e Jogos Americanos", slug: "toalhas-mesa-jogos-americanos", icon: "fas fa-utensils" },
+            { name: "Cobertores e Mantas", slug: "cobertores-mantas", icon: "fas fa-blanket" },
+            { name: "Edredons e Colchas", slug: "edredons-colchas", icon: "fas fa-layer-group" },
+            { name: "Travesseiros e Porta-Travesseiros", slug: "travesseiros-porta-travesseiros", icon: "fas fa-moon" },
+            { name: "Cortinas e Blackouts", slug: "cortinas-blackouts", icon: "fas fa-window-maximize" },
+            { name: "Tapetes para Quarto e Banheiro", slug: "tapetes-quarto-banheiro", icon: "fas fa-rug" },
+            { name: "Roupões de Banho", slug: "roupoes-banho", icon: "fas fa-user-tie" },
+            { name: "Protetores de Colchão e Travesseiro", slug: "protetores-colchao-travesseiro", icon: "fas fa-shield-alt" },
+            { name: "Panos de Prato e Copa", slug: "panos-prato-copa", icon: "fas fa-receipt" },
+            { name: "Acessórios para Banheiro (Saboneteiras, Lixeiras)", slug: "acessorios-banheiro", icon: "fas fa-pump-soap" },
+            { name: "Caminhas e Cobertores Pet (seção cama)", slug: "caminhas-cobertores-pet-cama", icon: "fas fa-paw" },
+            { name: "Almofadas Decorativas", slug: "almofadas-decorativas", icon: "fas fa-couch" },
+            { name: "Capas de Sofá e Poltrona", slug: "capas-sofa-poltrona", icon: "fas fa-chair" },
+            { name: "Organizadores de Cama e Banho", slug: "organizadores-cama-banho", icon: "fas fa-box-open" },
+            { name: "Velas e Aromatizadores (para ambiente de cama/banho)", slug: "velas-aromatizadores-cama-banho", icon: "fas fa-burn" },
+            { name: "Kits Coordenados (Cama, Banho)", slug: "kits-coordenados-cama-banho", icon: "fas fa-gifts" },
+            { name: "Saídas de Banho", slug: "saidas-de-banho", icon: "fas fa-bath" },
+            { name: "Pisos para Banheiro (Antiderrapantes)", slug: "pisos-banheiro-antiderrapantes", icon: "fas fa-grip-horizontal" },
+            { name: "Cortinas de Box", slug: "cortinas-de-box", icon: "fas fa-shower" },
+            { name: "Lençóis Avulsos", slug: "lencois-avulsos", icon: "fas fa-scroll" },
+            { name: "Fronhas Avulsas", slug: "fronhas-avulsas", icon: "fas fa-square" },
+            { name: "Mantas para Sofá", slug: "mantas-para-sofa", icon: "fas fa-couch" },
+            { name: "Toalhas de Praia e Piscina", slug: "toalhas-praia-piscina", icon: "fas fa-umbrella-beach" }
+        ]
+      },
+      { 
+        name: "Casa e Construção", 
+        slug: "casa-e-construcao", 
+        icon: "fas fa-tools", 
+        subcategories: [ 
+            { name: "Ferramentas Elétricas (Furadeiras, Serras)", slug: "ferramentas-eletricas", icon: "fas fa-bolt" },
+            { name: "Ferramentas Manuais (Martelos, Chaves)", slug: "ferramentas-manuais", icon: "fas fa-hammer" },
+            { name: "Materiais de Construção (Cimento, Tijolo)", slug: "materiais-construcao", icon: "fas fa-bricks" },
+            { name: "Tintas e Acessórios de Pintura", slug: "tintas-acessorios-pintura", icon: "fas fa-paint-roller" },
+            { name: "Materiais Hidráulicos (Canos, Torneiras)", slug: "materiais-hidraulicos", icon: "fas fa-faucet" },
+            { name: "Materiais Elétricos (Fios, Disjuntores)", slug: "materiais-eletricos", icon: "fas fa-lightbulb" },
+            { name: "Equipamentos de Proteção Individual (EPI)", slug: "epi-seguranca-trabalho", icon: "fas fa-hard-hat" },
+            { name: "Jardinagem e Paisagismo (Ferramentas, Sementes)", slug: "jardinagem-paisagismo", icon: "fas fa-leaf" },
+            { name: "Organização e Armazenamento (Prateleiras, Caixas)", slug: "organizacao-armazenamento-casa", icon: "fas fa-boxes" },
+            { name: "Ferragens (Dobradiças, Fechaduras)", slug: "ferragens", icon: "fas fa-key" },
+            { name: "Pisos e Revestimentos", slug: "pisos-revestimentos", icon: "fas fa-th-large" },
+            { name: "Portas e Janelas", slug: "portas-janelas", icon: "fas fa-door-open" },
+            { name: "Iluminação Residencial (Lâmpadas, Luminárias)", slug: "iluminacao-residencial", icon: "far fa-lightbulb" },
+            { name: "Segurança Residencial (Câmeras, Alarmes)", slug: "seguranca-residencial", icon: "fas fa-shield-house" },
+            { name: "Aquecedores de Água", slug: "aquecedores-agua", icon: "fas fa-temperature-high" },
+            { name: "Ventilação e Climatização (Ventiladores, Ar Cond.)", slug: "ventilacao-climatizacao-casa", icon: "fas fa-wind" },
+            { name: "Escadas Domésticas e Profissionais", slug: "escadas", icon: "fas fa-level-up-alt" },
+            { name: "Materiais para Telhado", slug: "materiais-telhado", icon: "fas fa-home" },
+            { name: "Impermeabilizantes", slug: "impermeabilizantes", icon: "fas fa-tint-slash" },
+            { name: "Argamassas e Rejuntes", slug: "argamassas-rejuntes", icon: "fas fa-fill-drip" },
+            { name: "Equipamentos para Limpeza Pesada", slug: "equipamentos-limpeza-pesada", icon: "fas fa-broom" },
+            { name: "Automação Residencial (Interruptores Inteligentes)", slug: "automacao-residencial", icon: "fas fa-robot" },
+            { name: "Churrasqueiras e Acessórios", slug: "churrasqueiras-acessorios", icon: "fas fa-drumstick-bite" },
+            { name: "Piscinas e Acessórios", slug: "piscinas-acessorios", icon: "fas fa-swimmer" },
+            { name: "Decoração de Jardim (Vasos, Fontes)", slug: "decoracao-jardim", icon: "fas fa-seedling" }
+        ]
+      },
+      { 
+        name: "Eletrodomésticos", 
+        slug: "eletrodomesticos", 
+        icon: "fas fa-blender-phone",
+        subcategories: [ 
+            { name: "Geladeiras e Refrigeradores", slug: "geladeiras-refrigeradores", icon: "fas fa-door-closed" },
+            { name: "Fogões e Cooktops", slug: "fogoes-cooktops", icon: "fas fa-fire" },
+            { name: "Fornos Elétricos e a Gás", slug: "fornos-eletricos-gas", icon: "fas fa-stroopwafel" },
+            { name: "Micro-ondas", slug: "micro-ondas", icon: "fas fa-cube" },
+            { name: "Máquinas de Lavar Roupa", slug: "maquinas-lavar-roupa", icon: "fas fa-soap" },
+            { name: "Secadoras de Roupa", slug: "secadoras-roupa", icon: "fas fa-wind" },
+            { name: "Lava-louças", slug: "lava-loucas", icon: "fas fa-glass-martini-alt" },
+            { name: "Freezers (Horizontal e Vertical)", slug: "freezers", icon: "fas fa-snowflake" },
+            { name: "Adegas Climatizadas", slug: "adegas-climatizadas", icon: "fas fa-wine-bottle" },
+            { name: "Coifas e Depuradores de Ar", slug: "coifas-depuradores", icon: "fas fa-fan" },
+            { name: "Ar Condicionado (Janela, Split)", slug: "ar-condicionado", icon: "fas fa-thermometer-quarter" },
+            { name: "Climatizadores de Ar", slug: "climatizadores-ar", icon: "fas fa-wind" },
+            { name: "Aquecedores de Ambiente", slug: "aquecedores-ambiente", icon: "fas fa-fire-alt" },
+            { name: "Bebedouros e Purificadores de Água", slug: "bebedouros-purificadores-agua", icon: "fas fa-tint" },
+            { name: "Máquinas de Gelo", slug: "maquinas-de-gelo", icon: "fas fa-icicles" },
+            { name: "Frigobares", slug: "frigobares", icon: "fas fa-door-closed" },
+            { name: "Cervejeiras", slug: "cervejeiras", icon: "fas fa-beer" },
+            { name: "Peças e Acessórios para Eletrodomésticos", slug: "pecas-acessorios-eletrodomesticos", icon: "fas fa-tools" },
+            { name: "Eletrodomésticos Embutir", slug: "eletrodomesticos-embutir", icon: "fas fa-th" },
+            { name: "Centrífugas de Roupa", slug: "centrifugas-de-roupa", icon: "fas fa-sync-alt" },
+            { name: "Fogões a Lenha (Modernos)", slug: "fogoes-a-lenha-modernos", icon: "fas fa-campground" },
+            { name: "Trituradores de Alimentos (Pia)", slug: "trituradores-alimentos-pia", icon: "fas fa-trash-alt" },
+            { name: "Máquinas de Café Expresso (Embutidas/Grandes)", slug: "maquinas-cafe-expresso-grandes", icon: "fas fa-coffee" },
+            { name: "Chopeiras Elétricas", slug: "chopeiras-eletricas", icon: "fas fa-beer" },
+            { name: "Aspiradores de Pó Robô (Grandes/Integrados)", slug: "aspiradores-robo-grandes", icon: "fas fa-robot" }
+        ]
+      },
+      { 
+        name: "Eletroportáteis", 
+        slug: "eletroportateis", 
+        icon: "fas fa-coffee", 
+        subcategories: [ 
+            { name: "Cafeteiras Elétricas e Expressas", slug: "cafeteiras-eletricas-expressas", icon: "fas fa-coffee" },
+            { name: "Liquidificadores e Processadores", slug: "liquidificadores-processadores", icon: "fas fa-blender" },
+            { name: "Batedeiras (Planetárias, Comuns)", slug: "batedeiras", icon: "fas fa-birthday-cake" },
+            { name: "Sanduicheiras e Grills", slug: "sanduicheiras-grills", icon: "fas fa-hamburger" },
+            { name: "Torradeiras", slug: "torradeiras", icon: "fas fa-bread-slice" },
+            { name: "Fritadeiras Elétricas (Airfryers)", slug: "fritadeiras-eletricas-airfryers", icon: "fas fa-cloud-meatball" },
+            { name: "Panelas Elétricas (Arroz, Pressão)", slug: "panelas-eletricas", icon: "fas fa-utensil-spoon" },
+            { name: "Fornos Elétricos de Bancada", slug: "fornos-eletricos-bancada", icon: "fas fa-stroopwafel" },
+            { name: "Mixers e Multiprocessadores", slug: "mixers-multiprocessadores", icon: "fas fa-blender-phone" },
+            { name: "Aspiradores de Pó e Água (Portáteis)", slug: "aspiradores-po-agua-portateis", icon: "fas fa-broom" },
+            { name: "Ferros de Passar Roupa", slug: "ferros-passar-roupa", icon: "fas fa-tshirt" },
+            { name: "Vaporizadores e Higienizadores Portáteis", slug: "vaporizadores-higienizadores-portateis", icon: "fas fa-steam" },
+            { name: "Chaleiras Elétricas", slug: "chaleiras-eletricas", icon: "fas fa-mug-hot" },
+            { name: "Espremedores de Frutas", slug: "espremedores-frutas", icon: "fas fa-lemon" },
+            { name: "Máquinas de Waffle e Crepe", slug: "maquinas-waffle-crepe", icon: "fas fa-stroopwafel" },
+            { name: "Pipoqueiras Elétricas", slug: "pipoqueiras-eletricas", icon: "fas fa-film" },
+            { name: "Moedores de Café e Grãos", slug: "moedores-cafe-graos", icon: "fas fa-seedling" },
+            { name: "Balanças de Cozinha", slug: "balancas-de-cozinha", icon: "fas fa-balance-scale" },
+            { name: "Máquinas de Cupcake e Donuts", slug: "maquinas-cupcake-donuts", icon: "fas fa-birthday-cake" },
+            { name: "Abridor de Latas Elétrico", slug: "abridor-latas-eletrico", icon: "fas fa-box" },
+            { name: "Fontes de Chocolate", slug: "fontes-de-chocolate", icon: "fas fa-tint" },
+            { name: "Máquinas de Algodão Doce", slug: "maquinas-algodao-doce", icon: "fas fa-cloud" },
+            { name: "Seladoras a Vácuo Portáteis", slug: "seladoras-vacuo-portateis", icon: "fas fa-archive" },
+            { name: "Mini Geladeiras Portáteis", slug: "mini-geladeiras-portateis", icon: "fas fa-cube" },
+            { name: "Umidificadores de Ar (Pequenos)", slug: "umidificadores-ar-pequenos", icon: "fas fa-water" }
+        ]
+      },
+      { 
+        name: "Esporte e Lazer", 
+        slug: "esporte-e-lazer", 
+        icon: "fas fa-futbol", 
+        subcategories: [ 
+            { name: "Bicicletas (Mountain Bike, Speed, Urbanas)", slug: "bicicletas", icon: "fas fa-bicycle" },
+            { name: "Equipamentos de Academia (Halteres, Anilhas)", slug: "equipamentos-academia", icon: "fas fa-dumbbell" },
+            { name: "Roupas Esportivas (Camisetas, Shorts)", slug: "roupas-esportivas", icon: "fas fa-running" },
+            { name: "Tênis Esportivos (Corrida, Treino)", slug: "tenis-esportivos", icon: "fas fa-shoe-prints" },
+            { name: "Bolas Esportivas (Futebol, Basquete, Vôlei)", slug: "bolas-esportivas", icon: "fas fa-futbol" },
+            { name: "Suplementos Alimentares", slug: "suplementos-alimentares", icon: "fas fa-pills" },
+            { name: "Artigos para Camping (Barracas, Sacos de Dormir)", slug: "artigos-camping", icon: "fas fa-campground" },
+            { name: "Artigos para Pesca (Varas, Molinetes)", slug: "artigos-pesca", icon: "fas fa-fish" },
+            { name: "Skates, Patins e Patinetes", slug: "skates-patins-patinetes", icon: "fas fa-skating" },
+            { name: "Equipamentos para Natação (Óculos, Toucas)", slug: "equipamentos-natacao", icon: "fas fa-swimmer" },
+            { name: "Monitores Cardíacos e Smartbands", slug: "monitores-cardiacos-smartbands", icon: "fas fa-heartbeat" },
+            { name: "Mochilas e Bolsas Esportivas", slug: "mochilas-bolsas-esportivas", icon: "fas fa-briefcase" },
+            { name: "Equipamentos de Luta (Luvas, Kimonos)", slug: "equipamentos-luta", icon: "fas fa-fist-raised" },
+            { name: "Artigos para Praia (Cadeiras, Guarda-sóis)", slug: "artigos-praia", icon: "fas fa-umbrella-beach" },
+            { name: "Jogos de Salão (Sinuca, Pebolim)", slug: "jogos-salao", icon: "fas fa-table-tennis" },
+            { name: "Drones Recreativos", slug: "drones-recreativos", icon: "fas fa-helicopter" },
+            { name: "Equipamentos de Mergulho", slug: "equipamentos-mergulho", icon: "fas fa-water" },
+            { name: "Roupas de Ciclismo", slug: "roupas-ciclismo", icon: "fas fa-biking" },
+            { name: "Acessórios para Bicicleta (Capacetes, Luzes)", slug: "acessorios-bicicleta", icon: "fas fa-tools" },
+            { name: "Equipamentos de Yoga e Pilates", slug: "equipamentos-yoga-pilates", icon: "fas fa-spa" },
+            { name: "Tabelas de Basquete", slug: "tabelas-basquete", icon: "fas fa-basketball-ball" },
+            { name: "Redes Esportivas (Vôlei, Tênis)", slug: "redes-esportivas", icon: "fas fa-network-wired" },
+            { name: "Equipamentos de Escalada", slug: "equipamentos-escalada", icon: "fas fa-mountain" },
+            { name: "Pranchas de Surf e Stand Up Paddle", slug: "pranchas-surf-sup", icon: "fas fa-water" },
+            { name: "Coolers e Caixas Térmicas", slug: "coolers-caixas-termicas", icon: "fas fa-box" }
+        ]
+      },
+      { 
+        name: "Games", 
+        slug: "games", 
+        icon: "fas fa-gamepad", 
+        subcategories: [ 
+            { name: "Consoles de Videogame (PlayStation, Xbox, Nintendo)", slug: "consoles-videogame", icon: "fas fa-gamepad" },
+            { name: "Jogos para Consoles (Mídia Física e Digital)", slug: "jogos-consoles", icon: "fas fa-compact-disc" },
+            { name: "Jogos para PC (Mídia Física e Digital)", slug: "jogos-pc", icon: "fas fa-download" },
+            { name: "Controles e Joysticks", slug: "controles-joysticks", icon: "fas fa-gamepad" },
+            { name: "Headsets Gamers", slug: "headsets-gamers", icon: "fas fa-headphones-alt" },
+            { name: "Teclados Gamers", slug: "teclados-gamers", icon: "fas fa-keyboard" },
+            { name: "Mouses Gamers", slug: "mouses-gamers", icon: "fas fa-mouse-pointer" },
+            { name: "Mousepads Gamers", slug: "mousepads-gamers", icon: "far fa-square" },
+            { name: "Monitores Gamers", slug: "monitores-gamers", icon: "fas fa-desktop" },
+            { name: "Cadeiras Gamers", slug: "cadeiras-gamers", icon: "fas fa-chair" },
+            { name: "Acessórios para Consoles (Cabos, Carregadores)", slug: "acessorios-consoles", icon: "fas fa-plug" },
+            { name: "Realidade Virtual (VR) para Games", slug: "realidade-virtual-vr-games", icon: "fas fa-vr-cardboard" },
+            { name: "Volantes e Pedais para Jogos de Corrida", slug: "volantes-pedais-games", icon: "fas fa-car" },
+            { name: "Arcades e Fliperamas (Miniaturas, Controles)", slug: "arcades-fliperamas", icon: "fas fa-ghost" },
+            { name: "Gift Cards e Créditos para Lojas de Games", slug: "gift-cards-creditos-games", icon: "fas fa-gift" },
+            { name: "Mesas Gamers", slug: "mesas-gamers", icon: "fas fa-desktop" },
+            { name: "Componentes para PC Gamer (Placas de Vídeo, RAM)", slug: "componentes-pc-gamer", icon: "fas fa-microchip" },
+            { name: "Gabinetes Gamers", slug: "gabinetes-gamers", icon: "fas fa-cube" },
+            { name: "Cooling para PC Gamer (Watercoolers, Fans)", slug: "cooling-pc-gamer", icon: "fas fa-fan" },
+            { name: "Fontes de Alimentação para PC Gamer", slug: "fontes-pc-gamer", icon: "fas fa-bolt" },
+            { name: "Software de Captura e Streaming de Jogos", slug: "software-captura-streaming-games", icon: "fas fa-video" },
+            { name: "Action Figures e Colecionáveis de Games", slug: "action-figures-colecionaveis-games", icon: "fas fa-user-astronaut" },
+            { name: "Livros e Guias de Estratégia de Games", slug: "livros-guias-games", icon: "fas fa-book" },
+            { name: "Roupas e Acessórios Temáticos de Games", slug: "roupas-acessorios-games", icon: "fas fa-tshirt" },
+            { name: "Serviços de Assinatura de Games (Plus, Game Pass)", slug: "assinatura-servicos-games", icon: "fas fa-id-card" }
+        ]
+      },
+      { 
+        name: "Industrial e Comercial", 
+        slug: "industrial-e-comercial", 
+        icon: "fas fa-industry", 
+        subcategories: [ 
+            { name: "Máquinas e Equipamentos Industriais", slug: "maquinas-equipamentos-industriais", icon: "fas fa-cogs" },
+            { name: "Ferramentas Industriais (Pneumáticas, Elétricas)", slug: "ferramentas-industriais", icon: "fas fa-wrench" },
+            { name: "Automação Industrial (CLPs, Sensores)", slug: "automacao-industrial", icon: "fas fa-robot" },
+            { name: "Equipamentos de Proteção Coletiva (EPC)", slug: "epc-industrial", icon: "fas fa-shield-alt" },
+            { name: "Equipamentos para Comércio (Balcões, Gôndolas)", slug: "equipamentos-comercio", icon: "fas fa-store" },
+            { name: "Impressoras Fiscais e Leitores de Código de Barras", slug: "impressoras-fiscais-leitores-codbarras", icon: "fas fa-barcode" },
+            { name: "Balanças Comerciais e Industriais", slug: "balancas-comerciais-industriais", icon: "fas fa-balance-scale-right" },
+            { name: "Embalagens Industriais e Comerciais", slug: "embalagens-industriais-comerciais", icon: "fas fa-box-tissue" },
+            { name: "Sinalização Industrial e Comercial", slug: "sinalizacao-industrial-comercial", icon: "fas fa-traffic-light" },
+            { name: "Mobiliário para Escritório e Comércio", slug: "mobiliario-escritorio-comercio", icon: "fas fa-chair" },
+            { name: "Equipamentos de Limpeza Profissional", slug: "equipamentos-limpeza-profissional", icon: "fas fa-broom" },
+            { name: "Uniformes Profissionais", slug: "uniformes-profissionais", icon: "fas fa-user-tie" },
+            { name: "Geradores de Energia", slug: "geradores-de-energia", icon: "fas fa-bolt" },
+            { name: "Compressores de Ar Industriais", slug: "compressores-ar-industriais", icon: "fas fa-compress-arrows-alt" },
+            { name: "Equipamentos de Soldagem", slug: "equipamentos-de-soldagem", icon: "fas fa-burn" },
+            { name: "Bombas Hidráulicas Industriais", slug: "bombas-hidraulicas-industriais", icon: "fas fa-water" },
+            { name: "Motores Elétricos Industriais", slug: "motores-eletricos-industriais", icon: "fas fa-cogs" },
+            { name: "Correias e Polias Industriais", slug: "correias-polias-industriais", icon: "fas fa-sync-alt" },
+            { name: "Rolamentos Industriais", slug: "rolamentos-industriais", icon: "far fa-circle" },
+            { name: "Válvulas Industriais", slug: "valvulas-industriais", icon: "fas fa-valve" },
+            { name: "Equipamentos para Food Service (Fornos, Freezers Ind.)", slug: "equipamentos-food-service", icon: "fas fa-utensils" },
+            { name: "Carrinhos de Carga e Plataformas", slug: "carrinhos-carga-plataformas", icon: "fas fa-dolly-flatbed" },
+            { name: "Sistemas de Ponto Eletrônico", slug: "sistemas-ponto-eletronico", icon: "fas fa-fingerprint" },
+            { name: "Cofres Comerciais e Industriais", slug: "cofres-comerciais-industriais", icon: "fas fa-lock" },
+            { name: "Equipamentos para Laboratório (Básico)", slug: "equipamentos-laboratorio-basico", icon: "fas fa-flask" }
+        ]
+      },
+      { 
+        name: "Instrumentos Musicais", 
+        slug: "instrumentos-musicais", 
+        icon: "fas fa-guitar", 
+        subcategories: [ 
+            { name: "Guitarras Elétricas", slug: "guitarras-eletricas", icon: "fas fa-guitar" },
+            { name: "Violões (Aço e Nylon)", slug: "violoes", icon: "fas fa-music" },
+            { name: "Baixos Elétricos (Contrabaixos)", slug: "baixos-eletricos", icon: "fas fa-guitar" },
+            { name: "Teclados e Pianos Digitais", slug: "teclados-pianos-digitais", icon: "fas fa-piano" },
+            { name: "Baterias Acústicas e Eletrônicas", slug: "baterias-acusticas-eletronicas", icon: "fas fa-drum" },
+            { name: "Instrumentos de Sopro (Flautas, Saxofones)", slug: "instrumentos-sopro", icon: "fas fa-wind" },
+            { name: "Instrumentos de Cordas Clássicas (Violinos, Cellos)", slug: "instrumentos-cordas-classicas", icon: "fas fa-violin" },
+            { name: "Equipamentos de Áudio para Músicos (Mesas, Interfaces)", slug: "equipamentos-audio-musicos", icon: "fas fa-sliders-h" },
+            { name: "Microfones para Palco e Estúdio", slug: "microfones-palco-estudio", icon: "fas fa-microphone-alt" },
+            { name: "Pedais e Efeitos para Guitarra e Baixo", slug: "pedais-efeitos-guitarra-baixo", icon: "fas fa-compact-disc" },
+            { name: "Amplificadores para Guitarra e Baixo", slug: "amplificadores-guitarra-baixo", icon: "fas fa-volume-up" },
+            { name: "Cabos e Conectores para Instrumentos", slug: "cabos-conectores-instrumentos", icon: "fas fa-plug" },
+            { name: "Acessórios (Palhetas, Correias, Capotrastes)", slug: "acessorios-instrumentos-musicais", icon: "fas fa-tag" },
+            { name: "Ukuleles", slug: "ukuleles", icon: "fas fa-music" },
+            { name: "Instrumentos de Percussão (Pandeiros, Cajons)", slug: "instrumentos-percussao", icon: "fas fa-drum-steelpan" },
+            { name: "Acordeons e Sanfonas", slug: "acordeons-sanfonas", icon: "fas fa-accordion" },
+            { name: "DJ Equipment (Controladoras, Mixers DJ)", slug: "dj-equipment", icon: "fas fa-record-vinyl" },
+            { name: "Fones de Ouvido para Monitoramento e Estúdio", slug: "fones-monitoramento-estudio", icon: "fas fa-headphones" },
+            { name: "Software de Produção Musical (DAWs)", slug: "software-producao-musical-daws", icon: "fas fa-sliders-h" },
+            { name: "Partituras e Livros de Música", slug: "partituras-livros-musica", icon: "fas fa-book-open" },
+            { name: "Cases e Bags para Instrumentos", slug: "cases-bags-instrumentos", icon: "fas fa-briefcase" },
+            { name: "Afinadores e Metrônomos", slug: "afinadores-metronomos", icon: "fas fa-tachometer-alt" },
+            { name: "Suportes para Instrumentos e Partituras", slug: "suportes-instrumentos-partituras", icon: "fas fa-chair" },
+            { name: "Iluminação para Palco e DJ", slug: "iluminacao-palco-dj", icon: "far fa-lightbulb" },
+            { name: "Instrumentos Infantis (Educacionais)", slug: "instrumentos-infantis-educacionais", icon: "fas fa-child" }
+        ]
+      },
+      { 
+        name: "Mercado", 
+        slug: "mercado", 
+        icon: "fas fa-shopping-cart", 
+        subcategories: [ 
+            { name: "Alimentos Básicos (Arroz, Feijão, Óleo)", slug: "alimentos-basicos", icon: "fas fa-seedling" },
+            { name: "Mercearia Doce (Biscoitos, Chocolates, Doces)", slug: "mercearia-doce", icon: "fas fa-cookie-bite" },
+            { name: "Mercearia Salgada (Salgadinhos, Conservas)", slug: "mercearia-salgada", icon: "fas fa-pepper-hot" },
+            { name: "Bebidas Não Alcoólicas (Refrigerantes, Sucos, Água)", slug: "bebidas-nao-alcoolicas", icon: "fas fa-glass-whiskey" },
+            { name: "Bebidas Alcoólicas (Cervejas, Vinhos, Destilados)", slug: "bebidas-alcoolicas", icon: "fas fa-beer" },
+            { name: "Produtos de Limpeza para Casa", slug: "produtos-limpeza-casa", icon: "fas fa-soap" },
+            { name: "Higiene Pessoal (Shampoo, Sabonete, Papel Hig.)", slug: "higiene-pessoal-mercado", icon: "fas fa-pump-soap" },
+            { name: "Frios e Laticínios (Queijos, Iogurtes, Manteiga)", slug: "frios-laticinios", icon: "fas fa-cheese" },
+            { name: "Congelados (Carnes, Pratos Prontos, Sorvetes)", slug: "congelados", icon: "fas fa-snowflake" },
+            { name: "Padaria e Confeitaria (Pães, Bolos, Salgados)", slug: "padaria-confeitaria", icon: "fas fa-bread-slice" },
+            { name: "Hortifrúti (Frutas, Verduras, Legumes)", slug: "hortifruti", icon: "fas fa-carrot" },
+            { name: "Carnes, Aves e Peixes (Açougue)", slug: "carnes-aves-peixes-acougue", icon: "fas fa-drumstick-bite" },
+            { name: "Alimentos para Pets (Ração, Petiscos)", slug: "alimentos-para-pets-mercado", icon: "fas fa-bone" },
+            { name: "Produtos Naturais e Orgânicos", slug: "produtos-naturais-organicos-mercado", icon: "fas fa-leaf" },
+            { name: "Produtos Diet e Light", slug: "produtos-diet-light", icon: "fas fa-apple-alt" },
+            { name: "Produtos Sem Glúten e Sem Lactose", slug: "produtos-sem-gluten-sem-lactose", icon: "fas fa-bread-slice" },
+            { name: "Produtos Importados (Alimentos)", slug: "produtos-importados-alimentos", icon: "fas fa-globe-americas" },
+            { name: "Utilidades Domésticas Básicas (Fósforos, Velas)", slug: "utilidades-domesticas-basicas-mercado", icon: "fas fa-concierge-bell" },
+            { name: "Produtos para Churrasco (Carvão, Sal Grosso)", slug: "produtos-para-churrasco-mercado", icon: "fas fa-fire-alt" },
+            { name: "Comida para Bebês (Papinhas, Leites Especiais)", slug: "comida-para-bebes-mercado", icon: "fas fa-baby" },
+            { name: "Produtos de Café da Manhã (Cereais, Geleias)", slug: "produtos-cafe-da-manha", icon: "fas fa-mug-hot" },
+            { name: "Temperos e Condimentos", slug: "temperos-condimentos", icon: "fas fa-pepper-hot" },
+            { name: "Massas e Molhos", slug: "massas-molhos", icon: "fas fa-utensil-spoon" },
+            { name: "Sopas e Caldos Prontos", slug: "sopas-caldos-prontos", icon: "fas fa-concierge-bell" },
+            { name: "Descartáveis (Copos, Pratos, Talheres)", slug: "descartaveis-mercado", icon: "fas fa-recycle" }
+        ]
+      },
+      { 
+        name: "Móveis e Decoração", 
+        slug: "moveis-e-decoracao", 
+        icon: "fas fa-couch", 
+        subcategories: [ 
+            { name: "Sofás e Poltronas", slug: "sofas-poltronas", icon: "fas fa-couch" },
+            { name: "Racks, Painéis e Estantes para TV", slug: "racks-paineis-estantes-tv", icon: "fas fa-tv" },
+            { name: "Mesas de Jantar e Cadeiras", slug: "mesas-jantar-cadeiras", icon: "fas fa-utensils" },
+            { name: "Guarda-Roupas e Closets", slug: "guarda-roupas-closets", icon: "fas fa-door-closed" },
+            { name: "Camas (Solteiro, Casal, Queen, King)", slug: "camas", icon: "fas fa-bed" },
+            { name: "Colchões", slug: "colchoes", icon: "fas fa-bed" },
+            { name: "Móveis para Escritório (Mesas, Cadeiras Office)", slug: "moveis-escritorio", icon: "fas fa-briefcase" },
+            { name: "Móveis para Cozinha (Armários, Balcões)", slug: "moveis-cozinha", icon: "fas fa-blender" },
+            { name: "Móveis para Banheiro (Gabinetes, Espelheiras)", slug: "moveis-banheiro", icon: "fas fa-bath" },
+            { name: "Móveis Infantis e Juvenis", slug: "moveis-infantis-juvenis", icon: "fas fa-child" },
+            { name: "Objetos de Decoração (Vasos, Quadros, Esculturas)", slug: "objetos-decoracao", icon: "fas fa-palette" },
+            { name: "Iluminação Decorativa (Lustres, Abajures, Spots)", slug: "iluminacao-decorativa", icon: "far fa-lightbulb" },
+            { name: "Tapetes Decorativos", slug: "tapetes-decorativos", icon: "fas fa-rug" },
+            { name: "Cortinas, Persianas e Blackouts Decorativos", slug: "cortinas-persianas-decorativas", icon: "fas fa-window-maximize" },
+            { name: "Espelhos Decorativos", slug: "espelhos-decorativos", icon: "far fa-square" },
+            { name: "Almofadas e Capas Decorativas", slug: "almofadas-capas-decorativas", icon: "fas fa-couch" },
+            { name: "Móveis para Área Externa e Jardim", slug: "moveis-area-externa-jardim", icon: "fas fa-tree" },
+            { name: "Organizadores para Casa (Caixas, Cestos Decor.)", slug: "organizadores-casa-decorativos", icon: "fas fa-box-open" },
+            { name: "Papel de Parede e Adesivos Decorativos", slug: "papel-parede-adesivos-decorativos", icon: "fas fa-sticky-note" },
+            { name: "Velas Decorativas e Aromatizadores de Ambiente", slug: "velas-aromatizadores-decorativos", icon: "fas fa-burn" },
+            { name: "Biombos e Divisórias Decorativas", slug: "biombos-divisorias-decorativas", icon: "fas fa-columns" },
+            { name: "Prateleiras e Nichos Decorativos", slug: "prateleiras-nichos-decorativos", icon: "fas fa-th-list" },
+            { name: "Cabeceiras de Cama", slug: "cabeceiras-de-cama", icon: "fas fa-bed" },
+            { name: "Puffs e Bancos Decorativos", slug: "puffs-bancos-decorativos", icon: "fas fa-chair" },
+            { name: "Relógios de Parede e Mesa Decorativos", slug: "relogios-parede-mesa-decorativos", icon: "far fa-clock" }
+        ]
+      },
+      { 
+        name: "Moda e Acessórios", 
+        slug: "moda-e-acessorios", 
+        icon: "fas fa-tshirt", 
+        subcategories: [ 
+            { name: "Roupas Femininas (Blusas, Vestidos, Calças)", slug: "roupas-femininas", icon: "fas fa-female" },
+            { name: "Roupas Masculinas (Camisas, Calças, Bermudas)", slug: "roupas-masculinas", icon: "fas fa-male" },
+            { name: "Roupas Infantis (Meninos e Meninas)", slug: "roupas-infantis-moda", icon: "fas fa-child" },
+            { name: "Calçados Femininos (Sapatos, Sandálias, Botas)", slug: "calcados-femininos", icon: "fas fa-shoe-prints" },
+            { name: "Calçados Masculinos (Sapatos, Tênis Casual, Botas)", slug: "calcados-masculinos", icon: "fas fa-shoe-prints" },
+            { name: "Calçados Infantis", slug: "calcados-infantis-moda", icon: "fas fa-shoe-prints" },
+            { name: "Bolsas e Carteiras Femininas", slug: "bolsas-carteiras-femininas", icon: "fas fa-briefcase" },
+            { name: "Acessórios Masculinos (Cintos, Carteiras, Gravatas)", slug: "acessorios-masculinos", icon: "fas fa-user-tie" },
+            { name: "Joias e Semijoias (Anéis, Colares, Brincos)", slug: "joias-semijoias", icon: "far fa-gem" },
+            { name: "Relógios (Masculinos e Femininos)", slug: "relogios", icon: "far fa-clock" },
+            { name: "Óculos de Sol e de Grau", slug: "oculos-sol-grau", icon: "fas fa-glasses" },
+            { name: "Moda Praia (Biquínis, Sungas, Saídas)", slug: "moda-praia", icon: "fas fa-umbrella-beach" },
+            { name: "Moda Fitness (Roupas para Academia)", slug: "moda-fitness", icon: "fas fa-dumbbell" },
+            { name: "Lingerie e Roupa Íntima", slug: "lingerie-roupa-intima", icon: "fas fa-heart" },
+            { name: "Pijamas e Camisolas", slug: "pijamas-camisolas", icon: "fas fa-bed" },
+            { name: "Malas e Acessórios de Viagem", slug: "malas-acessorios-viagem", icon: "fas fa-suitcase-rolling" },
+            { name: "Chapéus, Bonés e Gorros", slug: "chapeus-bones-gorros", icon: "fas fa-hat-cowboy" },
+            { name: "Cintos (Femininos e Masculinos)", slug: "cintos", icon: "fas fa-ellipsis-h" },
+            { name: "Meias (Sociais, Esportivas, Casuais)", slug: "meias", icon: "fas fa-socks" },
+            { name: "Acessórios para Cabelo (Tiaras, Presilhas)", slug: "acessorios-para-cabelo", icon: "fas fa-cut" },
+            { name: "Moda Plus Size (Feminina e Masculina)", slug: "moda-plus-size", icon: "fas fa-plus-square" },
+            { name: "Moda Gestante", slug: "moda-gestante", icon: "fas fa-baby-carriage" },
+            { name: "Roupas Sociais e de Festa", slug: "roupas-sociais-festa", icon: "fas fa-user-tie" },
+            { name: "Brechó e Moda Sustentável (Peças Selecionadas)", slug: "brecho-moda-sustentavel", icon: "fas fa-recycle" },
+            { name: "Fantasias para Adultos", slug: "fantasias-para-adultos", icon: "fas fa-theater-masks" }
+        ]
+      },
+      { 
+        name: "Pets", 
+        slug: "pets", 
+        icon: "fas fa-paw", 
+        subcategories: [ 
+            { name: "Ração para Cães", slug: "racao-para-caes", icon: "fas fa-bone" },
+            { name: "Ração para Gatos", slug: "racao-para-gatos", icon: "fas fa-cat" },
+            { name: "Petiscos para Cães e Gatos", slug: "petiscos-caes-gatos", icon: "fas fa-cookie" },
+            { name: "Brinquedos para Pets", slug: "brinquedos-para-pets", icon: "fas fa-baseball-ball" },
+            { name: "Caminhas e Casinhas para Pets", slug: "caminhas-casinhas-pets", icon: "fas fa-home" },
+            { name: "Coleiras, Guias e Peitorais", slug: "coleiras-guias-peitorais", icon: "fas fa-dog" },
+            { name: "Produtos de Higiene Pet (Shampoos, Perfumes)", slug: "produtos-higiene-pet", icon: "fas fa-bath" },
+            { name: "Tapetes Higiênicos e Caixas de Areia", slug: "tapetes-higienicos-caixas-areia", icon: "fas fa-toilet-paper" },
+            { name: "Comedouros e Bebedouros", slug: "comedouros-bebedouros-pets", icon: "fas fa-utensil-spoon" },
+            { name: "Roupas e Acessórios para Pets", slug: "roupas-acessorios-pets", icon: "fas fa-tshirt" },
+            { name: "Medicamentos e Antipulgas (com prescrição/orientação)", slug: "medicamentos-antipulgas-pets", icon: "fas fa-pills" },
+            { name: "Aquários e Acessórios para Peixes", slug: "aquarios-acessorios-peixes", icon: "fas fa-fish" },
+            { name: "Gaiolas e Acessórios para Pássaros", slug: "gaiolas-acessorios-passaros", icon: "fas fa-dove" },
+            { name: "Produtos para Roedores (Hamsters, Coelhos)", slug: "produtos-para-roedores", icon: "fas fa-paw" },
+            { name: "Transporte Pet (Caixas de Transporte, Bolsas)", slug: "transporte-pet", icon: "fas fa-suitcase" },
+            { name: "Adestramento e Comportamento Pet", slug: "adestramento-comportamento-pet", icon: "fas fa-whistle" },
+            { name: "Produtos de Limpeza para Ambiente Pet", slug: "produtos-limpeza-ambiente-pet", icon: "fas fa-spray-can" },
+            { name: "Cercados e Portões para Pets", slug: "cercados-portoes-pets", icon: "fas fa-bars" },
+            { name: "Arranhadores para Gatos", slug: "arranhadores-para-gatos", icon: "fas fa-cat" },
+            { name: "Ossos e Mastigáveis Naturais", slug: "ossos-mastigaveis-naturais", icon: "fas fa-bone" },
+            { name: "Suplementos Vitamínicos para Pets", slug: "suplementos-vitaminicos-pets", icon: "fas fa-capsules" },
+            { name: "Produtos para Viagem com Pets", slug: "produtos-viagem-com-pets", icon: "fas fa-plane-departure" },
+            { name: "Serviços Pet (Indicação de Banho/Tosa, Veterinário)", slug: "servicos-pet-indicacao", icon: "fas fa-clinic-medical" },
+            { name: "Livros e Guias sobre Cuidados com Pets", slug: "livros-guias-cuidados-pets", icon: "fas fa-book" },
+            { name: "Memorial Pet (Urnas, Placas)", slug: "memorial-pet", icon: "fas fa-heart-broken" }
+        ]
+      },
+      { 
+        name: "Papelaria", 
+        slug: "papelaria", 
+        icon: "fas fa-pencil-alt", 
+        subcategories: [ 
+            { name: "Cadernos e Blocos de Anotações", slug: "cadernos-blocos-anotacoes", icon: "fas fa-book-reader" },
+            { name: "Canetas e Lápis (Esferográficas, Hidrocor, Grafite)", slug: "canetas-lapis", icon: "fas fa-pen-nib" },
+            { name: "Material de Desenho e Pintura (Tintas, Pincéis)", slug: "material-desenho-pintura", icon: "fas fa-paint-brush" },
+            { name: "Material Escolar (Mochilas, Estojos, Lancheiras)", slug: "material-escolar", icon: "fas fa-graduation-cap" },
+            { name: "Material para Escritório (Grampeadores, Clips, Pastas)", slug: "material-para-escritorio", icon: "fas fa-folder-open" },
+            { name: "Agendas e Planners", slug: "agendas-planners", icon: "far fa-calendar-alt" },
+            { name: "Papéis Especiais (Fotográfico, Sulfite Colorido)", slug: "papeis-especiais", icon: "far fa-file-alt" },
+            { name: "Envelopes e Etiquetas", slug: "envelopes-etiquetas", icon: "far fa-envelope" },
+            { name: "Calculadoras (Científicas, Financeiras, Mesa)", slug: "calculadoras", icon: "fas fa-calculator" },
+            { name: "Presentes Criativos de Papelaria", slug: "presentes-criativos-papelaria", icon: "fas fa-gift" },
+            { name: "Carimbos e Almofadas", slug: "carimbos-almofadas", icon: "fas fa-stamp" },
+            { name: "Fitas Adesivas e Colas", slug: "fitas-adesivas-colas", icon: "fas fa-tape" },
+            { name: "Tesouras e Estiletes", slug: "tesouras-estiletes", icon: "fas fa-cut" },
+            { name: "Organizadores de Mesa e Gaveta", slug: "organizadores-mesa-gaveta", icon: "fas fa-box" },
+            { name: "Quadros Brancos, de Avisos e Lousas", slug: "quadros-brancos-avisos-lousas", icon: "fas fa-chalkboard-teacher" },
+            { name: "Globos Terrestres e Mapas Decorativos", slug: "globos-terrestres-mapas-decorativos", icon: "fas fa-globe-americas" },
+            { name: "Livros de Colorir para Adultos e Crianças", slug: "livros-colorir-adultos-criancas", icon: "fas fa-palette" },
+            { name: "Scrapbooking e Artesanato em Papel", slug: "scrapbooking-artesanato-papel", icon: "fas fa-heart" },
+            { name: "Canetas Marca-Texto", slug: "canetas-marca-texto", icon: "fas fa-highlighter" },
+            { name: "Borrachas e Corretivos", slug: "borrachas-corretivos", icon: "fas fa-eraser" },
+            { name: "Apontadores de Lápis", slug: "apontadores-de-lapis", icon: "fas fa-pencil-alt" },
+            { name: "Réguas, Esquadros e Compasso", slug: "reguas-esquadros-compasso", icon: "fas fa-ruler-combined" },
+            { name: "Papelaria Fina (Canetas de Luxo, Papéis Especiais)", slug: "papelaria-fina", icon: "fas fa-gem" },
+            { name: "Embalagens para Presente (Papéis, Sacolas, Laços)", slug: "embalagens-para-presente-papelaria", icon: "fas fa-gift" },
+            { name: "Fragmentadoras de Papel", slug: "fragmentadoras-de-papel", icon: "fas fa-trash-restore-alt" }
+        ]
+      },
+      { 
+        name: "Saúde e Cuidados Pessoais", 
+        slug: "saude-e-cuidados-pessoais", 
+        icon: "fas fa-heartbeat", 
+        subcategories: [ 
+            { name: "Aparelhos de Pressão e Medidores de Glicose", slug: "aparelhos-pressao-medidores-glicose", icon: "fas fa-stethoscope" },
+            { name: "Termômetros (Digitais, Infravermelhos)", slug: "termometros", icon: "fas fa-thermometer-three-quarters" },
+            { name: "Vitaminas e Suplementos (Não Esportivos)", slug: "vitaminas-suplementos-nao-esportivos", icon: "fas fa-pills" },
+            { name: "Produtos Ortopédicos (Joelheiras, Cintas)", slug: "produtos-ortopedicos", icon: "fas fa-bone" },
+            { name: "Cuidado Oral (Escovas, Cremes Dentais, Fio Dental)", slug: "cuidado-oral", icon: "fas fa-tooth" },
+            { name: "Cuidados com os Pés (Cremes, Palmilhas)", slug: "cuidados-com-os-pes", icon: "fas fa-shoe-prints" },
+            { name: "Primeiros Socorros (Curativos, Antissépticos)", slug: "primeiros-socorros", icon: "fas fa-medkit" },
+            { name: "Inaladores e Nebulizadores", slug: "inaladores-nebulizadores", icon: "fas fa-lungs-virus" },
+            { name: "Balanças Corporais", slug: "balancas-corporais", icon: "fas fa-weight" },
+            { name: "Massageadores Elétricos e Manuais", slug: "massageadores", icon: "fas fa-hand-paper" },
+            { name: "Produtos para Incontinência (Fraldas Adulto)", slug: "produtos-para-incontinencia", icon: "fas fa-user-friends" },
+            { name: "Lentes de Contato e Soluções de Limpeza", slug: "lentes-contato-solucoes-limpeza", icon: "far fa-eye" },
+            { name: "Aparelhos Auditivos (Acessórios e Pilhas)", slug: "aparelhos-auditivos-acessorios", icon: "fas fa-assistive-listening-systems" },
+            { name: "Produtos para Cuidados com a Visão (Colírios Lub.)", slug: "produtos-cuidados-visao", icon: "fas fa-eye-dropper" },
+            { name: "Almofadas Terapêuticas (Térmicas, Posturais)", slug: "almofadas-terapeuticas", icon: "fas fa-couch" },
+            { name: "Produtos para Ronco e Apneia", slug: "produtos-ronco-apneia", icon: "fas fa-bed" },
+            { name: "Cadeiras de Rodas e Andadores (Mobilidade)", slug: "cadeiras-rodas-andadores-mobilidade", icon: "fas fa-wheelchair" },
+            { name: "Produtos para Cuidados com Idosos", slug: "produtos-cuidados-com-idosos", icon: "fas fa-user-md" },
+            { name: "Repelentes de Insetos", slug: "repelentes-de-insetos", icon: "fas fa-bug" },
+            { name: "Máscaras de Proteção Respiratória", slug: "mascaras-protecao-respiratoria", icon: "fas fa-head-side-mask" },
+            { name: "Álcool em Gel e Higienizadores de Mãos", slug: "alcool-gel-higienizadores-maos", icon: "fas fa-hands-wash" },
+            { name: "Produtos para Cuidados com Tatuagens", slug: "produtos-cuidados-com-tatuagens", icon: "fas fa-paint-brush" },
+            { name: "Testes Rápidos (Gravidez, Covid - se permitido)", slug: "testes-rapidos", icon: "fas fa-vial" },
+            { name: "Produtos para Bem-Estar (Difusores, Óleos Essenciais)", slug: "produtos-para-bem-estar", icon: "fas fa-spa" },
+            { name: "Livros sobre Saúde e Qualidade de Vida", slug: "livros-saude-qualidade-vida", icon: "fas fa-book-medical" }
+        ]
+      },
+      { 
+        name: "Smartphone e Celular", 
+        slug: "smartphone-e-celular", 
+        icon: "fas fa-mobile-alt", 
+        subcategories: [ 
+            { name: "Smartphones (Android, iOS)", slug: "smartphones", icon: "fas fa-mobile-alt" },
+            { name: "Celulares Básicos (Feature Phones)", slug: "celulares-basicos", icon: "fas fa-phone-square-alt" },
+            { name: "Capas e Películas Protetoras", slug: "capas-peliculas-protetoras", icon: "fas fa-shield-alt" },
+            { name: "Carregadores de Celular (Com Fio e Sem Fio)", slug: "carregadores-de-celular", icon: "fas fa-battery-full" },
+            { name: "Cabos USB para Celular (Tipo C, Lightning, Micro USB)", slug: "cabos-usb-para-celular", icon: "fas fa-plug" },
+            { name: "Fones de Ouvido para Celular (Com Fio e Bluetooth)", slug: "fones-de-ouvido-para-celular", icon: "fas fa-headphones" },
+            { name: "Power Banks (Carregadores Portáteis)", slug: "power-banks", icon: "fas fa-battery-three-quarters" },
+            { name: "Cartões de Memória para Celular (MicroSD)", slug: "cartoes-de-memoria-para-celular", icon: "fas fa-sd-card" },
+            { name: "Smartwatches e Pulseiras Inteligentes", slug: "smartwatches-pulseiras-inteligentes", icon: "far fa-clock" },
+            { name: "Suportes Veiculares para Celular", slug: "suportes-veiculares-para-celular", icon: "fas fa-car" },
+            { name: "Adaptadores para Celular (OTG, Fone)", slug: "adaptadores-para-celular", icon: "fas fa-random" },
+            { name: "Kits de Lentes para Câmera de Celular", slug: "kits-lentes-camera-celular", icon: "fas fa-camera-retro" },
+            { name: "Paus de Selfie e Tripés para Celular", slug: "paus-selfie-tripes-celular", icon: "fas fa-camera" },
+            { name: "Chips e Planos de Telefonia (Pré e Pós)", slug: "chips-planos-telefonia", icon: "fas fa-sim-card" },
+            { name: "Celulares Usados e Recondicionados (com garantia)", slug: "celulares-usados-recondicionados", icon: "fas fa-recycle" },
+            { name: "Acessórios para Smartwatch (Pulseiras, Películas)", slug: "acessorios-para-smartwatch", icon: "fas fa-watch" },
+            { name: "Canetas Touch para Celular e Tablet", slug: "canetas-touch-celular-tablet", icon: "fas fa-pen-alt" },
+            { name: "Caixas de Som Bluetooth Portáteis", slug: "caixas-som-bluetooth-portateis", icon: "fas fa-volume-up" },
+            { name: "PopSockets e Suportes de Dedo", slug: "popsockets-suportes-dedo", icon: "far fa-hand-pointer" },
+            { name: "Kits de Limpeza para Tela de Celular", slug: "kits-limpeza-tela-celular", icon: "fas fa-spray-can" },
+            { name: "Baterias Externas para Celular (Cases com Bateria)", slug: "baterias-externas-cases-celular", icon: "fas fa-battery-bolt" },
+            { name: "Projetores Portáteis para Celular", slug: "projetores-portateis-celular", icon: "fas fa-video" },
+            { name: "Teclados Bluetooth para Celular e Tablet", slug: "teclados-bluetooth-celular-tablet", icon: "fas fa-keyboard" },
+            { name: "Serviços de Reparo de Celular (Indicação)", slug: "servicos-reparo-celular-indicacao", icon: "fas fa-tools" },
+            { name: "Seguro para Celular", slug: "seguro-para-celular", icon: "fas fa-file-contract" }
+        ]
+      },
+      { 
+        name: "Telefonia (Fixa e Empresarial)", 
+        slug: "telefonia-fixa-empresarial", 
+        icon: "fas fa-phone-alt", 
+        subcategories: [ 
+            { name: "Telefones com Fio (Residenciais e Escritório)", slug: "telefones-com-fio", icon: "fas fa-phone" },
+            { name: "Telefones sem Fio (Secretária Eletrônica, Ramais)", slug: "telefones-sem-fio", icon: "fas fa-phone-volume" },
+            { name: "PABX e Centrais Telefônicas", slug: "pabx-centrais-telefonicas", icon: "fas fa-network-wired" },
+            { name: "Aparelhos de Fax (se ainda relevante)", slug: "aparelhos-de-fax", icon: "fas fa-fax" },
+            { name: "Headsets para Telefone Fixo e PABX", slug: "headsets-telefone-fixo-pabx", icon: "fas fa-headset" },
+            { name: "Identificadores de Chamada e Bloqueadores", slug: "identificadores-chamada-bloqueadores", icon: "fas fa-user-secret" },
+            { name: "Gravadores de Chamada Telefônica", slug: "gravadores-chamada-telefonica", icon: "fas fa-microphone-slash" },
+            { name: "Telefones IP e Equipamentos VoIP", slug: "telefones-ip-equipamentos-voip", icon: "fas fa-wifi" },
+            { name: "Conferência Telefônica (Audio e Videoconferência)", slug: "conferencia-telefonica-audio-video", icon: "fas fa-users" },
+            { name: "Acessórios para Telefonia (Cabos, Filtros de Linha)", slug: "acessorios-para-telefonia", icon: "fas fa-plug" },
+            { name: "Telefones para Idosos (Teclas Grandes, SOS)", slug: "telefones-para-idosos", icon: "fas fa-phone-alt" },
+            { name: "Interfones Residenciais e Condominiais", slug: "interfones-residenciais-condominiais", icon: "fas fa-concierge-bell" },
+            { name: "Porteiros Eletrônicos com Vídeo", slug: "porteiros-eletronicos-com-video", icon: "fas fa-video" },
+            { name: "Antenas e Amplificadores de Sinal Celular (Rural)", slug: "antenas-amplificadores-sinal-celular-rural", icon: "fas fa-broadcast-tower" },
+            { name: "Rádios Comunicadores (Walkie-Talkies)", slug: "radios-comunicadores-walkie-talkies", icon: "fas fa-walkie-talkie" },
+            { name: "Tarifadores Telefônicos", slug: "tarifadores-telefonicos", icon: "fas fa-file-invoice-dollar" },
+            { name: "Software de Gerenciamento de Chamadas (Call Center)", slug: "software-gerenciamento-chamadas-call-center", icon: "fas fa-headset" },
+            { name: "Gateways GSM e VoIP", slug: "gateways-gsm-voip", icon: "fas fa-exchange-alt" },
+            { name: "Cabos Telefônicos e Conectores (RJ11)", slug: "cabos-telefonicos-conectores-rj11", icon: "fas fa-ethernet" },
+            { name: "Baterias para Telefone sem Fio", slug: "baterias-para-telefone-sem-fio", icon: "fas fa-battery-half" },
+            { name: "Filtros ADSL para Linha Telefônica", slug: "filtros-adsl-linha-telefonica", icon: "fas fa-filter" },
+            { name: "Serviços de Instalação e Manutenção Telefônica (Indicação)", slug: "servicos-instalacao-manutencao-telefonica", icon: "fas fa-tools" },
+            { name: "Planos de Telefonia Fixa e Empresarial (Parcerias)", slug: "planos-telefonia-fixa-empresarial-parcerias", icon: "fas fa-file-signature" },
+            { name: "Telefones por Satélite (se aplicável)", slug: "telefones-por-satelite", icon: "fas fa-satellite-dish" },
+            { name: "Adaptadores e Conversores Telefônicos", slug: "adaptadores-conversores-telefonicos", icon: "fas fa-random" }
+        ]
+      },
+      { 
+        name: "TV, Áudio e Vídeo", 
+        slug: "tv-audio-e-video", 
+        icon: "fas fa-tv", 
+        subcategories: [ 
+            { name: "Televisores (Smart TVs, LED, OLED, QLED)", slug: "televisores", icon: "fas fa-tv" },
+            { name: "Home Theaters e Soundbars", slug: "home-theaters-soundbars", icon: "fas fa-volume-up" },
+            { name: "Projetores e Telas de Projeção", slug: "projetores-telas-projecao", icon: "fas fa-video" },
+            { name: "Players de Blu-ray e DVD", slug: "players-blu-ray-dvd", icon: "fas fa-compact-disc" },
+            { name: "Receptores de TV Digital e Antenas", slug: "receptores-tv-digital-antenas", icon: "fas fa-satellite-dish" },
+            { name: "Caixas de Som Amplificadas e Bluetooth (Grandes)", slug: "caixas-som-amplificadas-bluetooth-grandes", icon: "fas fa-speaker-deck" },
+            { name: "Fones de Ouvido (Hi-Fi, Over-Ear, On-Ear)", slug: "fones-de-ouvido-hi-fi", icon: "fas fa-headphones" },
+            { name: "Micro Systems e Mini Systems", slug: "micro-systems-mini-systems", icon: "fas fa-music" },
+            { name: "Toca-discos de Vinil e Vitrolas", slug: "toca-discos-vinil-vitrolas", icon: "fas fa-record-vinyl" },
+            { name: "Cabos de Áudio e Vídeo (HDMI, Óptico, RCA)", slug: "cabos-audio-video", icon: "fas fa-plug" },
+            { name: "Suportes para TV e Projetores", slug: "suportes-para-tv-projetores", icon: "fas fa-tv" },
+            { name: "Controles Remotos Universais e Originais", slug: "controles-remotos", icon: "fas fa-gamepad" },
+            { name: "Conversores de Mídia e Streaming Devices (Chromecast, Fire TV)", slug: "conversores-midia-streaming-devices", icon: "fas fa-wifi" },
+            { name: "Gravadores de Voz Digitais", slug: "gravadores-de-voz-digitais", icon: "fas fa-microphone" },
+            { name: "Câmeras de Ação (GoPro e Similares)", slug: "cameras-de-acao", icon: "fas fa-camera-retro" },
+            { name: "Filmadoras Digitais", slug: "filmadoras-digitais", icon: "fas fa-video" },
+            { name: "Equipamentos para Estúdio de Gravação (Interfaces, Monitores de Áudio)", slug: "equipamentos-estudio-gravacao", icon: "fas fa-sliders-h" },
+            { name: "Móveis para Home Theater (Racks, Painéis Específicos)", slug: "moveis-para-home-theater", icon: "fas fa-couch" },
+            { name: "Óculos 3D para TVs e Projetores", slug: "oculos-3d-tvs-projetores", icon: "fas fa-glasses" },
+            { name: "Kits de Limpeza para Telas e Eletrônicos", slug: "kits-limpeza-telas-eletronicos-av", icon: "fas fa-spray-can" },
+            { name: "Baterias e Carregadores para Câmeras", slug: "baterias-carregadores-para-cameras", icon: "fas fa-battery-full" },
+            { name: "Tripés e Estabilizadores para Câmeras", slug: "tripes-estabilizadores-para-cameras", icon: "fas fa-camera" },
+            { name: "Microfones para Câmeras e Filmadoras (Lapela, Shotgun)", slug: "microfones-para-cameras-filmadoras", icon: "fas fa-microphone-alt" },
+            { name: "Serviços de Instalação de Home Theater (Indicação)", slug: "servicos-instalacao-home-theater-indicacao", icon: "fas fa-tools" },
+            { name: "Extensores e Splitters HDMI", slug: "extensores-splitters-hdmi", icon: "fas fa-project-diagram" }
+        ]
+      },
+      { 
+        name: "Utilidades Domésticas", 
+        slug: "utilidades-domesticas", 
+        icon: "fas fa-concierge-bell", 
+        subcategories: [ 
+            { name: "Panelas e Conjuntos de Panelas", slug: "panelas-conjuntos-panelas", icon: "fas fa-utensil-spoon" },
+            { name: "Utensílios de Cozinha (Colheres, Facas, Escumadeiras)", slug: "utensilios-de-cozinha", icon: "fas fa-utensils" },
+            { name: "Potes e Recipientes para Alimentos", slug: "potes-recipientes-alimentos", icon: "fas fa-box" },
+            { name: "Formas e Assadeiras", slug: "formas-assadeiras", icon: "fas fa-stroopwafel" },
+            { name: "Aparelhos de Jantar e Louças", slug: "aparelhos-jantar-loucas", icon: "fas fa-plate-wheat" },
+            { name: "Copos, Taças e Jarras", slug: "copos-tacas-jarras", icon: "fas fa-glass-martini" },
+            { name: "Talheres e Faqueiros", slug: "talheres-faqueiros", icon: "fas fa-utensil-fork" },
+            { name: "Organizadores para Cozinha (Escorredores, Porta-Temperos)", slug: "organizadores-para-cozinha", icon: "fas fa-grip-lines" },
+            { name: "Produtos de Limpeza para Cozinha e Casa", slug: "produtos-limpeza-cozinha-casa-ud", icon: "fas fa-soap" },
+            { name: "Acessórios para Lavanderia (Varal, Prendedores, Cestos)", slug: "acessorios-para-lavanderia", icon: "fas fa-tshirt" },
+            { name: "Tábuas de Passar Roupa", slug: "tabuas-de-passar-roupa", icon: "fas fa-ruler-horizontal" },
+            { name: "Lixeiras para Cozinha, Banheiro e Escritório", slug: "lixeiras", icon: "fas fa-trash" },
+            { name: "Vassouras, Rodos e Pás de Lixo", slug: "vassouras-rodos-pas-lixo", icon: "fas fa-broom" },
+            { name: "Escadas Domésticas Pequenas", slug: "escadas-domesticas-pequenas", icon: "fas fa-level-up-alt" },
+            { name: "Garrafas Térmicas e Jarras Térmicas", slug: "garrafas-termicas-jarras-termicas", icon: "fas fa-mug-hot" },
+            { name: "Marmitas e Porta-Lanches", slug: "marmitas-porta-lanches", icon: "fas fa-box-open" },
+            { name: "Acessórios para Bar e Vinho (Saca-Rolhas, Baldes de Gelo)", slug: "acessorios-para-bar-e-vinho", icon: "fas fa-wine-glass-alt" },
+            { name: "Churrasqueiras Portáteis e Acessórios para Churrasco", slug: "churrasqueiras-portateis-acessorios-ud", icon: "fas fa-drumstick-bite" },
+            { name: "Filtros de Água e Purificadores de Torneira", slug: "filtros-agua-purificadores-torneira", icon: "fas fa-filter" },
+            { name: "Cutelaria (Facas de Chef, Afiadores)", slug: "cutelaria", icon: "fas fa-knife" },
+            { name: "Moedores Manuais (Pimenta, Sal, Café)", slug: "moedores-manuais", icon: "fas fa-pepper-hot" },
+            { name: "Porta-Guardanapos e Saleiros/Pimenteiros de Mesa", slug: "porta-guardanapos-saleiros-pimenteiros", icon: "fas fa-concierge-bell" },
+            { name: "Bandejas e Travessas de Servir", slug: "bandejas-travessas-de-servir", icon: "fas fa-tray" },
+            { name: "Descascadores e Raladores Manuais", slug: "descascadores-raladores-manuais", icon: "fas fa-carrot" },
+            { name: "Acessórios para Pia (Escorredores, Rodinhos de Pia)", slug: "acessorios-para-pia", icon: "fas fa-sink" }
+        ]
+      }
+    ]; // FIM DO ARRAY catalogStructure
+
+    // --- DADOS DOS PRODUTOS (Exemplo - será preenchido com seus 1150+ produtos) ---
+    let allProducts = [
+      // Exemplo de como os produtos serão adicionados aqui no futuro:
+      { 
+        id: 'notebook-ultra-pro', 
+        name: 'Notebook Ultra Pro', 
+        categorySlug: 'informatica', // Categoria principal correta
+        subcategorySlug: 'notebooks-ultrabooks', // Subcategoria correta
+        price: 5299.90, 
+        description: 'Intel Core i7, 16GB RAM, SSD 512GB, Tela 15.6" Full HD', 
+        imageIcon: 'fas fa-laptop-code', 
+        badge: 'Novo' 
+      },
+      { 
+        id: 'pneu-aro15-perf', 
+        name: 'Pneu Aro 15 Performance', 
+        categorySlug: 'automotivo', 
+        subcategorySlug: 'pneus-rodas', 
+        price: 350.00, 
+        description: 'Pneu de alta durabilidade para carros de passeio.', 
+        imageIcon: 'fas fa-dot-circle' 
+      },
+      // Adicione mais produtos de exemplo aqui para testar
+       { 
+        id: 'cadeirinha-confort', 
+        name: 'Cadeirinha Confort Plus Bebê', 
+        categorySlug: 'bebes-e-criancas', 
+        subcategorySlug: 'cadeirinhas-auto-bebe', 
+        price: 499.00, 
+        description: 'Segurança e conforto para seu bebê no carro.', 
+        imageIcon: 'fas fa-car-alt' 
+      },
+    ];
+
+
+    // --- ELEMENTOS DO DOM ---
+    const categoryFilterSelect = document.getElementById('category-filter');
+    const subcategoryFilterSelect = document.getElementById('subcategory-filter');
+    const searchInput = document.getElementById('search-input');
+    const sortFilterSelect = document.getElementById('sort-filter');
+    const productsGrid = document.getElementById('products-grid');
+    const productCountHeader = document.getElementById('product-count-header');
+    const totalItemsFooter = document.getElementById('total-items-footer');
+    const noResultsMessage = document.getElementById('no-results-message');
+
+    // --- FUNÇÕES AUXILIARES ---
+    function slugify(text) {
+      if (!text) return '';
+      return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+    }
+
+    // --- INICIALIZAÇÃO E POPULAÇÃO DOS FILTROS ---
+    function populateCategoryFilter() {
+      catalogStructure.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat.slug;
+        option.textContent = cat.name;
+        categoryFilterSelect.appendChild(option);
+      });
+    }
+
+    function populateSubcategoryFilter(selectedCategorySlug = '') {
+      subcategoryFilterSelect.innerHTML = '<option value="">Todas as Subcategorias</option>'; 
+
+      let subcategoriesToList = [];
+      if (selectedCategorySlug) {
+        const category = catalogStructure.find(cat => cat.slug === selectedCategorySlug);
+        if (category && category.subcategories) {
+          subcategoriesToList = category.subcategories;
+        }
+      } else { 
+        catalogStructure.forEach(cat => {
+          if (cat.subcategories) {
+            cat.subcategories.forEach(subcat => {
+              subcategoriesToList.push(subcat);
+            });
+          }
+        });
+        subcategoriesToList = subcategoriesToList.filter((subcat, index, self) =>
+            index === self.findIndex((s) => s.slug === subcat.slug)
+        );
+        subcategoriesToList.sort((a,b) => a.name.localeCompare(b.name));
+      }
+      
+      subcategoriesToList.forEach(subcat => {
+        const option = document.createElement('option');
+        option.value = subcat.slug;
+        option.textContent = subcat.name; 
+        subcategoryFilterSelect.appendChild(option);
+      });
+    }
+
+    // --- RENDERIZAÇÃO DOS PRODUTOS ---
+    function renderProducts(productsToRender) {
+      productsGrid.innerHTML = ''; 
+      noResultsMessage.style.display = productsToRender.length === 0 ? 'block' : 'none';
+
+      if (productsToRender.length === 0) {
+        updateCounts(0, allProducts.length); // Atualiza contagem mesmo sem produtos visíveis
+        return;
+      }
+
+      const groupedProducts = {};
+      productsToRender.forEach(product => {
+        if (!groupedProducts[product.categorySlug]) {
+          groupedProducts[product.categorySlug] = {};
+        }
+        if (!groupedProducts[product.categorySlug][product.subcategorySlug]) {
+          groupedProducts[product.categorySlug][product.subcategorySlug] = [];
+        }
+        groupedProducts[product.categorySlug][product.subcategorySlug].push(product);
+      });
+
+      const sortedCategorySlugs = catalogStructure.map(cs => cs.slug);
+
+      sortedCategorySlugs.forEach(categorySlug => {
+        if (groupedProducts[categorySlug]) {
+          const categoryData = catalogStructure.find(cs => cs.slug === categorySlug);
+          if (!categoryData) return;
+
+          const categoryHeader = document.createElement('div');
+          categoryHeader.className = `category-header category-${categorySlug}`; 
+          categoryHeader.dataset.category = categorySlug;
+          categoryHeader.innerHTML = `
+            <i class="${categoryData.icon} ${categorySlug}-icon"></i>
+            <span>${categoryData.name}</span>
+          `;
+          productsGrid.appendChild(categoryHeader);
+
+          const sortedSubcategorySlugs = categoryData.subcategories.map(sc => sc.slug);
+          
+          sortedSubcategorySlugs.forEach(subcategorySlug => {
+            if (groupedProducts[categorySlug] && groupedProducts[categorySlug][subcategorySlug]) { // Verificação adicional
+              const subcategoryData = categoryData.subcategories.find(sc => sc.slug === subcategorySlug);
+              if (!subcategoryData) return;
+
+              const subcategoryHeader = document.createElement('h4');
+              subcategoryHeader.className = 'subcategory-header';
+              subcategoryHeader.dataset.category = categorySlug; 
+              subcategoryHeader.innerHTML = `
+                <i class="${subcategoryData.icon}"></i>
+                <span>${subcategoryData.name}</span>
+              `;
+              productsGrid.appendChild(subcategoryHeader);
+
+              groupedProducts[categorySlug][subcategorySlug].forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                productCard.dataset.category = product.categorySlug;
+                productCard.dataset.subcategory = product.subcategorySlug;
+                productCard.dataset.price = product.price;
+                productCard.dataset.name = product.name;
+                
+                const categoryIconClass = `${product.categorySlug}-icon`;
+
+                productCard.innerHTML = `
+                  <div class="product-image-placeholder">
+                    <i class="${product.imageIcon || 'fas fa-image'} product-icon ${categoryIconClass}"></i>
+                  </div>
+                  ${product.badge ? `<span class="badge">${product.badge}</span>` : ''}
+                  <h3>${product.name}</h3>
+                  <p>${product.description || 'Sem descrição disponível.'}</p>
+                  <p class="price">R$ ${parseFloat(product.price).toFixed(2).replace('.', ',')}</p>
+                  <button class="btn" onclick="showProductDetails('${product.id}')">
+                    <i class="fas fa-eye"></i> Detalhes
+                  </button>
+                `;
+                productsGrid.appendChild(productCard);
+              });
+            }
+          });
+        }
+      });
+      updateCounts(productsToRender.length, allProducts.length);
+    }
+    
+    // --- LÓGICA DE FILTRAGEM E ORDENAÇÃO ---
+    function filterAndSortProducts() {
+      const categoryQuery = categoryFilterSelect.value;
+      const subcategoryQuery = subcategoryFilterSelect.value;
+      const searchQuery = searchInput.value.toLowerCase();
+      const sortQuery = sortFilterSelect.value;
+
+      let filteredProducts = allProducts;
+
+      if (categoryQuery) {
+        filteredProducts = filteredProducts.filter(p => p.categorySlug === categoryQuery);
+      }
+
+      if (subcategoryQuery) {
+        filteredProducts = filteredProducts.filter(p => p.subcategorySlug === subcategoryQuery);
+      }
+
+      if (searchQuery) {
+        filteredProducts = filteredProducts.filter(p => 
+          p.name.toLowerCase().includes(searchQuery) || 
+          (p.description && p.description.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      switch(sortQuery) {
+        case 'price-asc':
+          filteredProducts.sort((a, b) => a.price - b.price);
+          break;
+        case 'price-desc':
+          filteredProducts.sort((a, b) => b.price - a.price);
+          break;
+        case 'name-asc':
+          filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+          break;
+        case 'name-desc':
+          filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+          break;
+        default:
+          break;
+      }
+      renderProducts(filteredProducts);
+    }
+
+    // --- ATUALIZAÇÃO DE CONTAGENS ---
+    function updateCounts(visibleCount, totalCount) {
+      if (categoryFilterSelect.value || subcategoryFilterSelect.value || searchInput.value) {
+        productCountHeader.textContent = `(${visibleCount} de ${totalCount} itens)`;
+      } else {
+        productCountHeader.textContent = `(${totalCount} itens)`;
+      }
+      totalItemsFooter.textContent = totalCount;
+    }
+
+    // --- DETALHES DO PRODUTO (Placeholder) ---
+    function showProductDetails(productId) {
+      const product = allProducts.find(p => p.id === productId);
+      alert(`Detalhes do produto: ${product ? product.name : productId}\nEsta funcionalidade está em desenvolvimento.`);
+    }
+    
+    // --- MODAL (Placeholder) ---
+    function openAddProductModal() {
+        alert('Funcionalidade de adicionar novo produto em desenvolvimento.');
+    }
+
+    // --- EVENT LISTENERS ---
+    categoryFilterSelect.addEventListener('change', () => {
+      populateSubcategoryFilter(categoryFilterSelect.value);
+      filterAndSortProducts();
+    });
+    subcategoryFilterSelect.addEventListener('change', filterAndSortProducts);
+    searchInput.addEventListener('input', filterAndSortProducts); // Mudei para 'input' para melhor responsividade
+    sortFilterSelect.addEventListener('change', filterAndSortProducts);
+
+    // --- INICIALIZAÇÃO ---
+    document.addEventListener('DOMContentLoaded', () => {
+      populateCategoryFilter();
+      populateSubcategoryFilter(); 
+      filterAndSortProducts(); 
+    });
+
+  </script>
+</body>
+</html>

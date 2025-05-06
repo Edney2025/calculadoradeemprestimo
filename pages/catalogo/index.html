@@ -1,62 +1,205 @@
 ﻿<!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Categorias</title>
-    <link rel="stylesheet" href="../../assets/css/style-home.css"> <!-- Link CSS Principal -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- ☆☆☆ TÍTULO DA PÁGINA ☆☆☆ -->
+  <title>Encomenda Palotina - Catálogo de Categorias</title>
+
+  <!-- === CSS === -->
+  <!-- 1. CSS Principal (Subindo DOIS níveis) -->
+  <link rel="stylesheet" href="../../assets/css/style-home.css">
+  <!-- 2. CSS das Calculadoras/Componentes (Subindo UM nível) - Pode ser útil para alguns estilos de card se não usar o da home -->
+  <!-- <link rel="stylesheet" href="../calculadoras/style.css"> -->
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- ☆☆☆ ESTILOS ESPECÍFICOS PARA ESTA PÁGINA DE CATÁLOGO (se necessário, podem ir para style-home.css) ☆☆☆ -->
+  <!-- Muitos dos estilos que você tinha aqui foram movidos para o final do style-home.css -->
+  <!-- O estilo para '.card .card-icon' e '.card .card-title' já foi ajustado no style-home.css -->
+
 </head>
 <body>
-    <main class="content">
-        <!-- Cabeçalho da Página -->
-        <div class="page-header">
-            <h1>Catálogo de Categorias</h1>
-            <div class="nav-links">
-                <!-- Mantém links de navegação -->
-                <a href="../../index.html">← Voltar para Home</a>
-            </div>
-        </div>
 
-        <!-- ☆☆☆ Grid de Categorias Estilo Homepage ☆☆☆ -->
-        <!-- Aplicando classes de grid - Escolha o padrão (ex: grid-4) -->
-         <div class="grid main-grid grid-4">
-            <!-- ☆☆☆ Cards com Ícones Maiores ☆☆☆ -->
-            <div class="card"><a href="automotivo.html"><span class="card-icon" title="Automotivo">🚗</span><span class="card-title">Automotivo</span></a></div>
-            <div class="card"><a href="bebes-criancas.html"><span class="card-icon" title="Bebês e Crianças">👶</span><span class="card-title">Bebês & Crianças</span></a></div>
-            <div class="card"><a href="beleza-perfumaria.html"><span class="card-icon" title="Beleza e Perfumaria">💄</span><span class="card-title">Beleza & Perfumaria</span></a></div>
-            <div class="card"><a href="brinquedos.html"><span class="card-icon" title="Brinquedos">🧸</span><span class="card-title">Brinquedos</span></a></div>
-            <div class="card"><a href="cama-mesa-banho.html"><span class="card-icon" title="Cama, Mesa e Banho">🛋️</span><span class="card-title">Cama, Mesa & Banho</span></a></div>
-            <div class="card"><a href="casa-construcao.html"><span class="card-icon" title="Casa e Construção">🛠️</span><span class="card-title">Casa & Construção</span></a></div>
-            <div class="card"><a href="eletrodomesticos.html"><span class="card-icon" title="Eletrodomésticos">🔌</span><span class="card-title">Eletrodomésticos</span></a></div>
-            <div class="card"><a href="eletroportateis.html"><span class="card-icon" title="Eletroportáteis">🍳</span><span class="card-title">Eletroportáteis</span></a></div>
-            <div class="card"><a href="esporte-lazer.html"><span class="card-icon" title="Esporte e Lazer">⚽</span><span class="card-title">Esporte & Lazer</span></a></div>
-            <div class="card"><a href="games.html"><span class="card-icon" title="Games">🎮</span><span class="card-title">Games</span></a></div>
-            <div class="card"><a href="informatica.html"><span class="card-icon" title="Informática">💻</span><span class="card-title">Informática</span></a></div>
-            <div class="card"><a href="industrial-comercial.html"><span class="card-icon" title="Industrial e Comercial">🏭</span><span class="card-title">Industrial & Comercial</span></a></div>
-            <div class="card"><a href="instrumentos-musicais.html"><span class="card-icon" title="Instrumentos Musicais">🎸</span><span class="card-title">Instrumentos Musicais</span></a></div>
-            <div class="card"><a href="mercado.html"><span class="card-icon" title="Mercado">🛒</span><span class="card-title">Mercado</span></a></div>
-            <div class="card"><a href="moveis-decoracao.html"><span class="card-icon" title="Móveis e Decoração">🖼️</span><span class="card-title">Móveis & Decoração</span></a></div>
-            <div class="card"><a href="moda-acessorios.html"><span class="card-icon" title="Moda e Acessórios">👗</span><span class="card-title">Moda & Acessórios</span></a></div>
-            <div class="card"><a href="pets.html"><span class="card-icon" title="Pets">🐾</span><span class="card-title">Pets</span></a></div>
-            <div class="card"><a href="papelaria.html"><span class="card-icon" title="Papelaria">✂️</span><span class="card-title">Papelaria</span></a></div>
-            <div class="card"><a href="saude-cuidados.html"><span class="card-icon" title="Saúde e Cuidados Pessoais">⚕️</span><span class="card-title">Saúde & Cuidados</span></a></div>
-            <div class="card"><a href="smartphones.html"><span class="card-icon" title="Smartphone e Celular">📱</span><span class="card-title">Smartphones</span></a></div>
-            <div class="card"><a href="telefonia.html"><span class="card-icon" title="Telefonia">☎️</span><span class="card-title">Telefonia</span></a></div>
-            <div class="card"><a href="tv-audio-video.html"><span class="card-icon" title="TV, Áudio e Vídeo">📺</span><span class="card-title">TV, Áudio & Vídeo</span></a></div>
-            <div class="card"><a href="utilidades-domesticas.html"><span class="card-icon" title="Utilidades Domésticas">🧺</span><span class="card-title">Utilidades Domésticas</span></a></div>
-            <!-- Fim dos Cards de Categoria -->
-        </div>
+  <!-- Sidebar (Padrão do sistema) -->
+  <aside class="sidebar">
+    <div class="logo">🐸 Encomenda Palotina</div>
+    <nav>
+      <a href="../../pages/calculadoras/em-breve.html">⚙️ Configurações</a>
+      <a href="../../pages/minha-conta/index.html">👤 Minha Conta</a>
+      <a href="../../pages/suporte/index.html">🛠️ Suporte</a>
+      <a href="../../index.html">🚪 Sair</a>
+      <!-- Pode adicionar um link "ativo" aqui se esta página estiver na sidebar principal -->
+    </nav>
+  </aside>
 
-        <!-- Seção Link Google Drive (Mantida) -->
-        <div class="drive-link-section" style="margin-top: 3rem; padding: 1.5rem; background-color: var(--bg-dark-secondary); border-radius: var(--border-radius-medium); border: 1px solid var(--border-color);">
-            <p>Você também pode visualizar a estrutura de pastas diretamente no Google Drive:</p>
-            <a href="https://drive.google.com/drive/folders/19JS1i3v5DTZ_8S6BHkbYL_VLO5sy1GBa?usp=sharing" target="_blank" class="btn btn-secondary">
-                Abrir Pasta Raiz no Google Drive 📁
-            </a>
-        </div>
+  <!-- Conteúdo Principal -->
+  <main class="content">
 
-    </main>
-     <!-- ☆☆☆ NÃO precisa do JavaScript de controle de layout NESTA página ☆☆☆ -->
+    <!-- Cabeçalho da Página (Usando .page-header do style-home.css) -->
+    <header class="page-header"> <!-- Mudado de div para header para semântica -->
+        <h1>Catálogo de Categorias</h1>
+        <div class="nav-links">
+            <a href="../../index.html" class="btn btn-secondary btn-sm">« Voltar para Home</a>
+        </div>
+    </header>
+
+    <!-- ☆☆☆ Grid de Categorias Estilo Homepage ☆☆☆ -->
+    <!-- Aplicando classes de grid - main-grid para ser controlado pelos botões de layout da home -->
+    <!-- Se quiser que esta página tenha seus próprios controles de layout, adicione-os aqui -->
+    <div class="grid main-grid grid-4"> <!-- Usando main-grid e grid-4 como padrão -->
+        <!-- Cards com Ícones - A classe .card-icon será usada (ou span:first-child) -->
+        <div class="card"><a href="automotivo.html"><span class="card-icon" title="Automotivo">🚗</span><span class="card-title">Automotivo</span></a></div>
+        <div class="card"><a href="bebes-criancas.html"><span class="card-icon" title="Bebês e Crianças">👶</span><span class="card-title">Bebês & Crianças</span></a></div>
+        <div class="card"><a href="beleza-perfumaria.html"><span class="card-icon" title="Beleza e Perfumaria">💄</span><span class="card-title">Beleza & Perfumaria</span></a></div>
+        <div class="card"><a href="brinquedos.html"><span class="card-icon" title="Brinquedos">🧸</span><span class="card-title">Brinquedos</span></a></div>
+        <div class="card"><a href="cama-mesa-banho.html"><span class="card-icon" title="Cama, Mesa e Banho">🛋️</span><span class="card-title">Cama, Mesa & Banho</span></a></div>
+        <div class="card"><a href="casa-construcao.html"><span class="card-icon" title="Casa e Construção">🛠️</span><span class="card-title">Casa & Construção</span></a></div>
+        <div class="card"><a href="eletrodomesticos.html"><span class="card-icon" title="Eletrodomésticos">🔌</span><span class="card-title">Eletrodomésticos</span></a></div>
+        <div class="card"><a href="eletroportateis.html"><span class="card-icon" title="Eletroportáteis">🍳</span><span class="card-title">Eletroportáteis</span></a></div>
+        <div class="card"><a href="esporte-lazer.html"><span class="card-icon" title="Esporte e Lazer">⚽</span><span class="card-title">Esporte & Lazer</span></a></div>
+        <div class="card"><a href="games.html"><span class="card-icon" title="Games">🎮</span><span class="card-title">Games</span></a></div>
+        <div class="card"><a href="informatica.html"><span class="card-icon" title="Informática">💻</span><span class="card-title">Informática</span></a></div>
+        <div class="card"><a href="industrial-comercial.html"><span class="card-icon" title="Industrial e Comercial">🏭</span><span class="card-title">Industrial & Comercial</span></a></div>
+        <div class="card"><a href="instrumentos-musicais.html"><span class="card-icon" title="Instrumentos Musicais">🎸</span><span class="card-title">Instrumentos Musicais</span></a></div>
+        <div class="card"><a href="mercado.html"><span class="card-icon" title="Mercado">🛒</span><span class="card-title">Mercado</span></a></div>
+        <div class="card"><a href="moveis-decoracao.html"><span class="card-icon" title="Móveis e Decoração">🖼️</span><span class="card-title">Móveis & Decoração</span></a></div>
+        <div class="card"><a href="moda-acessorios.html"><span class="card-icon" title="Moda e Acessórios">👗</span><span class="card-title">Moda & Acessórios</span></a></div>
+        <div class="card"><a href="pets.html"><span class="card-icon" title="Pets">🐾</span><span class="card-title">Pets</span></a></div>
+        <div class="card"><a href="papelaria.html"><span class="card-icon" title="Papelaria">✂️</span><span class="card-title">Papelaria</span></a></div>
+        <div class="card"><a href="saude-cuidados.html"><span class="card-icon" title="Saúde e Cuidados Pessoais">⚕️</span><span class="card-title">Saúde & Cuidados</span></a></div>
+        <div class="card"><a href="smartphones.html"><span class="card-icon" title="Smartphone e Celular">📱</span><span class="card-title">Smartphones</span></a></div>
+        <div class="card"><a href="telefonia.html"><span class="card-icon" title="Telefonia">☎️</span><span class="card-title">Telefonia</span></a></div>
+        <div class="card"><a href="tv-audio-video.html"><span class="card-icon" title="TV, Áudio e Vídeo">📺</span><span class="card-title">TV, Áudio & Vídeo</span></a></div>
+        <div class="card"><a href="utilidades-domesticas.html"><span class="card-icon" title="Utilidades Domésticas">🧺</span><span class="card-title">Utilidades Domésticas</span></a></div>
+        <!-- Fim dos Cards de Categoria -->
+    </div>
+
+    <!-- Seção Link Google Drive -->
+    <div class="drive-link-section"> <!-- Estilo já no style-home.css -->
+        <p>Você também pode visualizar a estrutura de pastas diretamente no Google Drive:</p>
+        <a href="https://drive.google.com/drive/folders/19JS1i3v5DTZ_8S6BHkbYL_VLO5sy1GBa?usp=sharing" target="_blank" class="btn btn-secondary">
+            Abrir Pasta Raiz no Google Drive 📁
+        </a>
+    </div>
+
+  </main> <!-- Fim de .content -->
+
+  <!-- === JS === -->
+  <script src="../../assets/js/navigation.js"></script>
+  <!-- Se esta página tiver controles de layout (3,4,5 colunas), adicione o JS aqui também -->
+  <!-- Exemplo:
+  <script>
+    // Script para Controles de Layout (copiar da index.html da raiz se quiser os botões aqui)
+    document.addEventListener('DOMContentLoaded', () => {
+      const btnGrid3 = document.getElementById('grid-3-btn'); // Precisaria adicionar os botões no HTML desta página
+      // ... resto do script de controle de layout
+    });
+  </script>
+  -->
+
+</body>
+</html><!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <!-- ... (head content remains the same) ... -->
+  <style>
+    /* ... (existing styles remain the same) ... */
+
+    /* Hoodmart Green Theme */
+    :root {
+      --primary-color: #007b00; /* Darker Green */
+      --secondary-color: #28a745; /* Standard Green */
+      --accent-color: #d4edda; /* Light Green */
+      /* ... other theme variables ... */
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+    /* ... apply green theme to other elements ... */
+  </style>
+</head>
+<body>
+  <!-- ... (sidebar remains mostly the same - update the logo and colors) ... -->
+  <aside class="sidebar">
+    <div class="logo" style="color: var(--secondary-color);"> Hoodmart</div> <nav>
+      <!-- ... (navigation links - adapt paths if needed) ... -->
+    </nav>
+  </aside>
+
+  <main class="content">
+    <!-- ... (header remains the same - update styles if needed) ... -->
+
+    <section id="page-content">
+      <div class="filter-controls">
+        <!-- ... (filter controls - will be updated dynamically) ... -->
+      </div>
+
+      <div class="grid" id="products-grid">
+        <!-- Product cards will be loaded here dynamically -->
+      </div>
+    </section>
+
+    <!-- ... (footer remains the same) ... -->
+  </main>
+
+
+  <script>
+    const categories = {
+      "automotivo": { icon: "fa-car", subcategories: [ /* ... */]},
+      "bebes-e-criancas": { icon: "fa-baby", subcategories: [ /* ... */]},
+      // ... (add all categories and subcategories with icons) ...
+    };
+
+    function populateCategories() {
+      const categoryFilter = document.querySelector('select[onchange="filterByCategory(this.value)"]');
+      for (const category in categories) {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category.replace(/-/g, " ").toUpperCase(); // Capitalize
+        categoryFilter.appendChild(option);
+      }
+    }
+
+    function populateSubcategories(category) {
+        const subcategoryFilter = document.getElementById('subcategory-filter');
+        subcategoryFilter.innerHTML = '<option value="">Todas as Subcategorias</option>'; // Clear previous options
+        if (category && categories[category]) {
+            categories[category].subcategories.forEach(subcategory => {
+                const option = document.createElement('option');
+                option.value = subcategory.id; // Use the ID for filtering
+                option.textContent = subcategory.name;
+                subcategoryFilter.appendChild(option);
+            });
+        }
+    }
+
+    function generateProductCards(data) { /* ... (function to dynamically create product cards) ... */ }
+
+    function filterByCategory(category) {
+        populateSubcategories(category); // Update subcategories based on the selected category
+        // ... rest of the filtering logic ...
+    }
+
+
+    // ... (other functions - filterBySubcategory, searchProducts, sortProducts, showProductDetails) ...
+
+    document.addEventListener('DOMContentLoaded', () => {
+        populateCategories();
+        // Fetch product data (replace with your actual data fetching method)
+        fetch('products.json') // Example: Fetching from a JSON file
+          .then(response => response.json())
+          .then(data => {
+              generateProductCards(data);
+              populateSubcategories("");
+          })
+          .catch(error => console.error('Error fetching product data:', error)); 
+    });
+
+
+</script>
 </body>
 </html>

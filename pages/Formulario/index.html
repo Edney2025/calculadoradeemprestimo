@@ -1,337 +1,145 @@
-<!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Encomenda Palotina - Cadastro Empréstimo Veículo</title>
-    <link rel="stylesheet" href="../../assets/css/style-home.css">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos adicionais para profissionalizar o formulário */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #18181b;
-            color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-        }
+<form id="formulario-geral">
 
-        .sidebar {
-            background-color: #27272a;
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-            width: 250px;
-            height: fit-content;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 20px;
-        }
+  <!-- ETAPA 1: DADOS PESSOAIS -->
+  <div class="etapa" id="etapa1">
+    <h2>Dados do Cliente</h2>
 
-        .sidebar .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
+    <label for="nome">Nome Completo *</label>
+    <input type="text" id="nome" name="nome" required autocomplete="off">
 
-        .sidebar nav {
-            width: 100%;
-        }
+    <label for="cpf">CPF *</label>
+    <input type="text" id="cpf" name="cpf" required>
 
-        .sidebar nav a {
-            display: block;
-            padding: 10px;
-            margin-bottom: 5px;
-            text-decoration: none;
-            color: #a1a1aa;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
+    <label for="rg">RG</label>
+    <input type="text" id="rg" name="rg">
 
-        .sidebar nav a:hover {
-            background-color: #3f3f46;
-            color: #f3f4f6;
-        }
+    <label for="nascimento">Data de Nascimento *</label>
+    <input type="date" id="nascimento" name="nascimento" required>
 
-        .content {
-            background-color: #27272a;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
-            width: 80%;
-            max-width: 900px;
-        }
+    <label for="telefone">Telefone *</label>
+    <input type="tel" id="telefone" name="telefone" required>
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #3f3f46;
-        }
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email">
 
-        .header h1 {
-            font-size: 1.8rem;
-            margin: 0;
-            color: #f3f4f6;
-        }
+    <div class="botoes">
+      <button type="button" onclick="proximaEtapa(2)">Próximo: Endereço</button>
+    </div>
+  </div>
 
-        .header-actions .btn {
-            background-color: #3f3f46;
-            color: #a1a1aa;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
+  <!-- ETAPA 2: ENDEREÇO -->
+  <div class="etapa" id="etapa2" style="display:none;">
+    <h2>Endereço</h2>
 
-        .header-actions .btn:hover {
-            background-color: #52525b;
-            color: #e2e8f0;
-        }
+    <label for="cep">CEP *</label>
+    <input type="text" id="cep" name="cep" required>
 
-        #progress-bar {
-            background-color: #3f3f46;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
+    <label for="rua">Rua *</label>
+    <input type="text" id="rua" name="rua" required>
 
-        #progress-bar-fill {
-            background-color: #64748b;
-            height: 100%;
-            width: 0%;
-            border-radius: 4px;
-            transition: width 0.3s ease-in-out;
-        }
+    <label for="numero">Número *</label>
+    <input type="text" id="numero" name="numero" required>
 
-        .card {
-            padding: 20px;
-        }
+    <label for="complemento">Complemento</label>
+    <input type="text" id="complemento" name="complemento">
 
-        .form-step {
-            display: none;
-        }
+    <label for="bairro">Bairro *</label>
+    <input type="text" id="bairro" name="bairro" required>
 
-        .form-step.active {
-            display: block;
-        }
+    <label for="cidade">Cidade *</label>
+    <select id="cidade" name="cidade" required>
+      <!-- Lista com todas cidades do Brasil (inserir via script ou opção dinâmica) -->
+      <option value="">Selecione</option>
+    </select>
 
-        .form-step h2 {
-            color: #f3f4f6;
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
+    <label for="estado">Estado *</label>
+    <select id="estado" name="estado" required>
+      <option value="">Selecione</option>
+      <option value="SP">SP</option>
+      <option value="RJ">RJ</option>
+      <option value="MG">MG</option>
+      <option value="RS">RS</option>
+      <option value="BA">BA</option>
+      <option value="PR">PR</option>
+      <!-- e assim por diante... -->
+    </select>
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #a1a1aa;
-            font-weight: bold;
-        }
+    <div class="botoes">
+      <button type="button" onclick="voltarEtapa(1)">Voltar: Dados</button>
+      <button type="button" onclick="proximaEtapa(3)">Próximo: Complementares</button>
+    </div>
+  </div>
 
-        label.required::after {
-            content: "*";
-            color: #dc2626;
-            margin-left: 5px;
-        }
+  <!-- ETAPA 3: INFORMAÇÕES COMPLEMENTARES -->
+  <div class="etapa" id="etapa3" style="display:none;">
+    <h2>Informações Complementares</h2>
 
-        input[type="text"],
-        input[type="tel"],
-        input[type="file"],
-        select {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #52525b;
-            border-radius: 4px;
-            background-color: #3f3f46;
-            color: #e2e8f0;
-            box-sizing: border-box;
-        }
+    <label for="emprego">Profissão *</label>
+    <select id="emprego" name="emprego" required>
+      <option value="">Selecione</option>
+      <!-- 40 opções padrão -->
+      <option>Vendedor</option>
+      <option>Professor</option>
+      <option>Motorista</option>
+      <option>Estudante</option>
+      <option>Autônomo</option>
+      <option>Desempregado</option>
+      <!-- ... -->
+      <option value="outro">Outro</option>
+    </select>
+    <input type="text" id="emprego_outro" name="emprego_outro" placeholder="Se outro, digite aqui">
 
-        select {
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg fill="%23a1a1aa" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>');
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 1.2em;
-        }
+    <label for="salario">Faixa de Salário *</label>
+    <select id="salario" name="salario" required>
+      <option value="">Selecione</option>
+      <option>Até R$1.000</option>
+      <option>De R$1.001 a R$2.000</option>
+      <option>De R$2.001 a R$3.000</option>
+      <option>De R$3.001 a R$5.000</option>
+      <option>De R$5.001 a R$10.000</option>
+      <option>Acima de R$10.000</option>
+    </select>
 
-        .btn {
-            background-color: #64748b;
-            color: #e2e8f0;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
-        }
+    <label for="tempo_residencia">Tempo de residência no endereço atual *</label>
+    <select id="tempo_residencia" name="tempo_residencia" required>
+      <option value="">Selecione</option>
+      <option>Menos de 6 meses</option>
+      <option>6 meses a 1 ano</option>
+      <option>1 a 2 anos</option>
+      <option>2 a 5 anos</option>
+      <option>5 a 10 anos</option>
+      <option>Mais de 10 anos</option>
+    </select>
 
-        .btn:hover {
-            background-color: #a1a1aa;
-            color: #27272a;
-        }
+    <label>Você foi indicado por alguém? *</label>
+    <select id="foi_indicado" name="foi_indicado" required onchange="mostrarCampoIndicacao()">
+      <option value="">Selecione</option>
+      <option value="sim">Sim</option>
+      <option value="nao">Não</option>
+    </select>
 
-        .image-preview {
-            max-width: 150px;
-            height: auto;
-            margin-top: 10px;
-            border: 1px solid #52525b;
-            border-radius: 4px;
-            display: block;
-        }
+    <div id="campo_avalista" style="display:none;">
+      <label for="nome_avalista">Nome de quem indicou</label>
+      <input type="text" id="nome_avalista" name="nome_avalista">
+    </div>
 
-        .error-text {
-            color: #dc2626;
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: block;
-        }
+    <div id="campo_como_soube" style="display:none;">
+      <label for="como_soube">Como ficou sabendo da gente?</label>
+      <input type="text" id="como_soube" name="como_soube">
+    </div>
 
-        .social-input {
-            margin-left: 20px;
-            margin-bottom: 10px;
-        }
+    <div class="botoes">
+      <button type="button" onclick="voltarEtapa(2)">Voltar: Endereço</button>
+      <button type="button" onclick="proximaEtapa(4)">Finalizar</button>
+    </div>
+  </div>
 
-        #social-error {
-            color: #dc2626;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+  <!-- ETAPA 4: FINALIZAÇÃO -->
+  <div class="etapa" id="etapa4" style="display:none;">
+    <h2>Finalização</h2>
+    <p>Obrigado! Seus dados foram enviados com sucesso.</p>
+    <button type="submit">Enviar Formulário</button>
+    <button type="button" onclick="voltarEtapa(3)">Voltar: Complementares</button>
+  </div>
 
-        /* Estilos para o estado de erro nos campos */
-        input.error,
-        select.error {
-            border-color: #dc2626;
-            background-color: #7f1d1d;
-        }
-
-        /* Estilos para o estado de sucesso (opcional - para feedback de envio) */
-        .form-step.success h2 {
-            color: #86efac;
-        }
-
-        /* Estilos para a barra de progresso mais profissional */
-        #progress-bar {
-            background-color: #3f3f46;
-            height: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-
-        #progress-bar-fill {
-            background-color: #64748b;
-            height: 100%;
-            width: 0%;
-            border-radius: 5px;
-            transition: width 0.4s ease-in-out; /* Adicionando uma transição suave */
-        }
-    </style>
-</head>
-<body>
-    <aside class="sidebar">
-       <div class="logo">🐸 Encomenda Palotina</div>
-
-        <nav>
-
-          <a href="../calculadoras/em-breve.html">⚙️ Configurações</a>
-          <a href="../calculadoras/em-breve.html">👤 Minha Conta</a>
-          <a href="../suporte/index.html">🛠️ Suporte</a>
-          <a href="../../index.html">🚪 Sair</a>
-
-        </nav>
-
-     </aside>
-     <main class="content">
-        <header class="header">
-            <h1>📝 Cadastro de Empréstimo de Veículo</h1>
-            <div class="header-actions">
-                <a href="../../index.html" class="btn btn-secondary"> « Voltar</a>
-            </div>
-        </header>
-
-        <div id="progress-bar">
-            <div id="progress-bar-fill"></div>
-        </div>
-       <form id="loan-form" class="card" enctype="multipart/form-data">
-            <div class="form-step active" data-step="1">
-                <h2>Etapa 1/6: Dados Pessoais</h2>
-                <label for="nome" class="required">Nome Completo</label><input type="text" id="nome" name="nome" required >
-                <label for="cpf" class="required">CPF</label> <input type="text" id="cpf" name="cpf" required maxlength="14" oninput="formatCPF(this)">
-                <button type="button" class="btn" onclick="nextStep()">Próximo</button>
-        </div>
-            <div class="form-step" data-step="2">
-                <h2>Etapa 2/6: Endereço</h2>
-                 <label for="cep" class="required">CEP</label><input type="text" id="cep" name="cep"  required maxlength="9">
-                 <label for="cidade" class="required">Cidade</label> <input type="text" id="cidade" name="cidade"  required>
-                 <label for="estado" class="required">Estado</label> <input type="text" id="estado" name="estado"  required>
-                 <label for="bairro" class="required">Bairro</label><input type="text" id="bairro" name="bairro"  required>
-                 <label for="rua" class="required">Rua</label> <input type="text" id="rua" name="rua" required>
-                 <label for="numero" class="required">Número</label><input type="text" id="numero" name="numero"  required>
-                  <label for="complemento">Complemento</label> <input type="text" id="complemento" name="complemento">
-
-                <button type="button" class="btn" onclick="prevStep()">Anterior</button>
-                 <button type="button" class="btn" onclick="nextStep()">Próximo</button>
-            </div>
-           <div class="form-step" data-step="3">
-                <h2>Etapa 3/6: Informações Financeiras</h2>
-                <label for="tempo_moradia" class="required">Tempo de Moradia</label>
-                <select id="tempo_moradia" name="tempo_moradia" required>
-                    <option value="" selected disabled>Selecione...</option>
-                    <option value="Menos de 1 ano">Menos de 1 ano</option>
-                    <option value="1-3 anos">1-3 anos</option>
-                    <option value="3-5 anos">3-5 anos</option>
-                    <option value="Mais de 5 anos">Mais de 5 anos</option>
-                </select>
-                <label for="salario" class="required">Faixa Salarial</label> <select id="salario" name="salario" required>
-                    <option value="" selected disabled>Selecione...</option>
-                    <option value="Até R$1.500">Até R$1.500</option>
-                    <option value="R$1.501 - R$3.000">R$1.501 - R$3.000</option>
-                    <option value="R$3.001 - R$5.000">R$3.001 - R$5.000</option>
-                    <option value="Acima de R$5.000">Acima de R$5.000</option>
-                </select>
-            <button type="button" class="btn" onclick="prevStep()">Anterior</button>
-                 <button type="button" class="btn" onclick="nextStep()">Próximo</button>
-
-        </div>
-            <div class="form-step" data-step="4">
-                <h2>Etapa 4/6: Indicação (Opcional)</h2>
-
-                 <label for="foi-indicado">Foi indicado?</label>
-                <select id="foi-indicado" name="foi_indicado" onchange="mostrarCampoIndicado(this.value)">
-                  <option value="nao">Não</option> <option value="sim">Sim</option>
-              </select>
-
-             <div id="campo-indicador" style="display: none;"> <label for="nome-indicador">Quem indicou?</label> <input type="text" id="nome-indicador" name="nome_indicador" > </div>
-
-             <button type="button" class="btn" onclick="prevStep()">Anterior</button> <button type="button" class="btn" onclick="nextStep()">Próximo</button>
-            </div>
-
-         <div class="form-step" data-step="5">
-                <h2>Etapa 5/6: Documentos</h2>
-                 <p>Envie foto da CNH (que já contém RG e CPF) OU envie fotos separadas do RG (frente e verso) e CPF.</p>
-                  <label for="cnh">CNH (Substitui RG+CPF) </label> <input type="file" id="cnh" name="cnh[]" accept="image/*,.pdf" onchange="handleCNHUpload(this)"> <img id="cnh-preview" class="image-preview" src="#" alt="Preview CNH"> <span id="cnh-error" class="error-text"></span>
-
-
-                  <div id="rg-cpf-fields" style="display:none;">
-                      <label for="rg_frente">RG (Frente)</label> <input type="file" id="rg_frente" name="rg_frente[]" accept="image/*,.pdf" onchange="previewImage('rg_frente', 'rg-frente-preview')"> <img id="rg-frente-preview" class="image-preview" src="#" alt="Preview RG Frente"> <span id="rg_frente-error" class="error-text"></span>
-
-                      <label for="rg_verso">RG (Verso)</label><input type="file" id="rg_verso" name="rg_verso[]" accept="image/*,.pdf" onchange="previewImage('rg_verso', 'rg-verso-preview')"> <img id="rg-verso-preview" class="image-preview" src="#" alt="Preview RG Verso"> <span id="rg_verso-error" class="error-text"></span>
-
-
-                          <label for="cpf_doc">CPF (Documento) </label> <input type="file" id="cpf_doc" name="cpf_doc[]" accept="image/*,.pdf" onchange="previewImage('cpf_doc', 'cpf-doc-preview')"> <img id="cpf-doc-preview" class="image-preview" src="#" alt="Preview CPF">  <span id="cpf_doc-error" class="error-text"></span>
-                  </div>
-                   <label for="selfie" class="required">Selfie com Documento </label> <input type="file" id="selfie" name="selfie[]" accept="image/*" required onchange="previewImage('selfie', 'selfie-preview')"> <img id="selfie-preview" class="image-preview" src="#" alt="Preview Selfie">
+</form>
